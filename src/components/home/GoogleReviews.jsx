@@ -251,7 +251,7 @@ const GoogleReviews = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.1 }}
-                  className="snap-center shrink-0 w-[300px] md:w-[320px] bg-white rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col relative group hover:-translate-y-1 transition-transform duration-300"
+                  className="snap-center shrink-0 w-[300px] md:w-[320px] bg-white rounded-2xl p-6 glow-card flex flex-col relative group hover:-translate-y-1 transition-transform duration-300"
                 >
                   {/* Quote Icon Background */}
                   <div className="absolute top-6 right-6 text-gray-100 group-hover:text-gold/10 transition-colors">

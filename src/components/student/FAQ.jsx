@@ -1,86 +1,66 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import SEO from './SEO';
+import SEO from "../SEO";
 
 const FAQ = () => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const faqs = [
     {
-      question: 'WHAT IS THE MINIMUM AGE TO LEARN DRIVING?',
+      question: 'HOW MANY CLASSES ARE INCLUDED IN THE COURSE?',
       answer:
-        'The minimum age to learn driving is 18 years for a car. You must have a valid Learner’s License (LL) before starting actual driving training.'
+        'Our standard monthly package includes 26 practical driving classes. Classes are held Monday through Saturday, giving you consistent practice to build muscle memory.'
     },
     {
-      question: 'HOW LONG DOES IT TAKE TO LEARN DRIVING?',
+      question: 'IS HILL DRIVING DIFFICULT TO LEARN?',
       answer:
-        'Typically, it takes 15–30 days of regular practice to learn basic driving skills. Learning speed varies by individual.'
+        'It can be challenging initially, but our curriculum is specifically designed for Himachal’s terrain. We teach you clutch control, hill starts, and descent management so you can drive confidently on steep roads.'
     },
     {
-      question: 'DO YOU PROVIDE DUAL-CONTROL VEHICLES?',
+      question: 'WHICH CAR WILL I USE FOR THE DRIVING TEST?',
       answer:
-        'Yes. All our training cars have instructor-side dual controls for maximum safety.'
+        'You will generally use the same car you trained on for your RTO driving test. This ensures you are familiar with the vehicle’s dimensions and clutch bite point.'
     },
     {
-      question: 'WHAT DOCUMENTS DO I NEED TO START TRAINING?',
+      question: 'DOES THE INSTRUCTOR HAVE CONTROL OF THE CAR?',
       answer:
-        'You need a valid Learner’s License, Aadhaar card (or any government ID), and a working mobile number.'
+        'Yes, all our training vehicles are equipped with dual controls. The instructor has their own set of brake and clutch pedals to intervene instantly if necessary, ensuring your safety.'
     },
     {
-      question: 'CAN YOU HELP ME PREPARE FOR THE RTO DRIVING TEST?',
+      question: 'WHAT IS THE MINIMUM AGE TO JOIN?',
       answer:
-        'Yes. We provide full RTO test preparation including routes, rules, and test patterns.'
+        'You must be at least 18 years old to obtain a Learner’s License for a motor vehicle (car). You can start training once you have this license.'
     },
     {
-      question: 'WHAT IS THE CLASS TIMING AND BATCH SCHEDULE?',
+      question: 'DO YOU HELP WITH THE DRIVING LICENSE APPLICATION?',
       answer:
-        'Morning (6–8 AM), Afternoon (2–4 PM), Evening (4–7 PM). Classes run Monday to Saturday.'
+        'Yes, we guide you through the entire process—from applying for your Learner’s License online to booking your slot for the final driving test at the RTO.'
     },
     {
-      question: 'DO YOU OFFER AUTOMATIC AND MANUAL TRAINING?',
+      question: 'CAN I CHOOSE MY OWN CLASS TIMINGS?',
       answer:
-        'Yes. Training is available for both Manual (MT) and Automatic (AT) vehicles.'
+        'We offer flexible slots from 6:00 AM to 7:00 PM. You can choose a time that fits your schedule, subject to slot availability.'
     },
     {
-      question: 'WHAT IS THE COST OF DRIVING LESSONS?',
+      question: 'WHAT IF I AM NERVOUS OR AFRAID OF TRAFFIC?',
       answer:
-        'Pricing depends on the course. We offer beginner, refresher, and advanced packages. Contact us for details.'
+        'This is very common! Our instructors are trained to be patient and calm. We start in low-traffic areas and gradually move to busier roads only when you feel ready.'
     },
     {
-      question: 'CAN NERVOUS OR FEARFUL DRIVERS LEARN HERE?',
+      question: 'DO YOU OFFER REFRESHER COURSES FOR LICENSE HOLDERS?',
       answer:
-        'Absolutely. We specialize in calm, confidence-building training for nervous learners.'
+        'Yes, if you already have a license but lack confidence, we offer short refresher courses focusing on specific skills like parking, highway driving, or hill driving.'
     },
     {
-      question: 'DO YOU PROVIDE WOMEN-ONLY BATCHES?',
+      question: 'WHAT DOCUMENTS ARE REQUIRED FOR ADMISSION?',
       answer:
-        'Yes. Ladies-only batches are available on request.'
+        'You need a copy of your Aadhaar card and a passport-sized photograph.'
     },
     {
-      question: 'WHAT IF I MISS A CLASS?',
+      question: 'WHAT HAPPENS IF I MISS A CLASS?',
       answer:
-        'You can reschedule missed classes within the package validity period.'
-    },
-    {
-      question: 'DO YOU OFFER TRAINING AFTER LICENSE?',
-      answer:
-        'Yes. Advanced driving, highway driving, hill driving, and defensive driving courses are available.'
-    },
-    {
-      question: 'DO YOU TRAIN IN MANDI AND KARSOG?',
-      answer:
-        'Yes. Training is available in both Bhanthal (Mandi) and Karsog.'
-    },
-    {
-      question: 'WHAT IS YOUR REFUND POLICY?',
-      answer:
-        'Full refund within 7 days of enrollment. Partial refunds depend on classes completed.'
-    },
-    {
-      question: 'HOW DO I BOOK A FREE DEMO SESSION?',
-      answer:
-        'Call or WhatsApp +91 98820 34930 or fill out the enquiry form on our website.'
+        'If you inform us in advance, we can try to reschedule your class. However, frequent cancellations may affect your learning momentum.'
     }
   ];
 
@@ -99,7 +79,7 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-14 bg-white">
+    <div id="faq" className="bg-white p-6 md:p-8">
       <SEO
         title="FAQ – Driving School Questions | Raj Ann Raj"
         description="Frequently asked questions about driving lessons, RTO tests, fees, timing, and training locations in Mandi & Karsog."
@@ -107,8 +87,8 @@ const FAQ = () => {
         schema={faqSchema}
       />
 
-      <div className="container-max px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-navy text-center mb-10">
+      <div className="max-w-full mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-navy text-center mb-8">
           Frequently Asked Questions
         </h2>
 
@@ -178,7 +158,7 @@ const FAQ = () => {
           </div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -10,14 +10,14 @@ import {
   Building2,
   Award
 } from "lucide-react";
-import SEO from "./SEO";
+import SEO from "../SEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
 
-const About = () => {
+const About = ({ variant = "full" }) => {
   const stats = [
     { label: "Years Experience", value: "20+", icon: Clock },
     { label: "Students Trained", value: "5k+", icon: Users },
@@ -30,6 +30,80 @@ const About = () => {
     { title: "ISO Certified Training", icon: Award },
     { title: "Lady Friendly Environment", icon: Sparkles },
   ];
+
+  if (variant === "brief") {
+    return (
+      <section id="about" className="relative bg-slate-50 py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid lg:grid-cols-12 gap-6 items-start"
+          >
+            <div className="lg:col-span-6">
+              <span className="inline-block mb-3 px-4 py-1 text-xs font-semibold tracking-wide text-amber-600 bg-amber-100 rounded-full">
+                About Us
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                Trusted Driving School in <span className="text-amber-500">Mandi & Karsog</span>
+              </h2>
+              <p className="mt-3 text-slate-600 leading-relaxed">
+                We focus on calm, structured training with safety-first habits — especially for first-time and nervous learners.
+                Dual-control cars and patient instructors help you learn with confidence.
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                {values.map((v, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-full border border-slate-200 text-xs sm:text-sm font-medium text-slate-700"
+                  >
+                    <v.icon size={16} className="text-amber-500" />
+                    {v.title}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-6">
+              <div className="grid grid-cols-3 gap-3">
+                {stats.map((stat, i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-2xl p-4 border border-slate-100"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-2xl font-extrabold text-slate-900">
+                          {stat.value}
+                        </div>
+                        <div className="text-xs text-slate-500">
+                          {stat.label}
+                        </div>
+                      </div>
+                      <stat.icon className="text-amber-500" size={22} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 bg-[#0B1120] rounded-3xl p-6 text-white overflow-hidden">
+                <Quote className="text-amber-500/30 mb-3" />
+                <p className="text-slate-200 leading-relaxed">
+                  “Safety over speed. We teach you to respect the road — not just pass the test.”
+                </p>
+                <p className="mt-3 text-amber-400 text-sm font-semibold">
+                  Pushp Raj • Founder
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="about" className="relative bg-slate-50 py-10 sm:py-12">

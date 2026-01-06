@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FileSignature } from 'lucide-react';
 import { 
   FaUser, 
   FaPhone, 
@@ -116,8 +117,7 @@ const FormContent = ({
             className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/50 focus:border-gold focus:ring-2 focus:ring-gold/50 transition-all cursor-pointer hover:bg-white/10"
             style={{
               colorScheme: 'dark',
-              WebkitAppearance: 'none',
-              appearance: 'none'
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
             }}
           />
         </div>
@@ -300,7 +300,7 @@ const EnquiryForm = () => {
     // Define WhatsApp trigger inside handleSubmit so it can access formData and handle fallback
     const triggerWhatsApp = (status) => {
       const RAJ_NUMBER = "919882034930"; 
-      let intro = "I have submitted my details via your website:";
+      let intro = "I want to start driving lessons.";
       
       // If server failed, we change the message slightly
       if (status === 'fallback') {
@@ -308,16 +308,12 @@ const EnquiryForm = () => {
       }
 
       const waText = 
-        `*DRIVING LESSON ENQUIRY*\n` +
-        `Hello Raj N Raj Driving School,\n\n` +
+        `Hello Raj Ann Raj Driving Training School 👋\n\n` +
         `${intro}\n\n` +
-        `*Name:* ${formData.fullName}\n` +
-        `*Mobile:* ${formData.mobileNumber}\n` +
-        `*DOB:* ${formData.dateOfBirth}\n` +
-        `*Location:* ${formData.pickupLocation}\n` +
-        `*Skill:* ${formData.skillLevel}\n` +
-        `*Time:* ${formData.timeSlot}\n\n` +
-        `Please contact me.`;
+        `Name: ${formData.fullName}\n` +
+        `Mobile: ${formData.mobileNumber}\n` +
+        `Area: ${formData.pickupLocation}\n\n` +
+        `Please guide me about available slots.`;
 
       const whatsappUrl = `https://wa.me/${RAJ_NUMBER}?text=${encodeURIComponent(waText)}`;
       
@@ -395,19 +391,60 @@ const EnquiryForm = () => {
 
   return (
     <>
-      {/* Floating Button */}
-      <motion.button
-        onClick={() => setIsModalOpen(true)}
-        className="fixed bottom-20 right-4 md:bottom-8 md:right-8 z-40 bg-gold hover:bg-yellow-400 text-navy font-bold py-3 px-5 md:py-4 md:px-6 rounded-full shadow-2xl flex items-center gap-2 md:gap-3 transition-all duration-300 hover:scale-110 text-base md:text-lg"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
-      >
-        <FaPhone className="text-sm md:text-base" />
-        Register Now
-      </motion.button>
+      {/* Success State Overlay */}
+      {message && message.includes('✅') && (
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          onClick={() => setMessage('')}
+        >
+          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full text-center shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FaWhatsapp className="text-3xl text-green-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">Request Sent!</h3>
+            <p className="text-slate-600 mb-6">
+              We have received your details. Please click below to confirm your slot on WhatsApp.
+            </p>
+            <button
+              onClick={() => triggerWhatsApp('success')}
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2"
+            >
+              <FaWhatsapp size={20} />
+              Open WhatsApp Now
+            </button>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Floating Action Buttons Container */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-4">
+        
+        {/* 1. Enquiry Button (Secondary) */}
+        {/* Desktop: Above WhatsApp | Mobile: Stacked above WhatsApp */}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="
+            /* Styling */
+            bg-blue-700 hover:bg-blue-600 text-white
+            h-14 rounded-full shadow-xl shadow-blue-900/30
+            flex items-center overflow-hidden
+            z-50
+            group
+          "
+        >
+          <div className="w-14 h-14 flex items-center justify-center flex-shrink-0">
+            <FileSignature size={24} />
+          </div>
+          
+          <div className="w-0 group-hover:w-auto overflow-hidden transition-all duration-300 ease-out">
+            <span className="whitespace-nowrap font-bold pr-6">
+               Registration Form
+            </span>
+          </div>
+        </button>
+      </div>
 
       {/* Modal Overlay */}
       <AnimatePresence>
@@ -429,7 +466,7 @@ const EnquiryForm = () => {
               onClick={() => setIsModalOpen(false)}
             >
               <motion.div
-                className="bg-gradient-to-br from-slate-900/90 via-slate-900 to-slate-950 border border-white/10 rounded-3xl p-8 shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto backdrop-blur-xl"
+                className="bg-gradient-to-br from-slate-900/90 via-slate-900 to-slate-950 border border-white/10 rounded-3xl p-5 md:p-8 shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto backdrop-blur-xl"
                 initial={{ opacity: 0, scale: 0.8, y: 50 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -464,104 +501,6 @@ const EnquiryForm = () => {
           </>
         )}
       </AnimatePresence>
-
-      <section id="enquiry" className="py-20 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden text-white">
-        <p className="sr-only">
-          Enquiry form for Raj Ann Raj Driving Training School to book driving lessons, schedule callbacks, and request pickup in Himachal Pradesh.
-        </p>
-        {/* Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,193,7,0.08),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(59,130,246,0.08),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(99,102,241,0.08),transparent_35%)]" />
-          <div className="absolute -left-24 top-10 w-64 h-64 bg-gold/5 blur-3xl rounded-full" />
-          <div className="absolute -right-24 bottom-0 w-72 h-72 bg-blue-500/5 blur-3xl rounded-full" />
-        </div>
-
-        <div className="container-max px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.div className="mb-12">
-                <motion.div
-                  className="inline-flex items-center gap-3 bg-white/5 px-6 py-3 rounded-full mb-6 border border-white/10 text-white"
-                  whileHover={{ scale: 1.03 }}
-                >
-                  <FaGraduationCap className="text-gold text-2xl" />
-                  <span className="font-semibold text-sm uppercase tracking-wide">Start learning today</span>
-                </motion.div>
-
-                <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-                  Begin your <span className="text-gold">driving journey</span>
-                </h2>
-                
-                <p className="text-lg text-white/70 leading-relaxed max-w-2xl">
-                  Fill the form, get an instant WhatsApp message with your details, and our instructor will call you with a time that fits your schedule.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-                className="space-y-4"
-              >
-                <h3 className="text-2xl font-bold text-white mb-4">What you get</h3>
-                {[
-                  { icon: <FaGraduationCap className="text-gold" />, text: 'Priority callback to book your slot' },
-                  { icon: <FaUser className="text-gold" />, text: '1:1 consultation with your instructor' },
-                  { icon: <FaClock className="text-gold" />, text: 'Flexible timing that fits you' },
-                  { icon: <FaMapMarkerAlt className="text-gold" />, text: 'Pickup from your location' },
-                  { icon: <FaWhatsapp className="text-gold" />, text: 'Instant WhatsApp confirmation' }
-                ].map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.6 + index * 0.1, duration: 0.6 }}
-                  >
-                    <div className="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center border border-white/10">
-                      {benefit.icon}
-                    </div>
-                    <span className="text-white/80 font-medium">{benefit.text}</span>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-8 shadow-[0_20px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-                <div className="text-center mb-8 space-y-2">
-                  <p className="text-xs uppercase tracking-[0.2em] text-gold/80">Limited seats • Himachal</p>
-                  <h3 className="text-3xl font-bold text-white">Register for a lesson</h3>
-                  <p className="text-white/70">Finish in under a minute. No spam.</p>
-                </div>
-
-                <FormContent 
-                  handleSubmit={handleSubmit}
-                  formData={formData}
-                  handleChange={handleChange}
-                  submitting={submitting}
-                  phoneError={phoneError}
-                  message={message}
-                  idPrefix="inline-"
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
     </>
   );
 };

@@ -63,6 +63,28 @@
     @apply bg-white border border-slate-200 rounded-xl shadow-sm;
   }
 
+  /* Glowing Card Effect - Border Only */
+  .glow-card {
+    @apply relative border border-slate-200 overflow-hidden transition-all duration-300;
+    box-shadow: 0 0 0 1px rgba(245, 179, 1, 0);
+  }
+
+  .glow-card:hover {
+    @apply border-gold/50;
+    box-shadow: 0 0 15px rgba(245, 179, 1, 0.4), inset 0 0 0 0.5px rgba(245, 179, 1, 0.2);
+  }
+
+  /* Glow Card Gold Border - Border Only */
+  .glow-card-gold {
+    @apply relative border border-gold/40 overflow-hidden transition-all duration-300;
+    box-shadow: 0 0 0 1px rgba(245, 179, 1, 0);
+  }
+
+  .glow-card-gold:hover {
+    @apply border-gold;
+    box-shadow: 0 0 20px rgba(245, 179, 1, 0.5), inset 0 0 0 0.5px rgba(245, 179, 1, 0.3);
+  }
+
   /* Headings */
   .heading-hero {
     @apply text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight;
