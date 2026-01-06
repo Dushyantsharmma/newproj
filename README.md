@@ -1,5 +1,7 @@
 # React + Vite
 
+[![Deploy to GitHub Pages](https://github.com/Dushyantsharmma/newproj/actions/workflows/deploy.yml/badge.svg)](https://github.com/Dushyantsharmma/newproj/actions/workflows/deploy.yml)
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
