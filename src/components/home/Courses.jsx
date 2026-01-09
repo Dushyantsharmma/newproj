@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   GraduationCap,
   RefreshCw,
@@ -10,13 +10,14 @@ import {
   Mountain,
   Users,
   ChevronRight,
-  Route
+  Route,
+  Zap,
+  Star
 } from "lucide-react";
 import SEO from "../SEO";
 
 const PHONE = import.meta.env.VITE_PHONE || "+919882034930";
-const WHATSAPP_TEXT =
-  import.meta.env.VITE_WHATSAPP_TEXT || "I want to learn driving";
+const WHATSAPP_TEXT = import.meta.env.VITE_WHATSAPP_TEXT || "I want to learn driving";
 
 const COURSES = [
   {
@@ -24,51 +25,54 @@ const COURSES = [
     title: "Beginner Hill Driving",
     icon: GraduationCap,
     badge: "Most Popular",
-    badgeColor: "bg-yellow-100 text-yellow-800",
-    description: "Perfect for first-time learners in Himachal",
+    description: "Start your journey with confidence. Comprehensive training for first-time learners.",
     features: [
-      "Vehicle controls & basics",
-      "Hill starts & slopes",
-      "Narrow road confidence",
+      "Master vehicle controls",
+      "Hill starts made easy",
+      "Narrow road navigation",
       "Dual control safety"
     ],
     duration: "26 Days",
     price: "Contact for Rates",
-    cta: "Book Beginner"
+    cta: "Start Learning",
+    highlight: true,
+    color: "amber"
   },
   {
     id: "refresher",
     title: "Refresher Course",
     icon: RefreshCw,
-    badge: "Confidence Booster",
-    badgeColor: "bg-blue-100 text-blue-800",
-    description: "For license holders who need hill practice",
+    badge: "Skill Booster",
+    description: "Polish your skills and conquer hill driving fears. For license holders.",
     features: [
-      "Advanced parking skills",
-      "Traffic management",
-      "Uphill/Downhill control",
-      "Night driving tips"
+      "Advanced parking techniques",
+      "Traffic management skills",
+      "Uphill/Downhill mastery",
+      "Night driving confidence"
     ],
-    duration: "26 Days",
+    duration: "15 Days",
     price: "Contact for Rates",
-    cta: "Book Refresher"
+    cta: "Boost Skills",
+    highlight: false,
+    color: "blue"
   },
   {
     id: "nervous",
-    title: "Nervous Driver Program",
+    title: "Nervous Driver",
     icon: Heart,
-    badge: "Anxiety Free",
-    badgeColor: "bg-purple-100 text-purple-800",
-    description: "Specialized calm coaching for fearful drivers",
+    badge: "Stress Free",
+    description: "Gentle, patient coaching designed specifically for anxious drivers.",
     features: [
-      "Zero-shouting policy",
-      "Extra slow progression",
-      "Psychology-based training",
-      "Private roads first"
+      "Calm, zero-shouting environment",
+      "Learn at your own pace",
+      "Psychology-based approach",
+      "Quiet roads first"
     ],
     duration: "Flexible",
     price: "Contact for Rates",
-    cta: "Start Stress-Free"
+    cta: "Drive Calmly",
+    highlight: false,
+    color: "purple"
   }
 ];
 
@@ -79,6 +83,16 @@ const COMPARISON = [
   { feature: "Theory Classes", beginner: true, refresher: false, nervous: true },
   { feature: "License Assistance", beginner: true, refresher: true, nervous: true },
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50 } }
+};
 
 const Courses = () => {
   const [activeTab, setActiveTab] = useState("beginner");
@@ -93,179 +107,241 @@ const Courses = () => {
   };
 
   return (
-    <section id="courses" className="bg-slate-50 py-12 md:py-24">
+    <section id="courses" className="relative py-20 lg:py-28 bg-[#F8F9FA] overflow-hidden">
       <SEO
         title="Driving Courses & Pricing | Raj Ann Raj Driving School"
         description="Structured driving programs for hill roads. Beginner, Refresher, and Nervous Driver courses in Mandi & Karsog."
         canonical="https://rajannrajdrivingschool.com/#courses"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-white to-transparent pointer-events-none" />
+      <div className="absolute -top-20 -right-20 w-[600px] h-[600px] bg-amber-50 rounded-full blur-[100px] opacity-60 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* 1. PAGE HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-3 md:mb-4">
-            Courses & <span className="text-amber-500">Pricing</span>
+        {/* 1. HEADER */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-amber-600 text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
+            <Zap size={14} className="fill-current" />
+            Pricing & Plans
+          </div>
+          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+            Master the <span className="text-amber-600">Mountain Roads</span>
           </h2>
-          <p className="text-base md:text-lg text-slate-600">
-            Structured driving programs designed for the <span className="font-semibold text-slate-800">hill roads of Himachal Pradesh</span>.
+          <p className="text-slate-600 text-lg leading-relaxed">
+            Expert-designed courses tailored for Himachal's unique terrain. 
+            <br className="hidden sm:block" /> Choose the path that fits your experience level.
           </p>
+        </motion.div>
+
+        {/* 2. MOBILE TABS */}
+        <div className="md:hidden flex justify-center mb-8">
+          <div className="flex p-1.5 bg-white rounded-full border border-slate-200 shadow-sm">
+            {COURSES.map((course) => (
+              <button
+                key={course.id}
+                onClick={() => setActiveTab(course.id)}
+                className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                  activeTab === course.id
+                    ? "bg-slate-900 text-white shadow-md transform scale-105"
+                    : "text-slate-500 hover:text-slate-900"
+                }`}
+              >
+                {course.title.split(" ")[0]}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* 2. COURSE SELECTOR (Mobile Only) */}
-        <div className="md:hidden flex overflow-x-auto pb-4 mb-4 gap-2 no-scrollbar snap-x">
+        {/* 3. PRICING CARDS */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 mb-24"
+        >
           {COURSES.map((course) => (
-            <button
+            <motion.div
               key={course.id}
-              onClick={() => setActiveTab(course.id)}
-              className={`flex-shrink-0 snap-center px-4 py-2 rounded-full text-xs font-bold border transition-all ${
-                activeTab === course.id
-                  ? "bg-slate-900 text-white border-slate-900 shadow-md"
-                  : "bg-white text-slate-600 border-slate-200"
-              }`}
-            >
-              {course.title.split(" ")[0]}
-            </button>
-          ))}
-        </div>
-
-        {/* 3. COURSE CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
-          {COURSES.map((course) => (
-            <div 
-              key={course.id}
-              className={`relative rounded-2xl border bg-white p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col ${
-                // Mobile: Show only active tab. Desktop: Show all.
+              variants={itemVariants}
+              className={`relative flex flex-col rounded-[2.5rem] p-8 transition-all duration-500 ${
                 activeTab === course.id ? "block" : "hidden md:flex"
+              } ${
+                course.highlight
+                  ? "bg-white border-2 border-amber-400 shadow-2xl shadow-amber-500/10 scale-100 md:scale-105 z-10"
+                  : "bg-white border border-slate-100 shadow-lg hover:shadow-xl hover:-translate-y-2"
               }`}
             >
-              <span className={`absolute top-4 right-4 text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full ${course.badgeColor}`}>
-                {course.badge}
-              </span>
-
-              <div className="mb-4 w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-900">
-                <course.icon size={20} className="md:w-6 md:h-6" />
+              {/* Badge */}
+              <div className="flex justify-between items-start mb-8">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-inner ${
+                  course.highlight ? "bg-amber-50 text-amber-600" : "bg-slate-50 text-slate-600"
+                }`}>
+                  <course.icon size={28} strokeWidth={1.5} />
+                </div>
+                {course.highlight && (
+                  <span className="px-4 py-1.5 rounded-full bg-amber-500 text-white text-xs font-bold uppercase tracking-wide shadow-md shadow-amber-500/20">
+                    {course.badge}
+                  </span>
+                )}
               </div>
 
-              <h3 className="text-lg md:text-xl font-bold text-slate-900">{course.title}</h3>
-              <p className="text-xs md:text-sm text-slate-500 mt-1 mb-4 md:mb-6">
+              <h3 className="text-2xl font-bold text-slate-900 mb-3">{course.title}</h3>
+              <p className="text-slate-500 mb-8 leading-relaxed min-h-[48px]">
                 {course.description}
               </p>
 
-              <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow">
+              {/* Features List */}
+              <div className="space-y-4 mb-10 flex-1">
                 {course.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-2 md:gap-3 text-sm text-slate-700">
-                    <CheckCircle2 size={16} className="text-green-500 flex-shrink-0 mt-0.5 md:w-[18px] md:h-[18px]" />
-                    {feature}
-                  </li>
+                  <div key={idx} className="flex items-start gap-3">
+                    <div className="mt-0.5 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 size={12} className="text-green-600" strokeWidth={3} />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700">{feature}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
 
-              <div className="border-t border-slate-100 pt-4 md:pt-6 mt-auto">
-                <div className="flex justify-between items-center mb-2 text-sm">
-                  <span className="text-slate-500">Duration:</span>
-                  <span className="font-bold text-slate-900">{course.duration}</span>
-                </div>
-                <div className="flex justify-between items-center mb-4 md:mb-6 text-sm">
-                  <span className="text-slate-500">Price:</span>
-                  <span className="font-bold text-slate-900">{course.price}</span>
+              {/* Footer info */}
+              <div className="pt-8 border-t border-slate-100">
+                <div className="flex justify-between items-end mb-6">
+                  <div>
+                    <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Duration</p>
+                    <p className="text-xl font-extrabold text-slate-900">{course.duration}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Training</p>
+                    <p className="text-sm font-bold text-slate-700">Practical + Theory</p>
+                  </div>
                 </div>
 
                 <button 
                   onClick={() => handleWhatsApp(course.title)}
-                  className="w-full rounded-xl bg-amber-400 py-3 md:py-3.5 font-bold text-slate-900 hover:bg-amber-500 transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
+                  className={`w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 active:scale-95 ${
+                    course.highlight
+                      ? "bg-slate-900 text-white hover:bg-slate-800 shadow-lg hover:shadow-slate-900/20"
+                      : "bg-slate-50 text-slate-900 hover:bg-slate-100 border border-slate-200"
+                  }`}
                 >
                   <MessageCircle size={18} />
                   {course.cta}
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* 4. HIMACHAL CONTEXT */}
-        <div className="bg-slate-900 rounded-3xl p-8 md:p-12 text-white mb-16 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-          <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center min-w-0">
-            <div className="min-w-0 overflow-hidden text-left">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 break-words min-w-0 text-left leading-tight">
-                Why Our Courses Are Different in
-                <span className="block sm:inline text-amber-400 ml-0 sm:ml-2">Himachal Pradesh</span>
+        {/* 4. WHY HIMACHAL (Feature Section) */}
+        <div className="bg-white rounded-[3rem] overflow-hidden border border-slate-100 shadow-xl mb-24">
+          <div className="grid md:grid-cols-2">
+            <div className="p-10 md:p-16 flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 text-amber-600 font-bold text-sm uppercase tracking-wider mb-4">
+                <Mountain size={16} />
+                Terrain Mastery
+              </div>
+              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
+                Why Learn in the <br/><span className="text-amber-600">Hills?</span>
               </h3>
-              <p className="text-slate-300 mb-6 min-w-0 text-left">
-                Driving in the hills requires special skills. We don't just teach you to drive; we teach you to survive and thrive on mountain roads.
+              <p className="text-slate-600 mb-10 leading-relaxed text-lg">
+                Driving on flat roads is easy. Himachal's terrain requires specific skills: clutch control on steep slopes, judging narrow passes, and managing blind curves safely.
               </p>
-              <button 
-                onClick={() => handleWhatsApp("General Inquiry")}
-                className="text-amber-400 font-bold flex items-center gap-2 hover:text-amber-300 transition-colors text-left"
-              >
-                Chat with an Instructor <ChevronRight size={18} />
-              </button>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { icon: Route, text: "Steep Slope Starts" },
+                  { icon: Shield, text: "Blind Curve Safety" },
+                  { icon: Users, text: "Defensive Driving" },
+                  { icon: Star, text: "Traffic Patience" }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <item.icon className="text-amber-600" size={20} />
+                    <span className="text-sm font-bold text-slate-700">{item.text}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 min-w-0">
-              {[
-                { icon: Mountain, text: "Training on real hill roads" },
-                { icon: Route, text: "Practice on slopes & curves" },
-                { icon: Users, text: "Local instructors from Mandi" },
-                { icon: Shield, text: "Dual-control vehicles" }
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/10 flex items-center gap-3 min-w-0">
-                  <item.icon className="text-amber-400 flex-shrink-0" size={20} />
-                  <span className="text-sm font-medium min-w-0 break-words">{item.text}</span>
-                </div>
-              ))}
+            
+            <div className="relative h-80 md:h-auto min-h-[400px]">
+               <img 
+                 // FIXED: Changed .jpg to .png to match your file structure
+                 src={`${import.meta.env.BASE_URL}courses/hill-driving-collage.png`}
+                 alt="Hill Driving Training Collage"
+                 className="w-full h-full object-cover"
+               />
+               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-10">
+                 <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20">
+                    <p className="text-white font-bold text-xl mb-1">Real World Training</p>
+                    <div className="flex items-center gap-2 text-amber-400 text-sm font-medium">
+                      <Route size={14} />
+                      Karsog Valley, HP
+                    </div>
+                 </div>
+               </div>
             </div>
           </div>
         </div>
 
-        {/* 5. COURSE COMPARISON (Desktop Only) */}
-        <div className="hidden md:block bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm mb-16">
-          <div className="p-6 border-b border-slate-100 bg-slate-50">
-            <h3 className="text-lg font-bold text-slate-900">Quick Comparison</h3>
+        {/* 5. COMPARISON TABLE */}
+        <div className="hidden md:block mb-24">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-bold text-slate-900">Compare Programs</h3>
+            <p className="text-slate-500 mt-2">Find the perfect fit for your skill level</p>
           </div>
-          <table className="w-full text-sm text-left">
-            <thead className="bg-white text-slate-500 border-b border-slate-100">
-              <tr>
-                <th className="px-6 py-4 font-medium">Feature</th>
-                <th className="px-6 py-4 font-medium text-center">Beginner</th>
-                <th className="px-6 py-4 font-medium text-center">Refresher</th>
-                <th className="px-6 py-4 font-medium text-center">Nervous Driver</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {COMPARISON.map((row, idx) => (
-                <tr key={idx} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-4 font-medium text-slate-900">{row.feature}</td>
-                  <td className="px-6 py-4 text-center">
-                    {row.beginner ? <CheckCircle2 size={18} className="text-green-500 mx-auto" /> : <span className="text-slate-300">-</span>}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {row.refresher ? <CheckCircle2 size={18} className="text-green-500 mx-auto" /> : <span className="text-slate-300">-</span>}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {row.nervous ? <CheckCircle2 size={18} className="text-green-500 mx-auto" /> : <span className="text-slate-300">-</span>}
-                  </td>
+          
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-slate-50/50 border-b border-slate-100">
+                  <th className="py-6 px-8 text-left text-sm font-bold text-slate-900 w-1/3">Features</th>
+                  <th className="py-6 px-8 text-center text-sm font-bold text-slate-900 w-1/5">Beginner</th>
+                  <th className="py-6 px-8 text-center text-sm font-bold text-slate-900 w-1/5">Refresher</th>
+                  <th className="py-6 px-8 text-center text-sm font-bold text-slate-900 w-1/5">Nervous</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {COMPARISON.map((row, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-8 text-sm font-medium text-slate-700">{row.feature}</td>
+                    <td className="py-5 px-8 text-center">{row.beginner ? <div className="mx-auto w-8 h-8 rounded-full bg-green-100 flex items-center justify-center"><CheckCircle2 className="text-green-600" size={18} /></div> : <span className="text-slate-300">—</span>}</td>
+                    <td className="py-5 px-8 text-center">{row.refresher ? <div className="mx-auto w-8 h-8 rounded-full bg-green-100 flex items-center justify-center"><CheckCircle2 className="text-green-600" size={18} /></div> : <span className="text-slate-300">—</span>}</td>
+                    <td className="py-5 px-8 text-center">{row.nervous ? <div className="mx-auto w-8 h-8 rounded-full bg-green-100 flex items-center justify-center"><CheckCircle2 className="text-green-600" size={18} /></div> : <span className="text-slate-300">—</span>}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* 6. WHATSAPP CTA STRIP */}
-        <div className="bg-amber-50 border border-amber-100 rounded-2xl p-8 text-center">
-          <h3 className="text-xl font-bold text-slate-900 mb-2">
-            Not sure which course is right for you?
-          </h3>
-          <p className="text-slate-600 mb-6">
-            Talk to our senior instructor directly. No bots, just real advice.
-          </p>
-          <button 
-            onClick={() => handleWhatsApp("Course Consultation")}
-            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full font-bold transition-all shadow-lg shadow-green-500/20 hover:shadow-green-500/30 transform hover:-translate-y-0.5"
-          >
-            <MessageCircle size={20} />
-            Chat on WhatsApp
-          </button>
+        {/* 6. FINAL CTA */}
+        <div className="relative rounded-[3rem] bg-slate-900 p-12 md:p-20 text-center overflow-hidden">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]" />
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-amber-500 rounded-full blur-[120px] opacity-20" />
+          
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Ready to Start?
+            </h3>
+            <p className="text-slate-400 text-lg mb-10">
+              Join thousands of safe drivers in Himachal. <br className="hidden sm:block"/>
+              Contact us today for a free consultation.
+            </p>
+            <button 
+              onClick={() => handleWhatsApp("Consultation")}
+              className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg shadow-green-500/20 hover:shadow-green-500/30 transition-all hover:-translate-y-1"
+            >
+              <MessageCircle size={24} className="fill-current" />
+              Chat on WhatsApp
+            </button>
+          </div>
         </div>
 
       </div>

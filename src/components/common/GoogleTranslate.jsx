@@ -91,7 +91,7 @@ const GoogleTranslate = () => {
         //  - conceptually hidden
       />
 
-      {/* CSS to Hide Google's Top Banner & Tooltips */}
+      {/* CSS to Hide Google's Top Banner, Tooltips, and Loading Spinner/Logo */}
         <style>{`
           .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame, .goog-te-menu-frame, .goog-te-menu-value, .goog-te-gadget-icon, .goog-te-gadget-simple, .goog-te-gadget, body > .skiptranslate, html > body > .skiptranslate {
             display: none !important;
@@ -114,6 +114,18 @@ const GoogleTranslate = () => {
           /* Hide Google Translate top bar in all browsers */
           iframe.goog-te-banner-frame { display: none !important; }
           body { position: static !important; top: 0px !important; }
+          /* Hide Google Translate loading spinner and logo overlay */
+          .goog-te-spinner-pos, .goog-te-spinner-animation, .goog-te-spinner, .goog-logo-link, .goog-te-balloon-img, .goog-te-balloon-img-div {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+            max-width: 0 !important;
+            max-height: 0 !important;
+            overflow: hidden !important;
+          }
         `}</style>
 
       {/* Custom Trigger Button */}

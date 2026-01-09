@@ -1,44 +1,59 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
-const SEO = ({ 
-  title, 
-  description, 
-  keywords, 
+const SEO = ({
+  title,
+  description,
+  keywords,
   canonical,
   image,
-  type = 'website' 
+  village,
+  type = "website"
 }) => {
-  // --- DEFAULT CONFIGURATION ---
-  const siteUrl = 'https://rajannrajdrivingschool.com';
-  const defaultTitle = 'Raj Ann Raj Driving Training School | #1 Driving School in Mandi';
-  const defaultDescription = 'Government approved driving school in Mandi & Karsog. Learn from Pushp Raj (20+ years exp). Dual-control AC cars, RTO test prep, and safety-first training.';
-  const defaultKeywords = 'driving school mandi, car driving training karsog, learning license himachal, driving instructor pushp raj, rto test mandi, driving school near me';
-  const defaultImage = '/banners/driving-school-karsog-mandi-hp.webp';
-  
-  // --- MERGE PROPS ---
-  const pageTitle = title ? `${title} | Raj Ann Raj` : defaultTitle;
-  const pageDescription = description || defaultDescription;
-  const pageKeywords = keywords || defaultKeywords;
-  const pageCanonical = canonical || siteUrl;
-  const pageImage = image ? `${siteUrl}${image}` : `${siteUrl}${defaultImage}`;
+  const site = "https://rajannrajdrivingschool.com";
+  const phone = "+919882034930";
+  const business = "Raj Ann Raj Driving Training School";
+  const founder = "Pushp Raj";
 
-  // --- STRUCTURED DATA (JSON-LD) ---
-  // This helps Google show your rating, phone, and location in search results
-  const schemaData = {
+  const pageUrl = canonical || (typeof window !== "undefined" ? window.location.href.split("?")[0] : site);
+
+  const defaultTitle =
+    "Raj Ann Raj Driving School | Best Driving Training in Karsog & Mandi";
+
+  const defaultDescription =
+    "Government registered driving school in HP-30 Karsog. Learn hill driving, RTO test, learner license & car training from expert Pushp Raj.";
+
+  const defaultKeywords =
+    "driving school karsog, driving school mandi, hp-30 rto driving school, car driving training himachal, hill driving course, learning license karsog";
+
+  const pageTitle = title ? `${title} | ${business}` : defaultTitle;
+  const pageDesc = description || defaultDescription;
+  const pageImage = image
+    ? image.startsWith("http")
+      ? image
+      : `${site}${image}`
+    : `${site}/banners/driving-school-karsog-mandi-hp.webp`;
+
+  const servedVillage = village || "Karsog";
+
+  // =========================
+  //  MAIN BUSINESS SCHEMA
+  // =========================
+  const businessSchema = {
     "@context": "https://schema.org",
     "@type": "AutoDrivingSchool",
-    "name": "Raj Ann Raj Driving Training School",
+    "name": business,
+    "url": site,
+    "logo": `${site}/branding/raj-ann-raj-logo.jpeg`,
     "image": [
-      `${siteUrl}/branding/raj-ann-raj-logo.jpeg`,
-      `${siteUrl}/banners/driving-school-karsog-mandi-hp.webp`
+      `${site}/branding/raj-ann-raj-logo.jpeg`,
+      `${site}/banners/driving-school-karsog-mandi-hp.webp`
     ],
-    "@id": siteUrl,
-    "url": siteUrl,
-    "telephone": "+919882034930",
-    "priceRange": "₹₹",
+    "telephone": phone,
+    "priceRange": "₹2500 – ₹5000",
+    "founder": { "@type": "Person", "name": founder },
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Bhanthal",
+      "streetAddress": "Bhanthal, Karsog",
       "addressLocality": "Karsog",
       "addressRegion": "Himachal Pradesh",
       "postalCode": "175011",
@@ -46,71 +61,91 @@ const SEO = ({
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 31.3260, // Approx Karsog coordinates
-      "longitude": 77.2030
+      "latitude": "31.3260",
+      "longitude": "77.2030"
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "opens": "08:00",
-      "closes": "19:00"
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "HP-30 Karsog RTO"
     },
     "sameAs": [
-      "https://facebook.com/rajannrajdriving", // Add real links if available
-      "https://instagram.com/rajannrajdriving"
+      "https://wa.me/919882034930"
     ]
+  };
+
+  // =========================
+  //  VILLAGE PAGE SEO
+  // =========================
+  const villageSchema = village
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Driving School",
+        "provider": {
+          "@type": "AutoDrivingSchool",
+          "name": business
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": village + ", Karsog (HP-30)"
+        }
+      }
+    : null;
+
+  // =========================
+  //  RTO SEO
+  // =========================
+  const rtoSchema = {
+    "@context": "https://schema.org",
+    "@type": "GovernmentOffice",
+    "name": "Karsog RTO (HP-30)",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Karsog",
+      "addressRegion": "Himachal Pradesh",
+      "postalCode": "175011",
+      "addressCountry": "IN"
+    }
   };
 
   return (
     <Helmet>
-      {/* 1. Basic Metadata */}
-      <html lang="en" />
+      <html lang="en-IN" />
+
+      {/* BASIC SEO */}
       <title>{pageTitle}</title>
-      <meta name="description" content={pageDescription} />
-      <meta name="keywords" content={pageKeywords} />
-      <link rel="canonical" href={pageCanonical} />
-      
-      {/* 2. Robots & Indexing */}
-      <meta name="robots" content="index, follow, max-image-preview:large" />
-      <meta name="googlebot" content="index, follow" />
-      
-      {/* 3. Mobile UI */}
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="theme-color" content="#0f172a" /> {/* Matches your Navy Brand Color */}
+      <meta name="description" content={pageDesc} />
+      <meta name="keywords" content={keywords || defaultKeywords} />
+      <link rel="canonical" href={pageUrl} />
+      <meta name="robots" content="index,follow" />
 
-      {/* 4. Local SEO Geo-Tagging */}
+      {/* GEO SEO */}
       <meta name="geo.region" content="IN-HP" />
-      <meta name="geo.placename" content="Mandi" />
+      <meta name="geo.placename" content={servedVillage + ", Karsog"} />
       <meta name="geo.position" content="31.3260;77.2030" />
-      <meta name="ICBM" content="31.3260, 77.2030" />
 
-      {/* 5. Open Graph (Facebook/WhatsApp) */}
-      <meta property="og:site_name" content="Raj Ann Raj Driving Training School" />
-      <meta property="og:locale" content="en_IN" />
+      {/* OPEN GRAPH */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={pageDescription} />
-      <meta property="og:url" content={pageCanonical} />
+      <meta property="og:description" content={pageDesc} />
+      <meta property="og:url" content={pageUrl} />
       <meta property="og:image" content={pageImage} />
-      <meta property="og:image:alt" content="Raj Ann Raj Driving School Training" />
+      <meta property="og:site_name" content={business} />
 
-      {/* 6. Twitter Cards */}
+      {/* TWITTER */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={pageDescription} />
+      <meta name="twitter:description" content={pageDesc} />
       <meta name="twitter:image" content={pageImage} />
 
-      {/* 7. Schema.org JSON-LD */}
-      <script type="application/ld+json">
-        {JSON.stringify(schemaData)}
-      </script>
+      {/* SCHEMA */}
+      <script type="application/ld+json">{JSON.stringify(businessSchema)}</script>
+      <script type="application/ld+json">{JSON.stringify(rtoSchema)}</script>
+      {village && (
+        <script type="application/ld+json">
+          {JSON.stringify(villageSchema)}
+        </script>
+      )}
     </Helmet>
   );
 };

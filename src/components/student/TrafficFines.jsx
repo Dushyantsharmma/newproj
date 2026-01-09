@@ -1,115 +1,316 @@
 import { useState } from "react";
-import { Search, Gavel, AlertTriangle, ShieldAlert } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Search, 
+  Gavel, 
+  AlertTriangle, 
+  Bike, 
+  Car, 
+  FileText, 
+  Zap, 
+  ShieldAlert, 
+  Volume2, 
+  Truck, 
+  Siren 
+} from "lucide-react";
 
-export const TRAFFIC_FINES = [
-  { offense: "Driving without License", fine: "₹5,000", section: "181" },
-  { offense: "Unauthorized use of vehicles without License", fine: "₹5,000", section: "180" },
-  { offense: "Driving when mentally or physically unfit to drive", fine: "First: ₹1,000\nSecond: ₹2,000", section: "186" },
-  { offense: "Driving at excessive speed (LMV)", fine: "₹1,000 - ₹2,000", section: "183" },
-  { offense: "Driving at excessive speed (Medium/Heavy Vehicle)", fine: "₹2,000 - ₹4,000 + License Seizure", section: "183" },
-  { offense: "Dangerous/Rash Driving", fine: "First: ₹1,000 - ₹5,000 + 6-12 mo imprisonment\nSecond: ₹10,000 + 2 yr imprisonment", section: "184" },
-  { offense: "Drunken Driving", fine: "₹10,000 + 6 mo imprisonment", section: "185" },
-  { offense: "Racing and Trials of Speed", fine: "First: ₹5,000\nSecond: ₹10,000", section: "189" },
-  { offense: "Vehicle without Permit", fine: "₹10,000", section: "192A" },
-  { offense: "Aggregators (Violation of licencing conditions)", fine: "₹25,000 to ₹1,00,000", section: "193" },
-  { offense: "Overloading", fine: "₹20,000 + ₹2,000 per extra tonne", section: "194" },
-  { offense: "Overloading of passengers", fine: "₹1,000 per extra passenger", section: "194A" },
-  { offense: "Not wearing seat belt", fine: "₹1,000", section: "194B" },
-  { offense: "Overloading of two-wheelers (Tripling)", fine: "₹2,000 + Disqualification for 3 months", section: "194C" },
-  { offense: "Not wearing helmet (Rider & Pillion)", fine: "₹1,000 + Disqualification for 3 months", section: "194D" },
-  { offense: "Not providing way for emergency vehicles", fine: "₹10,000", section: "194E" },
-  { offense: "Driving without Insurance", fine: "First: ₹2,000\nSecond: ₹4,000", section: "196" },
-  { offense: "Offences by Juveniles", fine: "Rs. 25,000 with 3 yrs imprisonment to guardian + Cancellation of RC for 1 yr", section: "199A" },
-  { offense: "Disobedience of orders of Authorities", fine: "₹2,000", section: "179" },
-  { offense: "Violation of Road Rules/Regulations", fine: "₹500 - ₹1,000", section: "177A" },
-  { offense: "Using Horn in Silence Zones", fine: "First: ₹1,000\nSecond: ₹2,000", section: "194F" },
-  { offense: "Using Mobile Phone while Driving", fine: "₹5,000", section: "184(c)" },
+// DATA SOURCE: Himachal Pradesh Transport Department Notification (July 20, 2021)
+//
+const HP_FINES = [
+  { 
+    id: "helmet",
+    section: "194D", 
+    offense: "Driving without Helmet", 
+    fine: "₹1,500", 
+    details: "Applies to both rider and pillion.",
+    category: "Safety",
+    icon: Bike
+  },
+  { 
+    id: "seatbelt",
+    section: "194B(1)", 
+    offense: "Not Wearing Seat Belt", 
+    fine: "₹1,500", 
+    details: "Applies to driver and passengers.",
+    category: "Safety",
+    icon: Car
+  },
+  { 
+    id: "license",
+    section: "181", 
+    offense: "Driving Without License", 
+    fine: "₹7,500", 
+    details: "Violating Section 3 or 4 of MV Act.",
+    category: "Documents",
+    icon: FileText
+  },
+  { 
+    id: "insurance",
+    section: "196", 
+    offense: "Driving Without Insurance", 
+    fine: "₹3,000", 
+    subsequent: "₹6,000",
+    details: "Driving uninsured vehicle.",
+    category: "Documents",
+    icon: ShieldAlert
+  },
+  { 
+    id: "speed_light",
+    section: "183(1)(i)", 
+    offense: "Over Speeding (Light Vehicle)", 
+    fine: "₹1,500 - ₹3,000", 
+    details: "For Cars, Jeeps, etc.",
+    category: "Speed",
+    icon: Zap
+  },
+  { 
+    id: "speed_heavy",
+    section: "183(1)(ii)", 
+    offense: "Over Speeding (Medium/Heavy)", 
+    fine: "₹3,000 - ₹6,000", 
+    details: "For Trucks, Buses, etc.",
+    category: "Speed",
+    icon: Truck
+  },
+  { 
+    id: "dangerous",
+    section: "184", 
+    offense: "Dangerous Driving / Mobile Use", 
+    fine: "₹1,500 - ₹7,500", 
+    subsequent: "₹15,000",
+    details: "Using handheld devices while driving.",
+    category: "Major",
+    icon: AlertTriangle
+  },
+  { 
+    id: "racing",
+    section: "189", 
+    offense: "Racing / Speed Trials", 
+    fine: "₹7,500", 
+    subsequent: "₹15,000",
+    details: "Unauthorized racing in public places.",
+    category: "Major",
+    icon: Zap
+  },
+  { 
+    id: "disobedience",
+    section: "179", 
+    offense: "Disobedience of Orders", 
+    fine: "₹3,000", 
+    details: "Refusal to share information or obey authorities.",
+    category: "General",
+    icon: Gavel
+  },
+  { 
+    id: "unauthorized",
+    section: "180", 
+    offense: "Allowing Unauthorized Driver", 
+    fine: "₹7,500", 
+    details: "Vehicle owner allowing unlicensed person to drive.",
+    category: "Major",
+    icon: Car
+  },
+  { 
+    id: "pollution",
+    section: "190(2)", 
+    offense: "Pollution / Safety Violation", 
+    fine: "₹15,000", 
+    details: "Violating air/noise standards.",
+    category: "Major",
+    icon: AlertTriangle
+  },
+  { 
+    id: "emergency",
+    section: "194E", 
+    offense: "Blocking Emergency Vehicle", 
+    fine: "₹15,000", 
+    details: "Not giving way to Ambulance/Fire Brigade.",
+    category: "Major",
+    icon: Siren
+  },
+  { 
+    id: "reg",
+    section: "192", 
+    offense: "Vehicle Without Registration", 
+    fine: "₹3,000 - ₹7,500", 
+    subsequent: "₹7,500 - ₹15,000",
+    details: "Driving unregistered vehicle.",
+    category: "Documents",
+    icon: FileText
+  },
+  { 
+    id: "permit",
+    section: "192A", 
+    offense: "Permit Violation", 
+    fine: "₹15,000", 
+    details: "Commercial vehicle without valid permit.",
+    category: "Commercial",
+    icon: FileText
+  },
+  { 
+    id: "overload_goods",
+    section: "194(1)", 
+    offense: "Overloading (Goods)", 
+    fine: "₹30,000", 
+    details: "+ ₹3,000 per extra tonne.",
+    category: "Commercial",
+    icon: Truck
+  },
+  { 
+    id: "overload_pass",
+    section: "194A", 
+    offense: "Overloading (Passengers)", 
+    fine: "₹300 / passenger", 
+    details: "Fine per excess passenger.",
+    category: "Commercial",
+    icon: Truck
+  },
+  { 
+    id: "two_wheeler",
+    section: "194C", 
+    offense: "Triple Riding / Safety", 
+    fine: "₹1,500", 
+    details: "Safety violation on two-wheelers.",
+    category: "Safety",
+    icon: Bike
+  },
+  { 
+    id: "noise",
+    section: "194F", 
+    offense: "Unnecessary Horn / Noise", 
+    fine: "₹1,500", 
+    subsequent: "₹3,000",
+    details: "Honking in silence zones or noisy exhaust.",
+    category: "General",
+    icon: Volume2
+  },
+  { 
+    id: "general",
+    section: "177", 
+    offense: "General Offense", 
+    fine: "₹750", 
+    subsequent: "₹2,250",
+    details: "Any offense not specified elsewhere.",
+    category: "General",
+    icon: FileText
+  }
 ];
 
 const TrafficFines = () => {
   const [query, setQuery] = useState("");
 
-  const filtered = TRAFFIC_FINES.filter(item =>
+  const filtered = HP_FINES.filter(item =>
     item.offense.toLowerCase().includes(query.toLowerCase()) || 
-    item.section.includes(query)
+    item.section.includes(query) ||
+    item.category.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
-    <section className="bg-[#EFEDE0] rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 h-full flex flex-col">
-      <div className="mb-6">
-          <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2 mb-2">
-            <Gavel className="text-red-500" /> Traffic Penalties (India)
-          </h3>
-          <p className="text-sm text-slate-500 flex items-center gap-1.5">
-             <AlertTriangle size={14} className="text-amber-500" /> 
-             As per <strong className="text-slate-700">Motor Vehicles (Amendment) Act, 2019</strong>.
-          </p>
-      </div>
-
-      <div className="relative mb-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-        <input
-          type="text"
-          placeholder="Search offense (e.g. 'helmet', 'license', '184')..."
-          className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder:text-slate-400 font-medium"
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </div>
-
-      <div className="flex-1 overflow-hidden flex flex-col">
-        <div className="bg-red-50 rounded-t-xl border border-red-100 p-4 flex justify-between items-center text-red-800 text-xs font-bold uppercase tracking-wider">
-            <span>Offense Description</span>
-            <span className="hidden sm:inline">Section & Penalty</span>
-        </div>
-        
-        <div className="overflow-y-auto max-h-[500px] border-x border-b border-slate-100 rounded-b-xl scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
-          {filtered.length > 0 ? (
-              <table className="w-full text-sm text-left">
-              <tbody className="divide-y divide-slate-100">
-                  {filtered.map((row, i) => (
-                  <tr key={i} className="hover:bg-slate-50 transition-colors group">
-                      <td className="p-4 align-top">
-                          <p className="font-bold text-slate-800 mb-1 group-hover:text-blue-700 transition-colors">{row.offense}</p>
-                          <span className="inline-flex sm:hidden items-center text-[10px] font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
-                              Sec {row.section}
-                          </span>
-                          <div className="sm:hidden mt-2 font-bold text-red-600 bg-red-50 p-2 rounded-lg text-xs">
-                              {row.fine}
-                          </div>
-                      </td>
-                      <td className="p-4 align-top w-[40%] text-right hidden sm:table-cell">
-                          <div className="flex flex-col items-end gap-1">
-                              <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full mb-1">
-                                  Section {row.section}
-                              </span>
-                              <span className="font-bold text-red-600 whitespace-pre-line text-right">
-                                  {row.fine}
-                              </span>
-                          </div>
-                      </td>
-                  </tr>
-                  ))}
-              </tbody>
-              </table>
-          ) : (
-             <div className="p-12 text-center text-slate-400">
-                <ShieldAlert className="mx-auto mb-3 opacity-50" size={32} />
-                <p>No fines found for "{query}"</p>
-                <button 
-                  onClick={() => setQuery('')}
-                  className="text-blue-500 font-bold text-sm mt-2 hover:underline"
-                >
-                  Clear Search
-                </button>
-             </div>
-          )}
-        </div>
-      </div>
+    <section className="bg-[#EFEDE0] relative overflow-hidden py-12 px-4 md:px-8 min-h-screen">
       
-      <div className="mt-4 pt-4 border-t border-slate-100 text-center">
-          <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">
-              * Fines may vary by state. Consult local traffic police for latest challan rates.
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        
+        {/* Header */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-red-600 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+            <AlertTriangle size={14} className="fill-current" />
+            Strictly Enforced
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
+            Himachal Pradesh <br className="md:hidden" />
+            <span className="text-amber-600">Challan Rates</span>
+          </h2>
+          <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto">
+            Updated fines as per HP Govt Notification (July 2021) under Motor Vehicles (Amendment) Act.
           </p>
+        </div>
+
+        {/* Search Bar */}
+        <div className="sticky top-4 z-20 mb-8">
+          <div className="relative max-w-2xl mx-auto shadow-xl shadow-slate-200/50 rounded-2xl">
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <Search className="text-slate-400" size={20} />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by offense (e.g. 'Helmet', '184', 'Speed')"
+              className="block w-full pl-12 pr-5 py-4 bg-white border-0 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500 transition-all font-medium text-lg"
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Fines Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <AnimatePresence>
+            {filtered.length > 0 ? (
+              filtered.map((item) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow group"
+                >
+                  <div className="flex items-start gap-4">
+                    {/* Icon */}
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-600 group-hover:bg-amber-50 group-hover:text-amber-600 transition-colors">
+                      <item.icon size={24} />
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start gap-2 mb-1">
+                        <h3 className="font-bold text-slate-900 text-lg leading-tight">
+                          {item.offense}
+                        </h3>
+                        <span className="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase tracking-wide whitespace-nowrap">
+                          Sec {item.section}
+                        </span>
+                      </div>
+                      
+                      <p className="text-sm text-slate-500 mb-3 line-clamp-1">
+                        {item.details}
+                      </p>
+
+                      <div className="flex flex-wrap items-center gap-2">
+                        <div className="inline-block bg-red-50 text-red-700 px-3 py-1.5 rounded-lg text-sm font-bold border border-red-100">
+                          {item.fine}
+                        </div>
+                        {item.subsequent && (
+                          <div className="text-xs text-slate-400 font-medium">
+                            <span className="font-bold text-slate-600">{item.subsequent}</span> (2nd Offense)
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="col-span-full py-20 text-center">
+                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                  <Search size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900">No fines found</h3>
+                <p className="text-slate-500">Try searching for a different keyword or section.</p>
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Footer Disclaimer */}
+        <div className="mt-12 pt-6 border-t border-slate-200 text-center">
+          <p className="text-xs text-slate-400 font-medium max-w-2xl mx-auto">
+            * <strong className="text-slate-600">Note:</strong> These rates are based on the Himachal Pradesh Government Notification No. TPT-A(3)-5/2020 dated 20th July 2021. Court challans may vary based on the magistrate's discretion.
+          </p>
+        </div>
+
       </div>
     </section>
   );

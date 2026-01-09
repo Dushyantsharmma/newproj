@@ -1,29 +1,57 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-// Keeps navigation predictable with a fixed header:
-// - When navigating to /path#hash, scrolls to the element with that id
-// - Otherwise scrolls to the top
-export default function ScrollToTop({ offset = 96 }) {
-  const location = useLocation();
+/*
+  Smart scroll handler for Raj Ann Raj Driving School
+  Works with:
+  - Fixed animated navbar
+  - Hash links (#gallery, #contact, etc)
+  - Mobile Safari
+  - Vite / React Router
+*/
+
+export default function ScrollToTop() {
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    const hash = location.hash ? location.hash.slice(1) : "";
+    const scroll = () => {
+      // Get navbar height dynamically
+      const header = document.querySelector("header");
+      const offset = header ? header.offsetHeight + 12 : 110;
 
-    // Let the new route render first.
-    requestAnimationFrame(() => {
+      // If hash exists → scroll to section
       if (hash) {
-        const el = document.getElementById(hash);
+        const id = hash.replace("#", "");
+        const el = document.getElementById(id);
+
         if (el) {
-          const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - offset);
-          window.scrollTo({ top, behavior: "smooth" });
+          const y =
+            el.getBoundingClientRect().top +
+            window.pageYOffset -
+            offset;
+          window.requestAnimationFrame(() => {
+            window.scrollTo({
+              top: y,
+              behavior: "smooth",
+            });
+          });
           return;
         }
       }
 
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    });
-  }, [location.pathname, location.hash, offset]);
+      // Otherwise scroll to top
+      window.requestAnimationFrame(() => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+      });
+    };
+
+    // Delay ensures layout is fully rendered (Vite + Framer Motion fix)
+    setTimeout(scroll, 60);
+  }, [pathname, hash]);
 
   return null;
 }

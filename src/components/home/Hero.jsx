@@ -1,118 +1,95 @@
-import React from 'react';
-import { MapPin, Shield, Award, Users } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { MapPin, Phone, MessageCircle, Mountain } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    // Added pt-32 to account for the fixed navbar, removed bg-[#EFEDE0]
-    <section className="relative bg-[#0b1220] pt-32 pb-10 sm:pb-16 md:pb-24 lg:pb-28 overflow-hidden min-h-[90vh] flex items-center justify-center">
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 w-full">
-        <div className="flex flex-col items-center text-center w-full">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden
+      bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#020617]">
 
-          {/* LOCATION BADGE */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full 
-                       bg-white/5 border border-white/10 text-slate-300 mb-8"
-          >
-            <MapPin size={14} className="text-amber-500" />
-            <span className="text-xs md:text-sm font-semibold tracking-wide uppercase">
-              Karsog • Mandi • Himachal Pradesh
+      {/* BACKGROUND DECOR */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.15),transparent_55%)]" />
+      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-black/40 to-transparent" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mx-auto max-w-3xl text-center backdrop-blur-xl
+            bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-10 lg:p-14 shadow-2xl"
+        >
+
+          {/* LOCATION */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full
+            bg-white/10 border border-white/20 text-amber-400 text-xs sm:text-sm font-semibold tracking-wide">
+            <MapPin size={14} />
+            Karsog • Mandi • Himachal Pradesh
+          </div>
+
+          {/* HEADING */}
+          <h1 className="mt-6 font-extrabold leading-tight text-white"
+            style={{ fontSize: "clamp(2.2rem, 6vw, 4rem)" }}>
+            Master the Art of
+            <span className="block text-amber-400">
+              Hill Driving
             </span>
-          </motion.div>
-
-          {/* MAIN HEADING */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-bold text-amber-500 leading-tight tracking-tight w-full"
-            style={{
-              fontSize: 'clamp(2rem, 7vw, 4rem)',
-              maxWidth: '100%',
-              margin: '0 auto',
-            }}
-          >
-            Master the Art of <br className="hidden sm:block" />
-            <span className="text-white">Hill Driving</span>
-          </motion.h1>
+          </h1>
 
           {/* SUBTEXT */}
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="mt-6 text-slate-400 leading-relaxed max-w-2xl mx-auto"
-            style={{
-              fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-            }}
-          >
+          <p className="mt-4 text-slate-300 leading-relaxed max-w-xl mx-auto"
+            style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)" }}>
             Learn safe and confident driving on real hill roads with
-            <strong className="text-white font-semibold block sm:inline">
-              {' '}Raj Ann Raj Driving School
-            </strong>.
+            <span className="text-white font-semibold"> Raj Ann Raj Driving School</span>.
             Trusted across Himachal Pradesh since 2005.
-          </motion.p>
+          </p>
 
-          {/* TRUST INDICATORS GRID */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 w-full max-w-5xl"
-          >
-            {/* 1. SAFETY */}
-            <div className="flex flex-row sm:flex-col items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 text-left sm:text-center transition-transform hover:scale-105">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-amber-500 shrink-0">
-                <Shield size={24} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-base md:text-lg mb-1">
-                  Safety First
-                </h3>
-                <p className="text-sm text-slate-400">
-                  Dual-control vehicles for complete safety
-                </p>
-              </div>
-            </div>
+          {/* CTA */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="tel:+919882034930"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3
+                rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-bold
+                transition shadow-lg w-full sm:w-auto"
+            >
+              <Phone size={18} />
+              Call Now
+            </a>
 
-            {/* 2. EXPERT TEAM */}
-            <div className="flex flex-row sm:flex-col items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 text-left sm:text-center transition-transform hover:scale-105">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-amber-500 shrink-0">
-                <Users size={24} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-base md:text-lg mb-1">
-                  Expert Team
-                </h3>
-                <p className="text-sm text-slate-400">
-                  Certified instructors with hill experience
-                </p>
-              </div>
-            </div>
+            <a
+              href="https://wa.me/919882034930"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3
+                rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold
+                border border-white/20 transition w-full sm:w-auto"
+            >
+              <MessageCircle size={18} />
+              WhatsApp
+            </a>
+          </div>
 
-            {/* 3. HIGH SUCCESS */}
-            <div className="flex flex-row sm:flex-col items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 text-left sm:text-center transition-transform hover:scale-105">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-amber-500 shrink-0">
-                <Award size={24} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-base md:text-lg mb-1">
-                  High Success
-                </h3>
-                <p className="text-sm text-slate-400">
-                  98% of our students pass the test
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+          {/* FEATURES */}
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            {[
+              "Hairpin Bends",
+              "Steep Climbs",
+              "Downhill Control",
+              "Narrow Roads",
+              "Hill Start Practice",
+            ].map((feature) => (
+              <span
+                key={feature}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full
+                  bg-white/5 border border-white/10 text-slate-200 text-sm font-medium"
+              >
+                <Mountain size={14} className="text-amber-400" />
+                {feature}
+              </span>
+            ))}
+          </div>
+
+        </motion.div>
       </div>
     </section>
   );
