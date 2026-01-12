@@ -40,16 +40,16 @@ const ImageSlideshow = () => {
     enter: (direction) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 1.1 // Slight zoom out on enter
+      scale: 1.1 
     }),
     center: {
       x: 0,
       opacity: 1,
-      scale: 1, // Settles at normal scale
+      scale: 1, 
       transition: {
         x: { type: "spring", stiffness: 300, damping: 30 },
         opacity: { duration: 0.5 },
-        scale: { duration: 6, ease: "linear" } // Ken Burns effect duration
+        scale: { duration: 6, ease: "linear" } 
       }
     },
     exit: (direction) => ({
@@ -64,14 +64,14 @@ const ImageSlideshow = () => {
 
   const textVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.3 } }
   };
 
   return (
     <section className="relative w-full h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[85vh] overflow-hidden bg-slate-900 group">
       
-      {/* 1. SLIDESHOW CONTAINER */}
-      <AnimatePresence initial={false} custom={direction}>
+      {/* 1. SLIDESHOW IMAGES */}
+      <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
           key={current}
           custom={direction}
@@ -82,16 +82,11 @@ const ImageSlideshow = () => {
           className="absolute inset-0 w-full h-full"
         >
           {/* Background Image */}
-          <motion.img
+          <img
             src={SLIDES[current].image}
             alt={SLIDES[current].title}
             className="w-full h-full object-cover"
             loading="lazy"
-            width="1200"
-            height="600"
-            animate={{ scale: [1, 1.1] }}
-            transition={{ duration: 8, ease: "linear" }}
-            style={{ minHeight: '100%', maxHeight: '100%' }}
           />
           
           {/* Cinematic Dark Overlay */}
@@ -100,28 +95,26 @@ const ImageSlideshow = () => {
       </AnimatePresence>
 
       {/* 2. TEXT CONTENT */}
-      <div className="absolute inset-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 w-full">
+      <div className="absolute inset-0 flex items-center z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
           <motion.div
             key={current}
             initial="hidden"
             animate="visible"
-            className="max-w-xs xs:max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl"
+            className="max-w-xl lg:max-w-2xl"
           >
             {/* Title */}
             <motion.h1 
               variants={textVariants}
-              transition={{ delay: 0.1 }}
-              className="text-lg xs:text-xl sm:text-2xl md:text-4xl lg:text-7xl font-bold text-white mb-2 xs:mb-3 sm:mb-4 md:mb-6 lg:mb-8 leading-snug xs:leading-tight md:leading-tight drop-shadow-lg break-words"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight drop-shadow-lg"
             >
               {SLIDES[current].title}
             </motion.h1>
 
             {/* Subtitle */}
-            <motion.p 
+            <motion.p
               variants={textVariants}
-              transition={{ delay: 0.2 }}
-              className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-slate-200 mb-3 xs:mb-4 sm:mb-6 md:mb-8 leading-normal xs:leading-relaxed max-w-xs xs:max-w-md sm:max-w-lg drop-shadow-md"
+              className="text-base sm:text-lg md:text-xl text-slate-200 font-light max-w-lg drop-shadow-md"
             >
               {SLIDES[current].subtitle}
             </motion.p>
@@ -129,25 +122,27 @@ const ImageSlideshow = () => {
         </div>
       </div>
 
-      {/* 3. CONTROLS */}
-      {/* Arrows (Hidden on mobile, visible on desktop hover) */}
-      <div className="absolute inset-0 hidden lg:flex items-center justify-between px-4 pointer-events-none">
-        <button 
+      {/* 3. NAVIGATION BUTTONS */}
+      <div className="absolute inset-0 flex items-center justify-between px-4 z-20 pointer-events-none">
+        {/* Left Button */}
+        <button
           onClick={() => paginate(-1)}
-          className="pointer-events-auto p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 -translate-x-10 group-hover:translate-x-0"
+          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 -translate-x-10 group-hover:translate-x-0"
         >
-          <ChevronLeft size={32} />
+          <ChevronLeft size={24} className="sm:w-8 sm:h-8" />
         </button>
-        <button 
+
+        {/* Right Button */}
+        <button
           onClick={() => paginate(1)}
-          className="pointer-events-auto p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 translate-x-10 group-hover:translate-x-0"
+          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 translate-x-10 group-hover:translate-x-0"
         >
-          <ChevronRight size={32} />
+          <ChevronRight size={24} className="sm:w-8 sm:h-8" />
         </button>
       </div>
 
-      {/* Progress Bars (Bottom Center) */}
-      <div className="absolute bottom-8 left-0 right-0 z-20">
+      {/* 4. PAGINATION INDICATORS */}
+      <div className="absolute bottom-6 left-0 right-0 z-20">
         <div className="flex justify-center gap-3">
           {SLIDES.map((_, index) => (
             <button

@@ -1,11 +1,21 @@
-import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Github } from "lucide-react";
+import React, { Suspense } from "react";
+import { useLanguage } from "../common/useLanguage";
+const Phone = React.lazy(() => import("lucide-react").then(m => ({ default: m.Phone })));
+const Mail = React.lazy(() => import("lucide-react").then(m => ({ default: m.Mail })));
+const MapPin = React.lazy(() => import("lucide-react").then(m => ({ default: m.MapPin })));
+const Facebook = React.lazy(() => import("lucide-react").then(m => ({ default: m.Facebook })));
+const Instagram = React.lazy(() => import("lucide-react").then(m => ({ default: m.Instagram })));
+const Youtube = React.lazy(() => import("lucide-react").then(m => ({ default: m.Youtube })));
+const Github = React.lazy(() => import("lucide-react").then(m => ({ default: m.Github })));
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
 const Footer = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const lang = useLanguage();
+  const brand = lang === "hi" ? "राज एन राज" : "Raj Ann Raj";
   return (
-    <footer className="bg-[#0B1220] text-slate-300">
+    <footer className="bg-[#0B1220] text-slate-300" style={{ minHeight: 240 }}>
       {/* ===== TOP ===== */}
       <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
         {/* BRAND */}
@@ -13,14 +23,17 @@ const Footer = () => {
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
               <img
-                src={"/branding/raj-ann-raj-logo.jpeg"}
-                alt={t("Raj Ann Raj")}
+                src={"/branding/raj-ann-raj-logo.webp"}
+                alt={brand}
                 className="w-20 h-20 object-cover"
+                width={80}
+                height={80}
                 loading="lazy"
+                style={{ minWidth: 80, minHeight: 80 }}
               />
             </div>
             <div>
-              <h3 className="text-xl font-bold" style={{ color: '#E57E33' }}>{t("Raj Ann Raj")}</h3>
+              <h3 className="text-xl font-bold" style={{ color: '#E57E33' }}>{brand}</h3>
               <p className="text-xs font-bold tracking-widest text-white">
                 Driving Training School
               </p>
@@ -31,14 +44,14 @@ const Footer = () => {
             Learn to drive safely, confidently, and independently.
           </p>
           <div className="flex gap-4">
-            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#">
-              <Facebook size={16} />
+            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#" aria-label="Facebook">
+              <Suspense fallback={null}><Facebook size={20} /></Suspense>
             </a>
-            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#">
-              <Instagram size={16} />
+            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#" aria-label="Instagram">
+              <Suspense fallback={null}><Instagram size={20} /></Suspense>
             </a>
-            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#">
-              <Youtube size={16} />
+            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#" aria-label="YouTube">
+              <Suspense fallback={null}><Youtube size={20} /></Suspense>
             </a>
           </div>
         </div>
@@ -57,15 +70,15 @@ const Footer = () => {
           <h4 className="text-white font-bold mb-6">Contact</h4>
           <div className="space-y-4 text-sm">
             <div className="flex gap-3">
-              <MapPin className="text-amber-500" size={16} />
+              <Suspense fallback={null}><MapPin className="text-amber-500" size={16} /></Suspense>
               <span>Bhanthal, Karsog, Mandi (HP)</span>
             </div>
             <div className="flex gap-3">
-              <Mail className="text-amber-500" size={16} />
+              <Suspense fallback={null}><Mail className="text-amber-500" size={16} /></Suspense>
               <span>rajannraj.dts@gmail.com</span>
             </div>
             <div className="flex gap-3">
-              <Phone className="text-amber-500" size={16} />
+              <Suspense fallback={null}><Phone className="text-amber-500" size={16} /></Suspense>
               <span>+91 98820 34930</span>
             </div>
           </div>
@@ -96,7 +109,7 @@ const Footer = () => {
       {/* ===== BOTTOM BAR ===== */}
       <div className="border-t border-white/10 py-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-3">
-          <p>© {new Date().getFullYear()} {t("Raj Ann Raj")} Driving School</p>
+          <p>© {new Date().getFullYear()} {brand} Driving School</p>
           <p className="flex items-center gap-2">
             Built by
             <a href="https://github.com/Dushyantsharmma" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-amber-500">

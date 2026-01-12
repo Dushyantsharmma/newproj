@@ -2,12 +2,24 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FileSignature, X, User, Phone, MapPin, Send, Loader2, 
-  CalendarDays, WifiOff, CheckCircle2, Clock, Gauge, Users, Lock
+  CalendarDays, WifiOff, CheckCircle2, Clock, Gauge, Users, Lock, ChevronDown
 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
 // Use your latest script URL here
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwHuW54HrmmrB6WiJAU_9uujwDHsy-qUC_EFJRFGU0wrCK13AujMM7rsW8z1ddAenQT/exec";
+
+// --- CONSTANTS ---
+const PICKUP_LOCATIONS = [
+  "Bhanthal",
+  "Sanarali",
+  "Baral Bypass",
+  "Mamail",
+  "Near GDC Karsog",
+  "Batala Bahali",
+  "Karsog Bus Stand",
+  "Sarkol"
+];
 
 // --- SUB-COMPONENTS ---
 
@@ -121,7 +133,7 @@ const EnquiryFab = () => {
     dateOfBirth: '',
     skillLevel: 'Beginner (Never Driven)',
     timeSlot: 'Morning (8 AM - 11 AM)',
-    pickupLocation: '',
+    pickupLocation: '', // Empty by default
     website_honey: '' 
   });
 
@@ -141,12 +153,10 @@ const EnquiryFab = () => {
     if (isOpen) fetchAvailability();
   }, [isOpen]);
 
-  // ✅ UPDATED HANDLER: Enforce 10-digit limit
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === 'mobileNumber') {
-      // Allow only numbers and limit to 10 digits
       const numericValue = value.replace(/\D/g, ''); 
       if (numericValue.length <= 10) {
         setFormData({ ...formData, [name]: numericValue });
@@ -162,7 +172,6 @@ const EnquiryFab = () => {
     setFormData({ ...formData, [field]: value });
   };
 
-  // ✅ UPDATED VALIDATION: Must be exactly 10 digits
   const validatePhone = (phone) => {
     return phone.length === 10;
   };
@@ -198,6 +207,12 @@ Please confirm if this slot is available.`;
     if (!validatePhone(formData.mobileNumber)) {
       setError('Please enter a valid 10-digit mobile number.');
       return;
+    }
+
+    // Validate Location
+    if (!formData.pickupLocation) {
+        setError('Please select a pickup location.');
+        return;
     }
 
     setStep('submitting');
@@ -238,12 +253,20 @@ Please confirm if this slot is available.`;
 
   return (
     <>
+      {/* FAB Placeholder to reserve space and prevent CLS */}
+      <div
+        className="fixed bottom-6 right-6 z-50"
+        style={{ width: 208, height: 56, pointerEvents: 'none', opacity: 0 }}
+        aria-hidden="true"
+      />
       <div className="fixed bottom-6 right-6 z-50">
         <motion.button
           onClick={() => setIsOpen(true)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="group flex items-center justify-center h-14 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 rounded-full shadow-[0_8px_30px_rgb(251,191,36,0.4)] pr-6 pl-4 gap-3 border-2 border-white/20 backdrop-blur-md"
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          className="group flex items-center justify-center h-14 w-52 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 rounded-full shadow-[0_8px_30px_rgb(251,191,36,0.4)] pr-6 pl-4 gap-3 border-2 border-white/20 backdrop-blur-md"
+          style={{ minWidth: 208, minHeight: 56 }}
         >
           <div className="relative">
             <span className="absolute inset-0 bg-white/40 rounded-full animate-ping opacity-75" />
@@ -265,9 +288,9 @@ Please confirm if this slot is available.`;
             />
 
             <motion.div
-              initial={{ y: "100%", opacity: 0, scale: 0.95 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: "100%", opacity: 0, scale: 0.95 }}
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="relative w-full max-w-lg bg-[#0f172a] border border-slate-800/60 sm:rounded-3xl rounded-t-3xl shadow-2xl shadow-black/50 overflow-hidden max-h-[90vh] flex flex-col"
             >
@@ -316,12 +339,12 @@ Please confirm if this slot is available.`;
                             value={formData.fullName}
                             onChange={handleChange}
                             className="w-full bg-slate-800/40 border border-slate-700/60 text-white rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all placeholder:text-slate-600 font-medium"
+                            placeholder="e.g. Dushyant Sharma"
                           />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        {/* ✅ UPDATED MOBILE INPUT */}
                         <div className="space-y-2">
                           <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
                             <Phone size={12} /> WhatsApp
@@ -331,12 +354,13 @@ Please confirm if this slot is available.`;
                               type="tel"
                               name="mobileNumber"
                               required
-                              maxLength={10} // HTML Constraint
-                              inputMode="numeric" // Mobile Keyboard
-                              pattern="[0-9]{10}" // iOS Hints
+                              maxLength={10}
+                              inputMode="numeric"
+                              pattern="[0-9]{10}"
                               value={formData.mobileNumber}
                               onChange={handleChange}
                               className={`w-full bg-slate-800/40 border ${error ? 'border-red-500/50 ring-2 ring-red-500/10' : 'border-slate-700/60'} text-white rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all placeholder:text-slate-600 font-medium tracking-wider`}
+                              placeholder="9876543210"
                             />
                           </div>
                           {error && <p className="text-red-400 text-xs ml-1 font-medium animate-pulse">{error}</p>}
@@ -418,19 +442,29 @@ Please confirm if this slot is available.`;
                         </div>
                       </div>
 
+                      {/* ✅ UPDATED PICKUP LOCATION DROPDOWN */}
                       <div className="space-y-2">
                         <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
                           <MapPin size={12} /> Pickup Location
                         </label>
                         <div className="relative group">
-                          <input
-                            type="text"
+                          <select
                             name="pickupLocation"
                             required
                             value={formData.pickupLocation}
                             onChange={handleChange}
-                            className="w-full bg-slate-800/40 border border-slate-700/60 text-white rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all placeholder:text-slate-600 font-medium"
-                          />
+                            className="w-full bg-slate-800/40 border border-slate-700/60 text-white rounded-xl py-3.5 pl-4 pr-10 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all font-medium appearance-none cursor-pointer"
+                          >
+                            <option value="" disabled className="text-slate-500 bg-slate-900">Select a location</option>
+                            {PICKUP_LOCATIONS.map((loc) => (
+                              <option key={loc} value={loc} className="bg-slate-900 text-slate-300">
+                                {loc}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                            <ChevronDown size={16} />
+                          </div>
                         </div>
                       </div>
                     </div>

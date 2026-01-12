@@ -15,9 +15,9 @@ const TEAM_MEMBERS = [
   },
   {
     id: 2,
-    name: "Pushp Raj",
+    name: "Pushap Raj",
     role: "Founder & Director",
-    image: "team/owner-pushp-raj.webp",
+    image: "team/owner-pushap-raj.webp",
     quote: "Our mission is to build a generation of drivers who respect the road.",
     isFounder: true,
     icon: Trophy,
@@ -25,9 +25,9 @@ const TEAM_MEMBERS = [
   },
   {
     id: 3,
-    name: "Tarun Bala",
+    name: "Tarun Wala",
     role: "Head of Operations",
-    image: "team/tarun-bala-clerk.webp",
+    image: "team/tarun-wala-clerk.webp",
     tags: ["Student Support", "RTO Expert"],
     isFounder: false,
     icon: Users,

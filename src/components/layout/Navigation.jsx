@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
+import { useLanguage } from "../common/useLanguage";
 import { NavLink, useNavigate } from "react-router-dom"; // ❌ Removed useLocation
 import {
   Phone,
@@ -47,10 +48,7 @@ const Navigation = () => {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
-  const isHindi = useMemo(
-    () => typeof document !== "undefined" && document.cookie.includes("googtrans=/en/hi"),
-    []
-  );
+  const lang = useLanguage();
 
   return (
     <>
@@ -74,14 +72,14 @@ const Navigation = () => {
           >
             <div className={`relative w-11 h-11 rounded-full overflow-hidden border-2 transition-all duration-300 ${scrolled ? 'border-white/10' : 'border-white/20 group-hover:border-amber-500'}`}>
               <img
-                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`}
+                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
                 className="w-full h-full object-cover scale-110"
                 alt="Logo"
               />
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-white text-lg leading-none tracking-tight group-hover:text-amber-400 transition-colors">
-                {isHindi ? "राज एन राज" : "Raj Ann Raj"}
+                {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
               </span>
               <span className="text-[10px] text-amber-500 font-bold tracking-[0.2em] uppercase mt-1">
                 Driving School
@@ -122,9 +120,6 @@ const Navigation = () => {
 
           {/* ACTIONS */}
           <div className="flex items-center gap-3 min-w-max">
-            <div className="opacity-80 hover:opacity-100 transition-opacity">
-               <GoogleTranslate />
-            </div>
             <a
               href="tel:+919882034930"
               className="group relative overflow-hidden flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-[#0B1220] font-bold text-sm shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95"
@@ -151,19 +146,19 @@ const Navigation = () => {
           <div className="flex items-center gap-3" onClick={() => navigate("/")}>
              <div className="w-10 h-10 rounded-full border border-white/20 overflow-hidden shadow-lg">
                 <img 
-                  src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`}
+                  src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
                   className="w-full h-full object-cover scale-110"
                   alt="Logo"
                 />
              </div>
              <div>
-                <div className="font-bold text-[#e57e33] text-base leading-none">RAJ ANN RAJ</div>
+                <div className="font-bold text-[#e57e33] text-base leading-none">{lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}</div>
                 <div className="text-[10px] text-white font-bold tracking-wider mt-0.5">Driving Training School</div>
              </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <GoogleTranslate />
+            {/* GoogleTranslate moved to App.jsx for global translation */}
             <button
               onClick={() => setIsOpen(true)}
               className="p-2.5 rounded-full bg-white/10 text-white border border-white/5 active:bg-amber-500 active:text-black transition-colors"
@@ -199,12 +194,12 @@ const Navigation = () => {
               <div className="flex items-center justify-between p-6 border-b border-white/10 bg-[#0F172A]">
                 <div className="flex items-center gap-3">
                    <img 
-                      src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`}
+                      src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
                       className="w-10 h-10 rounded-full border border-white/10" 
                       alt="Logo"
                    />
                    <div>
-                      <h2 className="text-amber-500 font-bold text-lg leading-none">Raj Ann Raj</h2>
+                      <h2 className="text-amber-500 font-bold text-lg leading-none">{lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}</h2>
                       <p className="text-xs text-white font-bold tracking-wider mt-0.5">EST. 2005</p>
                    </div>
                 </div>

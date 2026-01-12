@@ -1,9 +1,9 @@
 import React from "react";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Car, ShieldCheck, Award } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Car, ShieldCheck } from "lucide-react";
 
 export default function ContactPage() {
   return (
-    <section className="bg-[#EFEDE0] min-h-screen py-14 px-4">
+    <section className="bg-[#EFEDE0] min-h-screen py-14 px-4 mt-20">
       <div className="max-w-7xl mx-auto">
 
         {/* ===== HERO ===== */}
@@ -51,21 +51,31 @@ export default function ContactPage() {
             </Info>
 
             <Info title="Coverage Area" icon={<Car />}>
-              We provide car driving training across:
-              <ul className="list-disc list-inside mt-2">
+              <p>
+                We currently provide professional car driving training in the following areas.
+              </p>
+              <ul className="list-disc list-inside mt-3">
                 <li>Bhanthal</li>
                 <li>Karsog</li>
                 <li>Sanarli</li>
                 <li>Baral Bypass</li>
                 <li>Nearby villages in Karsog</li>
+                <li className="text-amber-700 font-semibold">
+                  🚀 We are also actively expanding our driving school services to more nearby towns and villages in Karsog soon.
+                </li>
               </ul>
             </Info>
 
             <Info title="Why Choose Us?" icon={<ShieldCheck />}>
-              • Dual-control safety cars  
-              • Hill road & RTO track training  
-              • Local RTO test experience  
-              • High pass success rate
+              <ul className="space-y-2 list-disc list-inside">
+                <li>Dual-control safety cars</li>
+                <li>Hill road & RTO track training</li>
+                <li>Local RTO test experience</li>
+                <li>High pass success rate</li>
+                <li className="text-amber-700 font-semibold">
+                  📍 We train on the same tracks used in Karsog RTO driving tests
+                </li>
+              </ul>
             </Info>
 
           </div>
@@ -85,13 +95,21 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl p-6 shadow border space-y-4">
               <h3 className="text-lg font-bold text-slate-900">Contact Details</h3>
 
-              <div className="flex items-center gap-3 text-slate-700">
-                <Phone className="text-amber-600" /> +91-98820-34930
-              </div>
+              <a
+                href="tel:+919882034930"
+                className="flex items-center gap-3 text-slate-700 hover:text-amber-600 transition"
+              >
+                <Phone className="text-amber-600" />
+                <span className="font-medium">+91-98820-34930</span>
+              </a>
 
-              <div className="flex items-center gap-3 text-slate-700">
-                <Mail className="text-amber-600" /> rajannraj.dts@gmail.com
-              </div>
+              <a
+                href="mailto:rajannraj.dts@gmail.com"
+                className="flex items-center gap-3 text-slate-700 hover:text-amber-600 transition"
+              >
+                <Mail className="text-amber-600" />
+                <span className="font-medium">rajannraj.dts@gmail.com</span>
+              </a>
 
               <div className="flex gap-4 pt-4">
                 <a href="tel:+919882034930" className="flex-1 bg-[#0f172a] text-white py-3 rounded-lg font-bold text-center">
@@ -112,6 +130,7 @@ export default function ContactPage() {
         </div>
 
       </div>
+
     </section>
   );
 }

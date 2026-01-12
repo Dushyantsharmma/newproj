@@ -1,147 +1,115 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { X, ZoomIn } from "lucide-react";
 
-/* ---------- IMAGE SOURCE (AUTO + MANUAL SAFE MIX) ---------- */
+/* ---------- IMAGE CONFIGURATION ---------- */
 const images = [
-  // Cars
   ...Array.from({ length: 6 }, (_, i) => `/gallery/car-${String(i + 1).padStart(2, "0")}.webp`),
   "/gallery/Car-07.webp",
   "/gallery/Car-08.webp",
   "/gallery/Car-09.webp",
-
-  // Classroom
+  "/gallery/Car10.webp",
+  "/gallery/Car11.webp",
+  "/gallery/Car12.webp",
+  "/gallery/Car13.webp",
   "/gallery/Classroom-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1-.webp",
   "/gallery/Classroom-Raj-Ann-Raj-Bhanthal-Karsog-Mandi2.webp",
   "/gallery/Classroom-Raj-Ann-Raj-Bhanthal-Karsog-Mandi3.webp",
   "/gallery/Classroom-Raj-Ann-Raj-Bhanthal-Karsog-Mandi4.webp",
   "/gallery/Classroom-Raj-Ann-Raj-Bhanthal-Karsog-Mandi5.webp",
-
-  // Road Test
+  "/gallery/Classroom-Raj-Ann-Raj-Bhanthal-Karsog-Mandi6.webp",
   "/gallery/Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp",
   "/gallery/Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi2.webp",
-
-  // Training
-  ...Array.from({ length: 24 }, (_, i) =>
-    `/gallery/training-${String(i + 1).padStart(3, "0")}.webp`
-  ),
+  ...Array.from({ length: 18 }, (_, i) => `/gallery/training-${String(i + 1).padStart(2, "0")}.webp`),
 ];
 
-/* ---------- CATEGORY + CAPTION LOGIC ---------- */
+/* ---------- CATEGORY LOGIC ---------- */
 const metaFromName = (src) => {
   const name = src.toLowerCase();
-
-  if (name.includes("car"))
-    return { category: "Cars", caption: "Training Vehicles • Raj Ann Raj Driving School" };
-
-  if (name.includes("classroom"))
-    return { category: "Classroom", caption: "Modern Classroom • Karsog, Himachal Pradesh" };
-
-  if (name.includes("roadtest"))
-    return { category: "Road Test", caption: "On-Road Training • Himachal Hill Roads" };
-
-  if (name.includes("training"))
-    return { category: "Training", caption: "Practical Driving Training • HP Roads" };
-
-  return { category: "Other", caption: "Driving School Gallery" };
+  if (name.includes("car")) return { category: "Cars", caption: "Training Vehicles" };
+  if (name.includes("classroom")) return { category: "Classroom", caption: "Classroom Session" };
+  if (name.includes("roadtest")) return { category: "Road Test", caption: "On-Road Test" };
+  if (name.includes("training")) return { category: "Training", caption: "Practical Training" };
+  return { category: "Other", caption: "Gallery Image" };
 };
 
-/* ---------- COMPONENT ---------- */
-const Gallery = () => {
+export default function Gallery() {
   const [active, setActive] = useState("All");
   const [lightbox, setLightbox] = useState(null);
 
-  const processed = useMemo(() => {
-    return images.map((src) => ({
-      src,
-      ...metaFromName(src),
-    }));
-  }, []);
+  const processed = useMemo(() => images.map((src) => ({ src, ...metaFromName(src) })), []);
+  const categories = useMemo(() => ["All", ...new Set(processed.map((i) => i.category))], [processed]);
+  
+  const filtered = useMemo(() => 
+    active === "All" ? processed : processed.filter((i) => i.category === active), 
+  [active, processed]);
 
-  const categories = useMemo(
-    () => ["All", ...new Set(processed.map((i) => i.category))],
-    [processed]
-  );
-
-  const filtered =
-    active === "All"
-      ? processed
-      : processed.filter((i) => i.category === active);
+  useEffect(() => {
+    const handleKey = (e) => e.key === "Escape" && setLightbox(null);
+    if (lightbox) {
+      window.addEventListener("keydown", handleKey);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "auto";
+    };
+  }, [lightbox]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
-      {/* HEADER */}
-      <div className="text-center mb-10">
-        <h2 className="text-xl sm:text-3xl font-bold text-slate-800 text-center sm:text-left">
-          Driving School <span className="block sm:inline text-amber-500 ml-0 sm:ml-2">Gallery</span>
+    <section className="max-w-7xl mx-auto px-4 py-16 mt-10 bg-slate-50 min-h-screen">
+      <div className="mb-12 text-center">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+          Our <span className="text-amber-500">Gallery</span>
         </h2>
-        <p className="text-slate-500 mt-2">
-          Professional Training • Himachal Roads • Modern Infrastructure
-        </p>
       </div>
 
-      {/* FILTERS */}
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
+      <div className="flex flex-wrap justify-center gap-3 mb-12">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActive(cat)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition
-              ${
-                active === cat
-                  ? "bg-green-700 text-white"
-                  : "bg-slate-200 hover:bg-slate-300"
-              }`}
+            className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
+              active === cat ? "bg-slate-900 text-white shadow-lg" : "bg-white text-slate-600 border border-slate-200"
+            }`}
           >
             {cat}
           </button>
         ))}
       </div>
 
-      {/* MASONRY GRID (PERFORMANCE SAFE) */}
-      <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
         {filtered.map((img, i) => (
           <div
             key={i}
-            className="break-inside-avoid cursor-pointer group"
+            className="break-inside-avoid group relative cursor-zoom-in rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300"
             onClick={() => setLightbox(img)}
           >
-            <div className="relative overflow-hidden rounded-xl">
+            <div className="relative overflow-hidden">
               <img
                 src={img.src}
-                loading="lazy"
                 alt={img.caption}
-                className="w-full rounded-xl transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+                className="w-full h-auto transform transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all scale-50 group-hover:scale-100">
+                <div className="bg-white/20 backdrop-blur-md p-3 rounded-full text-white">
+                    <ZoomIn size={24} />
+                </div>
+              </div>
             </div>
-
-            {/* CAPTION */}
-            <p className="text-xs text-slate-600 mt-2 px-1">
-              {img.caption}
-            </p>
           </div>
         ))}
       </div>
 
-      {/* LIGHTBOX */}
       {lightbox && (
-        <div
-          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <div className="max-w-5xl w-full">
-            <img
-              src={lightbox.src}
-              alt=""
-              className="w-full max-h-[90vh] object-contain rounded-lg"
-            />
-            <p className="text-center text-sm text-slate-300 mt-3">
-              {lightbox.caption}
-            </p>
-          </div>
+        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
+          <button className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white" onClick={() => setLightbox(null)}>
+            <X size={32} />
+          </button>
+          <img src={lightbox.src} alt={lightbox.caption} className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
         </div>
       )}
     </section>
   );
-};
-
-export default Gallery;
+}

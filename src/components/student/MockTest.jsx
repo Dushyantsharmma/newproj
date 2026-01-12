@@ -1,32 +1,16 @@
-/* cSpell:disable */
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'; // Ensure AnimatePresence is imported
 import {
-  CheckCircle2,
-  XCircle,
-  Clock,
-  Trophy,
-  RotateCcw,
-  ChevronRight,
-  ChevronLeft,
-  Award,
-  Download,
-  ShieldAlert,
-  Signal,
-  Gauge,
-  Eye,
-  ArrowLeft,
-  User,
-  Zap,
-  Loader2
+  CheckCircle2, XCircle, Clock, RotateCcw, ChevronRight, ChevronLeft,
+  Award, Download, ShieldAlert, Signal, Gauge, Eye, ArrowLeft,
+  User, Zap, Loader2
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
-import { QUESTION_BANK } from '../../data/mockTestQuestions';
 
-// --- SUB-COMPONENT: Confetti Particle (Fixed Purity) ---
+// FIX: Added extra '../' to go up two folders
+import { QUESTION_BANK } from '../../data/mockTestQuestions';
+// --- SUB-COMPONENT: Confetti Particle ---
 const ConfettiParticle = ({ delay }) => {
-  // FIX: Use useState with lazy initializer for random values.
-  // This satisfies React's purity rules as it only runs on mount.
   const [randomValues] = useState(() => {
     const colors = ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500'];
     return {
@@ -76,14 +60,24 @@ const MockTest = () => {
     setIsGenerating(false);
   };
 
+  // Fisher-Yates Shuffle for true randomness
   const shuffleArray = (array) => {
-    return [...array].sort(() => Math.random() - 0.5);
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
   };
 
   const startTestSetup = (level) => {
     resetTestState();
     setSelectedLevel(level);
+    
+    // Fallback to medium if level doesn't exist, though your data covers all 3
     const levelQuestions = QUESTION_BANK[level] || QUESTION_BANK.medium;
+    
+    // Randomly select 20 questions from your large dataset
     const count = Math.min(20, levelQuestions.length);
     setQuestions(shuffleArray([...levelQuestions]).slice(0, count));
   };
@@ -94,7 +88,7 @@ const MockTest = () => {
     setTestStarted(true);
     setCurrentQuestion(0);
     setAnswers([]);
-    setTimeLeft(1200);
+    setTimeLeft(1200); // 20 minutes
     setTestComplete(false);
   };
 
@@ -128,7 +122,6 @@ const MockTest = () => {
 
   // --- EFFECTS ---
 
-  // FIX: Timer Logic split into Ticking and Finishing to satisfy dependency arrays
   useEffect(() => {
     if (testStarted && !testComplete && timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft((prev) => prev - 1), 1000);
@@ -183,7 +176,7 @@ const MockTest = () => {
 
   const getResult = (score) => {
     const totalQ = questions.length || 20; 
-    const passMark = Math.ceil(totalQ * 0.7);
+    const passMark = Math.ceil(totalQ * 0.7); // 70% to pass (14/20)
     const passed = score >= passMark;
     
     if (passed) {
@@ -201,6 +194,7 @@ const MockTest = () => {
         const canvas = await html2canvas(certificateRef.current, {
             scale: 3, 
             useCORS: true,
+            allowTaint: true,
             backgroundColor: '#ffffff'
         });
         const link = document.createElement('a');
@@ -209,6 +203,7 @@ const MockTest = () => {
         link.click();
       } catch (err) {
         console.error("Certificate generation failed", err);
+        alert("Could not generate certificate. Please try again.");
       } finally {
         setIsGenerating(false);
       }
@@ -234,30 +229,30 @@ const MockTest = () => {
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
-               {[
-                   { id: 'easy', title: 'Beginner', icon: Signal, color: 'text-green-500', bg: 'bg-green-50', border: 'hover:border-green-500' },
-                   { id: 'medium', title: 'Intermediate', icon: ShieldAlert, color: 'text-amber-500', bg: 'bg-amber-50', border: 'hover:border-amber-500' },
-                   { id: 'hard', title: 'Expert', icon: Gauge, color: 'text-red-500', bg: 'bg-red-50', border: 'hover:border-red-500' }
-               ].map((level, idx) => (
-                   <motion.button
-                       key={level.id}
-                       initial={{ opacity: 0, y: 20 }}
-                       animate={{ opacity: 1, y: 0 }}
-                       transition={{ delay: idx * 0.1 }}
-                       onClick={() => startTestSetup(level.id)}
-                       className={`group relative bg-white rounded-3xl p-8 text-left border-2 border-transparent transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${level.border}`}
-                   >
-                       <div className={`w-14 h-14 ${level.bg} ${level.color} rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110`}>
-                           <level.icon size={28} />
-                       </div>
-                       <h3 className="text-2xl font-bold text-slate-900 mb-2">{level.title}</h3>
-                       <p className="text-slate-500 mb-6 text-sm">20 Questions • 20 Minutes</p>
-                       
-                       <div className="flex items-center gap-2 text-sm font-bold text-slate-400 group-hover:text-slate-900 transition-colors">
-                           Start Now <ChevronRight size={16} />
-                       </div>
-                   </motion.button>
-               ))}
+                {[
+                    { id: 'easy', title: 'Beginner', icon: Signal, color: 'text-green-500', bg: 'bg-green-50', border: 'hover:border-green-500' },
+                    { id: 'medium', title: 'Intermediate', icon: ShieldAlert, color: 'text-amber-500', bg: 'bg-amber-50', border: 'hover:border-amber-500' },
+                    { id: 'hard', title: 'Expert', icon: Gauge, color: 'text-red-500', bg: 'bg-red-50', border: 'hover:border-red-500' }
+                ].map((level, idx) => (
+                    <motion.button
+                        key={level.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        onClick={() => startTestSetup(level.id)}
+                        className={`group relative bg-white rounded-3xl p-8 text-left border-2 border-transparent transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${level.border}`}
+                    >
+                        <div className={`w-14 h-14 ${level.bg} ${level.color} rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110`}>
+                            <level.icon size={28} />
+                        </div>
+                        <h3 className="text-2xl font-bold text-slate-900 mb-2">{level.title}</h3>
+                        <p className="text-slate-500 mb-6 text-sm">20 Questions • 20 Minutes</p>
+                        
+                        <div className="flex items-center gap-2 text-sm font-bold text-slate-400 group-hover:text-slate-900 transition-colors">
+                            Start Now <ChevronRight size={16} />
+                        </div>
+                    </motion.button>
+                ))}
             </div>
         </div>
       </div>
@@ -362,6 +357,7 @@ const MockTest = () => {
                 {question.image && (
                     <div className="mb-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 flex justify-center">
                         <img
+                            // Dynamically loads images from public folder based on your data paths
                             src={question.image.startsWith('/') ? `${import.meta.env.BASE_URL}${question.image.substring(1)}` : question.image}
                             alt="Traffic Sign"
                             className="h-40 md:h-48 object-contain drop-shadow-sm"
@@ -562,7 +558,12 @@ const MockTest = () => {
                     <div className="relative z-10">
                         {/* Logo Placeholder */}
                         <div className="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-[#C5A059] p-1">
-                           <img src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`} className="w-full h-full rounded-full object-cover" alt="Logo" />
+                           <img 
+                            src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`} 
+                            className="w-full h-full rounded-full object-cover" 
+                            alt="Logo"
+                            crossOrigin="anonymous" 
+                           />
                         </div>
                         
                         <h1 className="text-3xl font-serif font-bold text-slate-900 mb-2">Certificate of Completion</h1>

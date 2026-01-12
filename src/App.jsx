@@ -1,5 +1,6 @@
 
 import { Suspense, lazy } from "react";
+import GoogleTranslate from "./components/common/GoogleTranslate";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navigation from "./components/layout/Navigation";
 import Footer from "./components/layout/Footer";
@@ -16,6 +17,10 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#f6f4ec] text-slate-900 transition-colors duration-300">
+      {/* Google Translate at the top level for whole site */}
+      <div style={{ position: 'fixed', top: 10, right: 10, zIndex: 9999 }}>
+        <GoogleTranslate />
+      </div>
       <Navigation />
       <ScrollToTop />
       {/* Main Content */}
