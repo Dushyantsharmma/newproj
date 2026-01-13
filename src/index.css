@@ -4,30 +4,19 @@
 
 /* =========================
    RAJ ANN RAJ BRAND THEME
-   (Light & Modern Version)
 ========================= */
 :root {
-  /* --- Brand Colors (Extracted from Logo) --- */
-  --brand-navy: #1e3a8a;   /* Deep Blue from the steering wheel */
-  --brand-orange: #ea580c; /* Burnt Orange from 'RAJ ANN RAJ' text */
-  
-  /* --- Background Colors (Light Theme) --- */
-  --bg-main: #ffffff;      /* Pure White */
-  --bg-surface: #f8fafc;   /* Very Light Blue-Grey (for sections) */
-  --bg-card: #ffffff;      /* White for cards */
-  
-  /* --- Borders --- */
-  --border-main: #e2e8f0;  /* Light grey border */
-  
-  /* --- Text Colors --- */
-  --text-primary: #334155; /* Dark Slate (Softer than black) */
-  --text-heading: #1e3a8a; /* Headings use Brand Navy */
-  --text-muted: #64748b;   /* Muted Grey */
+  --brand-navy: #1e3a8a;
+  --brand-orange: #ea580c;
+  --bg-main: #ffffff;
+  --bg-surface: #f8fafc;
+  --bg-card: #ffffff;
+  --border-main: #e2e8f0;
+  --text-primary: #334155;
+  --text-heading: #1e3a8a;
+  --text-muted: #64748b;
 }
 
-/* =========================
-   BASE
-========================= */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -36,128 +25,25 @@
 
   body {
     margin: 0;
-    padding: 0;
     background-color: var(--bg-main);
     color: var(--text-primary);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.6;
+    top: 0 !important;
   }
 
-  /* Headings now use the Navy Blue from the logo */
   h1, h2, h3, h4, strong {
     color: var(--text-heading);
     font-weight: 800;
-    letter-spacing: -0.02em;
   }
 
   p {
     color: var(--text-muted);
   }
-  
-  /* Scrollbar Customization */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-  }
 }
 
-/* =========================
-   COMPONENTS
-========================= */
-@layer components {
-
-  /* Modern Clean Card (Replaces Glass Dark Card) */
-  .modern-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-main);
-    border-radius: 1rem;
-    padding: 2rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 
-                0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
-  }
-
-  .modern-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
-                0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border-color: var(--brand-orange); /* Orange accent on hover */
-  }
-
-  /* Primary Button (The "Call to Action") */
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--brand-orange);
-    color: white; /* White text creates better contrast on orange */
-    font-weight: 700;
-    padding: 0.875rem 2rem;
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 14px 0 rgba(234, 88, 12, 0.39); /* Orange Glow */
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn-primary:hover {
-    background-color: #c2410c; /* Darker orange on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(234, 88, 12, 0.23);
-  }
-
-  /* Outline Button (Secondary actions) */
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 2px solid var(--brand-navy); /* Navy Border */
-    color: var(--brand-navy);            /* Navy Text */
-    font-weight: 600;
-    padding: 0.875rem 2rem;
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-
-  .btn-outline:hover {
-    background-color: var(--brand-navy);
-    color: white;
-  }
-  
-  /* Input Fields (Forms) */
-  .input-field {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-main);
-    background-color: var(--bg-surface);
-    color: var(--text-primary);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  
-  .input-field:focus {
-    border-color: var(--brand-navy);
-    background-color: white;
-  }
-}
-
-/* ================================
-   GOOGLE TRANSLATE CLEANUP
-   (Kept exactly as you had it)
-================================ */
+/* ===== GOOGLE TRANSLATE CLEANUP ===== */
 .goog-te-banner-frame,
 .goog-te-balloon-frame,
 .goog-te-gadget,
@@ -173,8 +59,4 @@ iframe[title="Language Translate Widget"] {
 .goog-text-highlight {
   background: transparent !important;
   box-shadow: none !important;
-}
-
-body {
-  top: 0 !important;
 }

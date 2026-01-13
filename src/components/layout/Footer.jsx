@@ -23,13 +23,13 @@ const Footer = () => {
               <img
                 src="/branding/raj-ann-raj-logo.webp"
                 alt={brand}
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-cover scale-110 rounded-full"
               />
             </div>
             <div>
-              <h3 className="text-xl font-extrabold text-white">{brand}</h3>
-              <p className="text-xs font-bold tracking-widest text-[#ea580c] uppercase bg-white/10 px-2 py-0.5 rounded mt-1 inline-block">
-                Driving School
+              <h3 className="text-2xl font-extrabold text-white">{brand}</h3>
+              <p className="text-sm font-bold tracking-widest text-[#ea580c] uppercase bg-white/10 px-2 py-0.5 rounded mt-1 inline-block">
+                DRIVING TRAINING SCHOOL
               </p>
             </div>
           </div>

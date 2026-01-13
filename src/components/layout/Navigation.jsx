@@ -8,10 +8,7 @@ import {
   GraduationCap,
   Image as ImageIcon,
   Users,
-  X,
-  ChevronRight,
-  MapPin,
-  Clock
+  X
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../common/useLanguage";
@@ -26,17 +23,10 @@ const NAV_ITEMS = [
   { name: "Contact", to: "/contact", icon: Phone },
 ];
 
-const Navigation = () => {
+export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const lang = useLanguage();
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
@@ -45,79 +35,57 @@ const Navigation = () => {
 
   return (
     <>
-      {/* ================= DESKTOP GLASS CAPSULE ================= */}
+      {/* ================= DESKTOP NAV ================= */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 70, damping: 20 }}
         className="fixed top-0 inset-x-0 z-50 hidden lg:flex justify-center"
       >
-        <div className="mt-5 w-[95%] max-w-7xl flex items-center justify-between">
+        <div className="mt-5 w-[95%] max-w-7xl flex items-center justify-between bg-[#1e3a8a]/95 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl px-6 py-3">
 
-          {/* Brand */}
-          <div
-            onClick={() => navigate("/")}
-            className="flex items-center gap-3 cursor-pointer"
-          >
-            <img
-              src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
-              className="w-10 h-10 rounded-full shadow-lg"
-              alt="Raj Ann Raj"
-            />
-            <div>
-              <div className="font-bold text-white leading-none">
+          {/* Logo */}
+          <div onClick={() => navigate("/")} className="flex items-center gap-3 cursor-pointer">
+            <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center bg-white p-1 shadow-lg">
+              <img
+                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
+                alt="Raj Ann Raj"
+                className="w-full h-full object-cover scale-110 rounded-full"
+              />
+            </div>
+            <div className="flex flex-col leading-none">
+              <div className="font-extrabold text-[#ea580c] text-lg lg:text-2xl">
                 {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
               </div>
-              <div className="text-[10px] tracking-widest text-[#ea580c] font-bold">
-                DRIVING SCHOOL
+              <div className="text-xs lg:text-base tracking-widest text-white font-bold mt-0.5">
+                DRIVING TRAINING SCHOOL
               </div>
             </div>
           </div>
 
-          {/* Glass Capsule */}
-          <motion.div
-            layout
-            className="flex items-center bg-white/80 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] rounded-full border border-white/60 ring-1 ring-white/40 px-3 py-2"
-          >
-            {NAV_ITEMS.map((item, i) => (
+          {/* Nav Capsule */}
+          <div className="flex items-center bg-white/95 rounded-full px-3 py-2 shadow-xl">
+            {NAV_ITEMS.map((item) => (
               <NavLink key={item.to} to={item.to}>
                 {({ isActive }) => (
-                  <motion.div layout className="relative flex items-center">
-                    <div
-                      className={`relative px-5 py-2 rounded-full text-sm font-semibold transition ${
-                        isActive
-                          ? "text-white"
-                          : "text-[#1e3a8a]/90 hover:text-[#ea580c]"
-                      }`}
-                    >
-                      {isActive && (
-                        <motion.div
-                          layoutId="active-pill"
-                          className="absolute inset-0 bg-gradient-to-r from-[#ea580c] to-orange-500 rounded-full shadow-[0_8px_30px_rgba(234,88,12,0.6)]"
-                          transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                        />
-                      )}
-                      <span className="relative z-10 flex items-center gap-2">
-                        <item.icon size={16} />
-                        {item.name}
-                      </span>
-                    </div>
-
-                    {i !== NAV_ITEMS.length - 1 && (
-                      <div className="w-px h-6 bg-slate-200 mx-1" />
-                    )}
-                  </motion.div>
+                  <div className={`px-5 py-2 rounded-full font-semibold flex items-center gap-2 transition ${
+                    isActive
+                      ? "bg-[#ea580c] text-white shadow-lg"
+                      : "text-[#1e3a8a] hover:text-[#ea580c]"
+                  }`}>
+                    <item.icon size={16} />
+                    {item.name}
+                  </div>
                 )}
               </NavLink>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Right actions */}
+          {/* Right Actions */}
           <div className="flex items-center gap-4">
             <GoogleTranslate />
             <a
               href="tel:+919882034930"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#ea580c] text-white font-bold shadow-[0_10px_30px_rgba(234,88,12,0.6)] hover:scale-105 transition"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#ea580c] text-white font-bold shadow-lg hover:scale-105 transition"
             >
               <Phone size={16} />
               Call Now
@@ -126,31 +94,30 @@ const Navigation = () => {
         </div>
       </motion.header>
 
-      {/* ================= MOBILE GLASS HEADER ================= */}
-      <header
-        className={`lg:hidden fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[#1e3a8a]/90 backdrop-blur-xl shadow-[0_10px_40px_rgba(30,58,138,0.5)] py-3"
-            : "bg-[#1e3a8a]/95 py-4"
-        }`}
-      >
+      {/* ================= MOBILE HEADER ================= */}
+      <header className="lg:hidden fixed top-0 inset-x-0 z-50 bg-[#1e3a8a]/95 backdrop-blur-xl shadow-xl py-3">
         <div className="flex justify-between items-center px-4">
-          <div className="flex items-center gap-3" onClick={() => navigate("/")}>
+          <div onClick={() => navigate("/")} className="flex items-center gap-3">
             <img
               src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
-              className="w-9 h-9 rounded-full shadow-lg"
+              className="w-9 h-9 rounded-full"
               alt="Logo"
             />
-            <span className="font-bold text-white">
-              {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
-            </span>
+            <div className="flex flex-col leading-none">
+              <span className="font-extrabold text-[#ea580c]">
+                {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
+              </span>
+              <span className="text-[9px] text-white tracking-widest font-bold mt-0.5">
+                DRIVING TRAINING SCHOOL
+              </span>
+            </div>
           </div>
 
           <div className="flex items-center gap-3">
             <GoogleTranslate />
             <button
               onClick={() => setIsOpen(true)}
-              className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.25)] flex items-center justify-center text-white"
+              className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white"
             >
               <Menu size={20} />
             </button>
@@ -167,60 +134,47 @@ const Navigation = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9990]"
+              className="fixed inset-0 bg-black/60 z-[9990]"
             />
 
             <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 bottom-0 z-[9999] w-[85vw] max-w-sm bg-[#1e3a8a]/95 backdrop-blur-2xl border-l border-white/10 flex flex-col shadow-2xl"
+              className="fixed right-0 top-0 bottom-0 z-[9999] w-[80vw] max-w-sm bg-[#1e3a8a] p-6"
             >
-              <div className="flex justify-between items-center p-6 border-b border-white/10">
-                <h2 className="text-xl font-bold text-white">Menu</h2>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white"
-                >
-                  <X size={20} />
+              <div className="flex justify-between items-center mb-6">
+                <div className="text-[#ea580c] font-bold text-lg">
+                  {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
+                </div>
+                <button onClick={() => setIsOpen(false)}>
+                  <X className="text-white" />
                 </button>
               </div>
 
-              <div className="flex-1 p-5 space-y-3">
+              <div className="space-y-4">
                 {NAV_ITEMS.map((item) => (
                   <NavLink
                     key={item.to}
                     to={item.to}
                     onClick={() => setIsOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition ${
-                        isActive
-                          ? "bg-[#ea580c] text-white shadow-[0_0_20px_rgba(234,88,12,0.6)]"
-                          : "bg-white/10 text-blue-100 hover:bg-white/20"
-                      }`
-                    }
+                    className="block px-4 py-3 rounded-lg bg-white/10 text-white hover:bg-[#ea580c]"
                   >
-                    <item.icon size={18} />
                     {item.name}
                   </NavLink>
                 ))}
               </div>
 
-              <div className="p-6 border-t border-white/10">
-                <a
-                  href="tel:+919882034930"
-                  className="block text-center py-4 rounded-xl bg-[#ea580c] text-white font-bold shadow-[0_10px_30px_rgba(234,88,12,0.6)]"
-                >
-                  Call Now
-                </a>
-              </div>
+              <a
+                href="tel:+919882034930"
+                className="mt-8 block text-center py-4 bg-[#ea580c] text-white font-bold rounded-xl"
+              >
+                Call Now
+              </a>
             </motion.aside>
           </>
         )}
       </AnimatePresence>
     </>
   );
-};
-
-export default Navigation;
+}

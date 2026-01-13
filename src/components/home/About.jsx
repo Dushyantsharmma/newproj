@@ -120,7 +120,7 @@ const FAQS = [
   },
   {
     q: "What is the duration of the course?",
-    a: "Our standard comprehensive course is 21 days. This includes simulator sessions, ground training for parking, and extensive on-road driving practice."
+    a: "Our standard comprehensive course is 26 days. This includes simulator sessions, ground training for parking, and extensive on-road driving practice."
   }
 ];
 
