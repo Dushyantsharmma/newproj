@@ -5,7 +5,7 @@ import SEO from "../SEO";
 
 /* ============================
    1. DATA CONFIGURATION
-   (Keep existing data)
+   (Kept existing data as provided)
 ============================ */
 
 const SIGN_DATA = {
@@ -134,10 +134,13 @@ const SIGNS = {
   informatory: createSignList(INFORMATORY, "informatory", "Information sign for road users."),
 };
 
-// Updated Tab Config for modern look
+// Updated Tab Config to match Brand Colors
 const TABS = [
-  { key: "mandatory", label: "Mandatory", activeBg: "bg-blue-50", activeText: "text-blue-700", ring: "ring-blue-200" },
-  { key: "cautionary", label: "Cautionary", activeBg: "bg-amber-50", activeText: "text-amber-700", ring: "ring-amber-200" },
+  // Mandatory signs are usually blue/red, keeping blue theme
+  { key: "mandatory", label: "Mandatory", activeBg: "bg-blue-50", activeText: "text-[#1e3a8a]", ring: "ring-blue-200" },
+  // Cautionary signs are usually triangular/red border, using Orange theme for warning
+  { key: "cautionary", label: "Cautionary", activeBg: "bg-orange-50", activeText: "text-[#ea580c]", ring: "ring-orange-200" },
+  // Informatory signs are usually blue/green, keeping green theme for info
   { key: "informatory", label: "Informatory", activeBg: "bg-green-50", activeText: "text-green-700", ring: "ring-green-200" }
 ];
 
@@ -162,10 +165,10 @@ export default function DrivingSymbolsPage() {
           
           {/* Left Text Content */}
           <div className="md:w-1/2 mb-10 md:mb-0">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-[#ea580c] text-sm font-semibold mb-6 border border-orange-100">
               <Info className="w-4 h-4" /> RTO Official Guide
             </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-[#1e3a8a] mb-6 leading-tight tracking-tight">
               Master Indian <br className="hidden md:block"/> Road Signs.
             </h1>
             <p className="text-slate-600 text-lg mb-8 leading-relaxed max-w-xl">
@@ -175,7 +178,7 @@ export default function DrivingSymbolsPage() {
             <a
               href="/symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp"
               download
-              className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#1e3a8a] hover:bg-[#1e2e60] text-white font-bold rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               <Download className="w-5 h-5" /> Download Full Chart
             </a>
@@ -183,7 +186,7 @@ export default function DrivingSymbolsPage() {
 
           {/* Right Image Content */}
           <div className="md:w-5/12 hidden md:block relative">
-             <div className="absolute inset-0 bg-gradient-to-tr from-blue-50 to-amber-50 rounded-3xl transform rotate-3 scale-105 -z-10"></div>
+             <div className="absolute inset-0 bg-gradient-to-tr from-blue-50 to-orange-50 rounded-3xl transform rotate-3 scale-105 -z-10"></div>
              <img
               src="/symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp"
               alt="Indian Road Signs Chart Preview"
@@ -205,8 +208,8 @@ export default function DrivingSymbolsPage() {
                 onClick={() => { setTab(t.key); setSearch(""); }}
                 className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
                   tab === t.key 
-                    ? `bg-white text-slate-900 shadow-sm ring-1 ring-slate-200` 
-                    : "text-slate-500 hover:text-slate-900"
+                    ? `bg-white text-[#1e3a8a] shadow-sm ring-1 ring-slate-200` 
+                    : "text-slate-500 hover:text-[#1e3a8a]"
                 }`}
               >
                 {t.label}
@@ -221,7 +224,7 @@ export default function DrivingSymbolsPage() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder={`Search ${tab} signs...`}
-              className="w-full pl-12 pr-4 py-3 rounded-full bg-slate-100 border-transparent focus:border-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-200/50 focus:outline-none transition-all text-sm font-medium"
+              className="w-full pl-12 pr-4 py-3 rounded-full bg-slate-100 border-transparent focus:border-[#ea580c] focus:bg-white focus:ring-2 focus:ring-orange-100 focus:outline-none transition-all text-sm font-medium"
             />
           </div>
         </div>
@@ -248,7 +251,7 @@ export default function DrivingSymbolsPage() {
                     alt={sign.name} 
                   />
                 </div>
-                <p className="text-sm font-bold text-slate-800 leading-snug group-hover:text-slate-900">
+                <p className="text-sm font-bold text-slate-800 leading-snug group-hover:text-[#1e3a8a]">
                   {sign.name}
                 </p>
               </button>
@@ -263,7 +266,7 @@ export default function DrivingSymbolsPage() {
             </div>
             <p className="text-xl font-semibold text-slate-700 mb-2">No signs found matching "{search}"</p>
             <p className="text-slate-500">Try checking your spelling or switch categories.</p>
-            <button onClick={() => setSearch("")} className="mt-4 px-6 py-2 bg-slate-900 text-white rounded-full text-sm font-bold hover:bg-slate-800 transition">
+            <button onClick={() => setSearch("")} className="mt-4 px-6 py-2 bg-[#1e3a8a] text-white rounded-full text-sm font-bold hover:bg-[#1e2e60] transition">
               Clear Filters
             </button>
           </div>
@@ -277,7 +280,7 @@ export default function DrivingSymbolsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4"
+            className="fixed inset-0 bg-[#1e3a8a]/40 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4"
             onClick={() => setActive(null)}
           >
             <motion.div
@@ -308,13 +311,13 @@ export default function DrivingSymbolsPage() {
                 <span className={`mb-4 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider ${activeTabTheme.activeBg} ${activeTabTheme.activeText} ring-1 ${activeTabTheme.ring}`}>
                   {tab} Sign
                 </span>
-                <h3 className="text-3xl font-extrabold text-slate-900 mb-3 leading-tight">{active.name}</h3>
+                <h3 className="text-3xl font-extrabold text-[#1e3a8a] mb-3 leading-tight">{active.name}</h3>
                 <p className="text-slate-600 text-lg leading-relaxed px-4">{active.desc}</p>
               </div>
 
               <div className="p-6 bg-slate-50/50 border-t border-slate-100">
                 <button 
-                  className="w-full py-3.5 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
+                  className="w-full py-3.5 bg-[#1e3a8a] text-white rounded-2xl font-bold text-lg hover:bg-[#1e2e60] transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
                   onClick={() => setActive(null)}
                 >
                   Understood

@@ -179,7 +179,7 @@ const HP_FINES = [
     section: "194F", 
     offense: "Unnecessary Horn / Noise", 
     fine: "₹1,500", 
-    subsequent: "₹3,000",
+    subsequent: "₹3,000", 
     details: "Honking in silence zones or noisy exhaust.",
     category: "General",
     icon: Volume2
@@ -189,7 +189,7 @@ const HP_FINES = [
     section: "177", 
     offense: "General Offense", 
     fine: "₹750", 
-    subsequent: "₹2,250",
+    subsequent: "₹2,250", 
     details: "Any offense not specified elsewhere.",
     category: "General",
     icon: FileText
@@ -206,38 +206,41 @@ const TrafficFines = () => {
   );
 
   return (
-    <section className="bg-[#EFEDE0] relative overflow-hidden py-12 px-4 md:px-8 min-h-screen">
+    <section className="bg-slate-50 relative overflow-hidden py-12 px-4 md:px-8 min-h-screen">
       
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
+      {/* Background Decor (Light Theme) */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#ea580c]/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.03]" 
+           style={{ backgroundImage: 'radial-gradient(#1e3a8a 1px, transparent 1px)', backgroundSize: '32px 32px' }} 
+      />
 
       <div className="max-w-5xl mx-auto relative z-10">
         
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-red-600 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-red-200 text-red-600 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
             <AlertTriangle size={14} className="fill-current" />
             Strictly Enforced
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-[#1e3a8a] mb-4">
             Himachal Pradesh <br className="md:hidden" />
-            <span className="text-amber-600">Challan Rates</span>
+            <span className="text-[#ea580c]">Challan Rates</span>
           </h2>
-          <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto">
+          <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto font-medium">
             Updated fines as per HP Govt Notification (July 2021) under Motor Vehicles (Amendment) Act.
           </p>
         </div>
 
         {/* Search Bar */}
         <div className="sticky top-4 z-20 mb-8">
-          <div className="relative max-w-2xl mx-auto shadow-xl shadow-slate-200/50 rounded-2xl">
+          <div className="relative max-w-2xl mx-auto shadow-xl shadow-blue-900/5 rounded-2xl">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
               <Search className="text-slate-400" size={20} />
             </div>
             <input
               type="text"
               placeholder="Search by offense (e.g. 'Helmet', '184', 'Speed')"
-              className="block w-full pl-12 pr-5 py-4 bg-white border-0 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500 transition-all font-medium text-lg"
+              className="block w-full pl-12 pr-5 py-4 bg-white border-0 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-[#1e3a8a] transition-all font-medium text-lg"
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
@@ -255,21 +258,21 @@ const TrafficFines = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow group"
+                  className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-lg hover:border-[#ea580c]/50 transition-all group"
                 >
                   <div className="flex items-start gap-4">
                     {/* Icon */}
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-600 group-hover:bg-amber-50 group-hover:text-amber-600 transition-colors">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-600 group-hover:bg-[#ea580c] group-hover:text-white transition-colors duration-300">
                       <item.icon size={24} />
                     </div>
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start gap-2 mb-1">
-                        <h3 className="font-bold text-slate-900 text-lg leading-tight">
+                        <h3 className="font-bold text-[#1e3a8a] text-lg leading-tight group-hover:text-[#ea580c] transition-colors">
                           {item.offense}
                         </h3>
-                        <span className="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase tracking-wide whitespace-nowrap">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase tracking-wide whitespace-nowrap border border-slate-200">
                           Sec {item.section}
                         </span>
                       </div>
@@ -297,7 +300,7 @@ const TrafficFines = () => {
                 <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
                   <Search size={32} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900">No fines found</h3>
+                <h3 className="text-lg font-bold text-[#1e3a8a]">No fines found</h3>
                 <p className="text-slate-500">Try searching for a different keyword or section.</p>
               </div>
             )}

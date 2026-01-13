@@ -44,27 +44,32 @@ export default function FAQ() {
   };
 
   return (
-    <section className="relative py-24 bg-gradient-to-br from-[#070B16] via-[#0B1222] to-[#111A2E] overflow-hidden">
+    <section className="relative py-24 bg-slate-50 overflow-hidden">
       <SEO schema={faqSchema} />
 
-      {/* glow blobs */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-amber-500/10 blur-3xl rounded-full" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 blur-3xl rounded-full" />
+      {/* Background Decor (Light Theme) */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+         <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#ea580c]/5 blur-3xl rounded-full" />
+         <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#1e3a8a]/5 blur-3xl rounded-full" />
+         <div className="absolute inset-0 opacity-[0.03]" 
+              style={{ backgroundImage: 'radial-gradient(#1e3a8a 1px, transparent 1px)', backgroundSize: '32px 32px' }} 
+         />
+      </div>
 
       <div className="relative max-w-5xl mx-auto px-6">
 
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/10 rounded-full text-amber-400 font-semibold">
+          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white border border-slate-200 rounded-full text-[#ea580c] font-semibold shadow-sm">
             <HelpCircle size={16} />
             Help Center
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-8">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mt-8">
             Questions Before You Start Driving?
           </h2>
 
-          <p className="text-slate-400 mt-5 max-w-xl mx-auto">
+          <p className="text-slate-600 mt-5 max-w-xl mx-auto text-lg">
             Everything you need to know about training, RTO test and learning to drive in Himachal.
           </p>
         </div>
@@ -75,16 +80,22 @@ export default function FAQ() {
             <motion.div
               key={i}
               layout
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 cursor-pointer hover:border-amber-500/50 transition"
+              className={`
+                rounded-2xl p-6 cursor-pointer transition-all duration-300 border
+                ${open === i 
+                   ? "bg-white border-[#ea580c] shadow-lg shadow-orange-100" 
+                   : "bg-white border-slate-200 hover:border-[#ea580c]/50 hover:shadow-md"
+                }
+              `}
               onClick={() => setOpen(open === i ? null : i)}
             >
               <div className="flex justify-between items-center">
-                <h3 className="text-white font-semibold text-lg">
+                <h3 className={`font-bold text-lg ${open === i ? "text-[#ea580c]" : "text-[#1e3a8a]"}`}>
                   {item.q}
                 </h3>
                 <ChevronDown
-                  className={`text-amber-400 transition-transform ${
-                    open === i ? "rotate-180" : ""
+                  className={`transition-transform duration-300 ${
+                    open === i ? "rotate-180 text-[#ea580c]" : "text-slate-400"
                   }`}
                 />
               </div>
@@ -95,7 +106,7 @@ export default function FAQ() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="text-slate-300 mt-4 leading-relaxed"
+                    className="text-slate-600 mt-4 leading-relaxed border-t border-slate-100 pt-4"
                   >
                     {item.a}
                   </motion.p>
@@ -107,13 +118,13 @@ export default function FAQ() {
 
         {/* CTA */}
         <div className="mt-20 text-center">
-          <p className="text-slate-400 mb-6">
+          <p className="text-slate-600 mb-6 font-medium">
             Still confused? Speak directly with our instructor.
           </p>
 
           <a
             href="tel:+919882034930"
-            className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-black font-bold px-10 py-5 rounded-xl shadow-lg shadow-amber-500/30 transition"
+            className="inline-flex items-center gap-3 bg-[#1e3a8a] hover:bg-[#152865] text-white font-bold px-10 py-5 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
           >
             <PhoneCall size={20} />
             Call Raj Ann Raj Driving School

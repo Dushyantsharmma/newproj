@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLanguage } from "../common/useLanguage";
-import { NavLink, useNavigate } from "react-router-dom"; // ❌ Removed useLocation
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Phone,
   Menu,
@@ -8,19 +7,21 @@ import {
   BookOpen,
   GraduationCap,
   Image as ImageIcon,
+  Users,
   X,
   ChevronRight,
-  Compass, 
-  Clock,
-  MessageCircle
+  MapPin,
+  Clock
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "../common/useLanguage";
 import GoogleTranslate from "../common/GoogleTranslate";
 
 const NAV_ITEMS = [
   { name: "Home", to: "/", icon: Home },
-  { name: "Courses & Pricing", to: "/courses", icon: BookOpen },
-  { name: "Student Corner", to: "/student-corner", icon: GraduationCap },
+  { name: "About Us", to: "/about", icon: Users },
+  { name: "Courses", to: "/courses", icon: BookOpen },
+  { name: "Students", to: "/student-corner", icon: GraduationCap },
   { name: "Gallery", to: "/gallery", icon: ImageIcon },
   { name: "Contact", to: "/contact", icon: Phone },
 ];
@@ -29,141 +30,129 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  // ❌ Removed const location = useLocation(); (Fixed ESLint Error)
+  const lang = useLanguage();
 
-  // Scroll Detection
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; };
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    return () => (document.body.style.overflow = "unset");
   }, [isOpen]);
-
-  const lang = useLanguage();
 
   return (
     <>
-      {/* ================= DESKTOP NAV ================= */}
+      {/* ================= DESKTOP GLASS CAPSULE ================= */}
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, type: "spring", damping: 20 }}
-        className={`fixed top-0 inset-x-0 z-50 hidden lg:block transition-all duration-300 ${
-          scrolled
-            ? "bg-[#0B1220]/90 backdrop-blur-xl border-b border-white/5 py-3 shadow-lg"
-            : "bg-gradient-to-b from-[#0B1220]/80 to-transparent py-6"
-        }`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 70, damping: 20 }}
+        className="fixed top-0 inset-x-0 z-50 hidden lg:flex justify-center"
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          
-          {/* LOGO */}
-          <div 
-            className="flex items-center gap-3 cursor-pointer group min-w-max"
+        <div className="mt-5 w-[95%] max-w-7xl flex items-center justify-between">
+
+          {/* Brand */}
+          <div
             onClick={() => navigate("/")}
+            className="flex items-center gap-3 cursor-pointer"
           >
-            <div className={`relative w-11 h-11 rounded-full overflow-hidden border-2 transition-all duration-300 ${scrolled ? 'border-white/10' : 'border-white/20 group-hover:border-amber-500'}`}>
-              <img
-                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
-                className="w-full h-full object-cover scale-110"
-                alt="Logo"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-white text-lg leading-none tracking-tight group-hover:text-amber-400 transition-colors">
+            <img
+              src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
+              className="w-10 h-10 rounded-full shadow-lg"
+              alt="Raj Ann Raj"
+            />
+            <div>
+              <div className="font-bold text-white leading-none">
                 {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
-              </span>
-              <span className="text-[10px] text-amber-500 font-bold tracking-[0.2em] uppercase mt-1">
-                Driving School
-              </span>
+              </div>
+              <div className="text-[10px] tracking-widest text-[#ea580c] font-bold">
+                DRIVING SCHOOL
+              </div>
             </div>
           </div>
 
-          {/* NAV PILL */}
-          <nav className="flex items-center gap-1 bg-white/5 backdrop-blur-sm p-1.5 rounded-full border border-white/5 mx-4">
-            {NAV_ITEMS.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    isActive ? "text-[#0B1220]" : "text-slate-300 hover:text-white"
-                  }`
-                }
-              >
+          {/* Glass Capsule */}
+          <motion.div
+            layout
+            className="flex items-center bg-white/80 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] rounded-full border border-white/60 ring-1 ring-white/40 px-3 py-2"
+          >
+            {NAV_ITEMS.map((item, i) => (
+              <NavLink key={item.to} to={item.to}>
                 {({ isActive }) => (
-                  <>
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-bg"
-                        className="absolute inset-0 bg-amber-500 rounded-full shadow-[0_0_15px_rgba(245,179,1,0.4)]"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                      />
+                  <motion.div layout className="relative flex items-center">
+                    <div
+                      className={`relative px-5 py-2 rounded-full text-sm font-semibold transition ${
+                        isActive
+                          ? "text-white"
+                          : "text-[#1e3a8a]/90 hover:text-[#ea580c]"
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="active-pill"
+                          className="absolute inset-0 bg-gradient-to-r from-[#ea580c] to-orange-500 rounded-full shadow-[0_8px_30px_rgba(234,88,12,0.6)]"
+                          transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                        />
+                      )}
+                      <span className="relative z-10 flex items-center gap-2">
+                        <item.icon size={16} />
+                        {item.name}
+                      </span>
+                    </div>
+
+                    {i !== NAV_ITEMS.length - 1 && (
+                      <div className="w-px h-6 bg-slate-200 mx-1" />
                     )}
-                    <span className="relative z-10 flex items-center gap-2">
-                      {isActive && <item.icon size={14} />} 
-                      {item.name}
-                    </span>
-                  </>
+                  </motion.div>
                 )}
               </NavLink>
             ))}
-          </nav>
+          </motion.div>
 
-          {/* ACTIONS */}
-          <div className="flex items-center gap-3 min-w-max">
+          {/* Right actions */}
+          <div className="flex items-center gap-4">
+            <GoogleTranslate />
             <a
               href="tel:+919882034930"
-              className="group relative overflow-hidden flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-[#0B1220] font-bold text-sm shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#ea580c] text-white font-bold shadow-[0_10px_30px_rgba(234,88,12,0.6)] hover:scale-105 transition"
             >
-              <span className="relative z-10 flex items-center gap-2">
-                 <Phone size={16} className="fill-current text-amber-600" />
-                 <span>Call Now</span>
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-200 to-amber-500 opacity-0 group-hover:opacity-20 transition-opacity" />
+              <Phone size={16} />
+              Call Now
             </a>
           </div>
         </div>
       </motion.header>
 
-      {/* ================= MOBILE HEADER ================= */}
+      {/* ================= MOBILE GLASS HEADER ================= */}
       <header
         className={`lg:hidden fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#0B1220]/95 backdrop-blur-xl border-b border-white/10 shadow-lg py-2"
-            : "bg-gradient-to-b from-[#0B1220] to-transparent py-4"
+            ? "bg-[#1e3a8a]/90 backdrop-blur-xl shadow-[0_10px_40px_rgba(30,58,138,0.5)] py-3"
+            : "bg-[#1e3a8a]/95 py-4"
         }`}
       >
         <div className="flex justify-between items-center px-4">
           <div className="flex items-center gap-3" onClick={() => navigate("/")}>
-             <div className="w-10 h-10 rounded-full border border-white/20 overflow-hidden shadow-lg">
-                <img 
-                  src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
-                  className="w-full h-full object-cover scale-110"
-                  alt="Logo"
-                />
-             </div>
-             <div>
-                <div className="font-bold text-[#e57e33] text-base leading-none">{lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}</div>
-                <div className="text-[10px] text-white font-bold tracking-wider mt-0.5">Driving Training School</div>
-             </div>
+            <img
+              src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
+              className="w-9 h-9 rounded-full shadow-lg"
+              alt="Logo"
+            />
+            <span className="font-bold text-white">
+              {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
+            </span>
           </div>
 
           <div className="flex items-center gap-3">
-            {/* GoogleTranslate moved to App.jsx for global translation */}
+            <GoogleTranslate />
             <button
               onClick={() => setIsOpen(true)}
-              className="p-2.5 rounded-full bg-white/10 text-white border border-white/5 active:bg-amber-500 active:text-black transition-colors"
+              className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.25)] flex items-center justify-center text-white"
             >
-              <Menu size={22} />
+              <Menu size={20} />
             </button>
           </div>
         </div>
@@ -173,117 +162,58 @@ const Navigation = () => {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* OVERLAY */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-[#0B1220]/80 backdrop-blur-sm z-[9990]"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9990]"
             />
 
-            {/* SIDEBAR */}
             <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 bottom-0 z-[9999] w-[85vw] max-w-sm bg-[#0B1220] border-l border-white/10 flex flex-col shadow-2xl"
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed right-0 top-0 bottom-0 z-[9999] w-[85vw] max-w-sm bg-[#1e3a8a]/95 backdrop-blur-2xl border-l border-white/10 flex flex-col shadow-2xl"
             >
-              {/* 1. BRAND HEADER */}
-              <div className="flex items-center justify-between p-6 border-b border-white/10 bg-[#0F172A]">
-                <div className="flex items-center gap-3">
-                   <img 
-                      src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
-                      className="w-10 h-10 rounded-full border border-white/10" 
-                      alt="Logo"
-                   />
-                   <div>
-                      <h2 className="text-amber-500 font-bold text-lg leading-none">{lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}</h2>
-                      <p className="text-xs text-white font-bold tracking-wider mt-0.5">EST. 2005</p>
-                   </div>
-                </div>
+              <div className="flex justify-between items-center p-6 border-b border-white/10">
+                <h2 className="text-xl font-bold text-white">Menu</h2>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white"
                 >
-                  <X size={22} />
+                  <X size={20} />
                 </button>
               </div>
 
-              {/* 2. DASHBOARD STATS */}
-              <div className="grid grid-cols-2 gap-3 p-4">
-                 <div className="bg-white/5 rounded-xl p-3 flex flex-col items-center justify-center text-center border border-white/5">
-                    <Clock size={20} className="text-amber-500 mb-2" />
-                    <span className="text-xs text-slate-400 uppercase font-bold">Open Daily</span>
-                    <span className="text-white font-bold">7AM - 8PM</span>
-                 </div>
-                 <a 
-                   href="https://maps.google.com/?q=Raj+Ann+Raj+Driving+School+Karsog"
-                   target="_blank"
-                   rel="noreferrer"
-                   className="bg-white/5 rounded-xl p-3 flex flex-col items-center justify-center text-center border border-white/5 active:bg-white/10"
-                 >
-                    <Compass size={20} className="text-blue-400 mb-2" />
-                    <span className="text-xs text-slate-400 uppercase font-bold">Navigate</span>
-                    <span className="text-white font-bold">Get Directions</span>
-                 </a>
-              </div>
-
-              {/* 3. NAVIGATION LINKS */}
-              <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-2">
-                {NAV_ITEMS.map((item, idx) => (
-                  <motion.div
+              <div className="flex-1 p-5 space-y-3">
+                {NAV_ITEMS.map((item) => (
+                  <NavLink
                     key={item.to}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + (idx * 0.05) }}
+                    to={item.to}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition ${
+                        isActive
+                          ? "bg-[#ea580c] text-white shadow-[0_0_20px_rgba(234,88,12,0.6)]"
+                          : "bg-white/10 text-blue-100 hover:bg-white/20"
+                      }`
+                    }
                   >
-                    <NavLink
-                      to={item.to}
-                      onClick={() => setIsOpen(false)}
-                      className={({ isActive }) =>
-                        `flex items-center gap-4 p-4 rounded-xl transition-all duration-200 border ${
-                          isActive
-                            ? "bg-amber-500 border-amber-500 text-[#0B1220] font-bold shadow-lg"
-                            : "bg-transparent border-transparent text-slate-300 hover:bg-white/5"
-                        }`
-                      }
-                    >
-                      {({ isActive }) => (
-                        <>
-                          <item.icon 
-                            size={22} 
-                            className={isActive ? "text-[#0B1220]" : "text-amber-500"} 
-                          />
-                          <span className="text-lg">{item.name}</span>
-                          <ChevronRight 
-                            size={18} 
-                            className={`ml-auto transition-transform ${isActive ? "opacity-100" : "opacity-30"}`} 
-                          />
-                        </>
-                      )}
-                    </NavLink>
-                  </motion.div>
+                    <item.icon size={18} />
+                    {item.name}
+                  </NavLink>
                 ))}
               </div>
 
-              {/* 4. DUAL ACTION FOOTER */}
-              <div className="p-4 border-t border-white/10 bg-[#0F172A] grid grid-cols-5 gap-3 pb-8">
-                 <a 
-                    href="https://wa.me/919882034930"
-                    className="col-span-1 bg-[#25D366] rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-transform"
-                    aria-label="WhatsApp"
-                 >
-                    <MessageCircle size={28} className="fill-current" />
-                 </a>
-                 <a
+              <div className="p-6 border-t border-white/10">
+                <a
                   href="tel:+919882034930"
-                  className="col-span-4 flex items-center justify-center gap-3 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg shadow-lg shadow-orange-500/20 active:scale-95 transition-transform"
-                 >
-                   <Phone size={22} className="fill-current" />
-                   <span>Call Now</span>
-                 </a>
+                  className="block text-center py-4 rounded-xl bg-[#ea580c] text-white font-bold shadow-[0_10px_30px_rgba(234,88,12,0.6)]"
+                >
+                  Call Now
+                </a>
               </div>
             </motion.aside>
           </>

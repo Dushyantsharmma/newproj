@@ -1,12 +1,19 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-// Basic translation resources example
 const resources = {
   en: {
     translation: {
-      "Raj Ann Raj": "Raj Ann Raj",
-      // Add more keys as needed
+      "brand_name": "Raj Ann Raj",
+      "subtitle": "Driving Training School",
+      // Add more English keys here
+    },
+  },
+  hi: {
+    translation: {
+      "brand_name": "राज एन राज",
+      "subtitle": "ड्राइविंग प्रशिक्षण स्कूल",
+      // Add more Hindi keys here
     },
   },
 };
@@ -15,10 +22,10 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: "en",
+    lng: "en", // Default language
     fallbackLng: "en",
     interpolation: {
-      escapeValue: false,
+      escapeValue: false, // React already escapes by default
     },
   });
 

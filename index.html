@@ -1,59 +1,52 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Raj Ann Raj Driving School - Expert car driving training in Karsog, Mandi (HP). Hill road specialization, RTO test support, and license assistance." />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <title>Raj Ann Raj Driving School</title>
 
-<title>Raj Ann Raj Driving Training School | Best Driving School in Mandi & Karsog</title>
+  <script>
+    (function() {
+      // Auto-set Google Translate cookie to English if missing
+      // This prevents the translation bar from popping up unexpectedly
+      const cookies = document.cookie.split('; ');
+      const found = cookies.find(row => row.startsWith('googtrans='));
+      if (!found) {
+        document.cookie = "googtrans=/en/en; path=/";
+      }
+    })();
+  </script>
 
-<script>
-  (function() {
-    try {
-      var savedLang = localStorage.getItem("lang") || "en";
-      document.cookie = "googtrans=/en/" + savedLang + "; path=/";
-    } catch (e) {}
-  })();
-</script>
-
+  <style>
+    /* Google Translate Clean-up */
+    .goog-te-balloon-frame { display: none !important; }
+    .goog-te-banner-frame { display: none !important; }
+    .goog-te-menu-value:hover { text-decoration: none !important; }
+    body { top: 0px !important; }
+    font { background-color: transparent !important; box-shadow: none !important; }
+    
+    /* Pre-loader background to match App's bg-slate-50 */
+    body { background-color: #f8fafc; margin: 0; }
+  </style>
 </head>
 <body>
+  
+  <div id="root"></div>
+  
+  <div id="google_translate_element" style="display:none"></div>
 
-<div id="google_translate_element" style="display:none"></div>
-<div id="root"></div>
-
-<script type="module" src="/src/main.jsx"></script>
-
-<script>
-  const GT = {
-    load() {
-      const s = document.createElement("script");
-      s.src = "https://translate.google.com/translate_a/element.js?cb=GT.init";
-      s.async = true;
-      document.body.appendChild(s);
-    },
-    init() {
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
       new google.translate.TranslateElement(
-        { pageLanguage: "en", includedLanguages: "en,hi", autoDisplay: false },
-        "google_translate_element"
+        { pageLanguage: 'en', includedLanguages: 'en,hi', autoDisplay: false },
+        'google_translate_element'
       );
     }
-  };
-
-  // ✅ CRITICAL FIX: Wait for the #root to have content (text)
-  function waitForContent() {
-    const root = document.getElementById("root");
-    // If root has content and more than 50 characters of text, we assume React is ready
-    if (root && root.innerText.length > 50) {
-      GT.load();
-    } else {
-      // If not ready, check again in 200ms
-      setTimeout(waitForContent, 200);
-    }
-  }
-
-  // Start checking when the window loads
-  window.addEventListener("load", waitForContent);
-</script>
-
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

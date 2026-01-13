@@ -58,8 +58,8 @@ export default function Gallery() {
   return (
     <section className="max-w-7xl mx-auto px-4 py-16 mt-10 bg-slate-50 min-h-screen">
       <div className="mb-12 text-center">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-          Our <span className="text-amber-500">Gallery</span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a8a] tracking-tight mb-3">
+          Our <span className="text-[#ea580c]">Gallery</span>
         </h2>
       </div>
 
@@ -68,8 +68,10 @@ export default function Gallery() {
           <button
             key={cat}
             onClick={() => setActive(cat)}
-            className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
-              active === cat ? "bg-slate-900 text-white shadow-lg" : "bg-white text-slate-600 border border-slate-200"
+            className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
+              active === cat 
+                ? "bg-[#ea580c] text-white shadow-lg shadow-orange-200" 
+                : "bg-white text-slate-600 border border-slate-200 hover:border-[#1e3a8a] hover:text-[#1e3a8a]"
             }`}
           >
             {cat}
@@ -81,7 +83,7 @@ export default function Gallery() {
         {filtered.map((img, i) => (
           <div
             key={i}
-            className="break-inside-avoid group relative cursor-zoom-in rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300"
+            className="break-inside-avoid group relative cursor-zoom-in rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-200 hover:shadow-xl hover:border-[#ea580c]/30 transition-all duration-300"
             onClick={() => setLightbox(img)}
           >
             <div className="relative overflow-hidden">
@@ -91,9 +93,11 @@ export default function Gallery() {
                 loading="lazy"
                 className="w-full h-auto transform transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all scale-50 group-hover:scale-100">
-                <div className="bg-white/20 backdrop-blur-md p-3 rounded-full text-white">
+              {/* Overlay: Navy Blue Tint */}
+              <div className="absolute inset-0 bg-[#1e3a8a]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all scale-50 group-hover:scale-100 duration-300">
+                <div className="bg-white/30 backdrop-blur-md p-3 rounded-full text-white border border-white/40">
                     <ZoomIn size={24} />
                 </div>
               </div>
@@ -103,8 +107,8 @@ export default function Gallery() {
       </div>
 
       {lightbox && (
-        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
-          <button className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white" onClick={() => setLightbox(null)}>
+        <div className="fixed inset-0 z-[100] bg-[#1e3a8a]/95 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
+          <button className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors" onClick={() => setLightbox(null)}>
             <X size={32} />
           </button>
           <img src={lightbox.src} alt={lightbox.caption} className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />

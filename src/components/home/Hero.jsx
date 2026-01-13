@@ -5,9 +5,10 @@ const Hero = () => {
   return (
     <section
       className="relative min-h-[90vh] flex items-center justify-center overflow-hidden
-      bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#020617]"
+      bg-slate-50"
     >
-      {/* ================= LCP IMAGE (SEO & Lighthouse) ================= */}
+      {/* ================= LCP IMAGE (Maintained as per your setup) ================= */}
+      {/* Kept hidden/preload logic as per your original code */}
       <img
         src="/banners/Banner1.webp"
         srcSet="
@@ -19,7 +20,7 @@ const Hero = () => {
         width="1600"
         height="600"
         alt="Raj Ann Raj Driving School Hill Driving Training"
-           fetchPriority="high"
+        fetchPriority="high"
         decoding="async"
         style={{
           position: "absolute",
@@ -30,17 +31,24 @@ const Hero = () => {
         }}
       />
 
-      {/* ================= BACKGROUND EFFECTS ================= */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.18),transparent_55%)]" />
-      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-black/40 to-transparent" />
+      {/* ================= BACKGROUND EFFECTS (Light Theme) ================= */}
+      {/* Subtle Pattern */}
+      <div className="absolute inset-0 opacity-[0.03]" 
+           style={{ backgroundImage: 'radial-gradient(#1e3a8a 1px, transparent 1px)', backgroundSize: '32px 32px' }} 
+      />
+      {/* Top Orange Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-[radial-gradient(ellipse_at_top,rgba(234,88,12,0.15),transparent_70%)]" />
+      {/* Bottom Blue Glow */}
+      <div className="absolute bottom-0 w-full h-64 bg-gradient-to-t from-[#1e3a8a]/5 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
-        <div className="mx-auto max-w-3xl text-center backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-10 lg:p-14 shadow-2xl">
+        {/* Card: White Glassmorphism */}
+        <div className="mx-auto max-w-4xl text-center backdrop-blur-xl bg-white/60 border border-white/60 rounded-[2.5rem] p-8 sm:p-12 lg:p-16 shadow-2xl shadow-blue-900/5">
 
           {/* ================= LOCATION BADGE ================= */}
           <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-            bg-white/10 border border-white/20 text-amber-400 text-xs sm:text-sm font-semibold tracking-wide"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full
+            bg-white border border-slate-200 text-[#ea580c] text-xs sm:text-sm font-bold tracking-wide shadow-sm mb-8"
           >
             <MapPin size={14} />
             Karsog • Mandi • Himachal Pradesh
@@ -48,54 +56,60 @@ const Hero = () => {
 
           {/* ================= HEADING ================= */}
           <h1
-            className="mt-6 font-extrabold leading-tight text-white"
-            style={{ fontSize: "clamp(2.2rem, 6vw, 4rem)" }}
+            className="font-extrabold leading-[1.1] text-[#1e3a8a] tracking-tight"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}
           >
             Master the Art of
-            <span className="block text-amber-400">
+            <span className="block text-[#ea580c] relative">
               Hill Driving
+              {/* Optional: Subtle underline SVG */}
+              <svg className="absolute w-1/3 h-3 -bottom-2 left-1/2 -translate-x-1/2 text-orange-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
+              </svg>
             </span>
           </h1>
 
           {/* ================= SUBTITLE ================= */}
           <p
-            className="mt-4 text-slate-300 leading-relaxed max-w-xl mx-auto"
-            style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)" }}
+            className="mt-6 text-slate-600 leading-relaxed max-w-2xl mx-auto font-medium"
+            style={{ fontSize: "clamp(1.125rem, 2vw, 1.25rem)" }}
           >
             Learn safe and confident driving on real hill roads with
-            <span className="text-white font-semibold">
+            <span className="text-[#1e3a8a] font-bold">
               {" "}Raj Ann Raj Driving School
             </span>.
-            Trusted across Himachal Pradesh since 2005.
+            <br className="hidden md:block"/> Trusted across Himachal Pradesh since 2005.
           </p>
 
           {/* ================= CTA BUTTONS ================= */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            {/* Primary Button: Orange */}
             <a
               href="tel:+919882034930"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3
-              rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-bold
-              transition shadow-lg w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4
+              rounded-xl bg-[#ea580c] hover:bg-[#c2410c] text-white font-bold text-lg
+              transition-all shadow-lg shadow-orange-200 hover:-translate-y-1 w-full sm:w-auto"
             >
-              <Phone size={18} />
+              <Phone size={20} />
               Call Now
             </a>
 
+            {/* Secondary Button: Navy Outline */}
             <a
               href="https://wa.me/919882034930"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3
-              rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold
-              border border-white/20 transition w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4
+              rounded-xl bg-transparent hover:bg-[#1e3a8a] text-[#1e3a8a] hover:text-white font-bold text-lg
+              border-2 border-[#1e3a8a] transition-all w-full sm:w-auto"
             >
-              <MessageCircle size={18} />
+              <MessageCircle size={20} />
               WhatsApp
             </a>
           </div>
 
           {/* ================= FEATURES ================= */}
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-12 pt-8 border-t border-slate-200 flex flex-wrap justify-center gap-3">
             {[
               "Hairpin Bends",
               "Steep Climbs",
@@ -106,9 +120,10 @@ const Hero = () => {
               <span
                 key={feature}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-                bg-white/5 border border-white/10 text-slate-200 text-sm font-medium"
+                bg-white border border-slate-200 text-slate-700 text-sm font-bold shadow-sm"
               >
-                <Mountain size={14} className="text-amber-400" />
+                {/* Icon in Brand Orange */}
+                <Mountain size={14} className="text-[#ea580c]" />
                 {feature}
               </span>
             ))}

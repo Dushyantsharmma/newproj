@@ -6,14 +6,20 @@ const SLIDES = [
   {
     id: 1,
     image: `${import.meta.env.BASE_URL}banners/Banner1.webp`,
+    title: "Master Hill Driving",
+    subtitle: "Learn confident driving on sharp turns and steep slopes."
   },
   {
     id: 2,
     image: `${import.meta.env.BASE_URL}banners/Banner2.webp`,
+    title: "Expert Instructors",
+    subtitle: "Train with certified professionals who know the local roads."
   },
   {
     id: 3,
     image: `${import.meta.env.BASE_URL}banners/Banner3.webp`,
+    title: "Safety First",
+    subtitle: "Dual control vehicles ensuring 100% safe learning experience."
   },
 ];
 
@@ -89,7 +95,7 @@ const ImageSlideshow = () => {
             loading="lazy"
           />
           
-          {/* Cinematic Dark Overlay */}
+          {/* Cinematic Overlay (Darker at bottom/left for text readability) */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         </motion.div>
       </AnimatePresence>
@@ -114,7 +120,7 @@ const ImageSlideshow = () => {
             {/* Subtitle */}
             <motion.p
               variants={textVariants}
-              className="text-base sm:text-lg md:text-xl text-slate-200 font-light max-w-lg drop-shadow-md"
+              className="text-base sm:text-lg md:text-xl text-slate-200 font-light max-w-lg drop-shadow-md border-l-4 border-[#ea580c] pl-4"
             >
               {SLIDES[current].subtitle}
             </motion.p>
@@ -127,7 +133,7 @@ const ImageSlideshow = () => {
         {/* Left Button */}
         <button
           onClick={() => paginate(-1)}
-          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 -translate-x-10 group-hover:translate-x-0"
+          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-[#ea580c] hover:border-[#ea580c] hover:scale-110 active:scale-95 -translate-x-10 group-hover:translate-x-0"
         >
           <ChevronLeft size={24} className="sm:w-8 sm:h-8" />
         </button>
@@ -135,7 +141,7 @@ const ImageSlideshow = () => {
         {/* Right Button */}
         <button
           onClick={() => paginate(1)}
-          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 translate-x-10 group-hover:translate-x-0"
+          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-[#ea580c] hover:border-[#ea580c] hover:scale-110 active:scale-95 translate-x-10 group-hover:translate-x-0"
         >
           <ChevronRight size={24} className="sm:w-8 sm:h-8" />
         </button>
@@ -157,11 +163,11 @@ const ImageSlideshow = () => {
               {/* Background track */}
               <div className="absolute inset-0 bg-white/30" />
               
-              {/* Filling animation */}
+              {/* Filling animation using Brand Orange */}
               {index === current && (
                 <motion.div
                   layoutId="activeSlide"
-                  className="absolute inset-0 bg-amber-500"
+                  className="absolute inset-0 bg-[#ea580c]"
                   initial={{ x: '-100%' }}
                   animate={{ x: '0%' }}
                   transition={{ duration: 6, ease: "linear" }}

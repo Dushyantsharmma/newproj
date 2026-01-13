@@ -1,98 +1,131 @@
-import { useState } from "react";
-import { Languages, ChevronDown, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { Languages, ChevronDown, Loader2, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const LANGS = [
   { code: "en", label: "English", flag: "🇺🇸" },
   { code: "hi", label: "Hindi", flag: "🇮🇳" },
 ];
 
-// Helper to set cookie safely
-function setGoogleCookie(lang) {
-  document.cookie = `googtrans=/en/${lang}; path=/`;
-}
+// Helper defined OUTSIDE component to satisfy strict linter rules
+const setGoogleCookies = (langCode) => {
+  const domain = window.location.hostname;
+  document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain}`;
+  document.cookie = `googtrans=/en/${langCode}; path=/;`;
+  document.cookie = `googtrans=/en/${langCode};`;
+};
 
-// Helper to get initial language
-function getInitialLang() {
-  if (typeof window === "undefined") return "en";
-  return localStorage.getItem("lang") || "en";
-}
+export default function GoogleTranslate({ className = "" }) {
+  // 1. Initialize State
+  const [currentLang] = useState(() => localStorage.getItem("lang") || "en");
+  const [isOpen, setIsOpen] = useState(false);
+  
+  // "targetLang" acts as our "Is Loading" switch. 
+  // If it's not null, we are in the middle of switching.
+  const [targetLang, setTargetLang] = useState(null);
 
-export default function GoogleTranslate() {
-  // Initialize state directly (Optimal performance)
-  const [lang] = useState(getInitialLang);
-  const [open, setOpen] = useState(false);
-  const [isTranslating, setIsTranslating] = useState(false);
+  // 2. SIDE EFFECT: Handle Language Switch
+  useEffect(() => {
+    // Only proceed if a user has actually clicked a language
+    if (!targetLang) return;
 
-  const handleLanguageChange = (newLang) => {
-    if (newLang === lang) {
-      setOpen(false);
+    // A. Update Local Storage so next load reads correct lang
+    localStorage.setItem("lang", targetLang);
+
+    // B. Set Cookies (using helper)
+    setGoogleCookies(targetLang);
+
+    // C. Reload Page
+    // We do NOT update 'currentLang' state here because the page is about to reload.
+    // This avoids the ESLint "set-state-in-effect" error.
+    const timer = setTimeout(() => {
+      window.location.reload();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [targetLang]);
+
+  // 3. Handler
+  const handleLanguageClick = (langCode) => {
+    if (langCode === currentLang) {
+      setIsOpen(false);
       return;
     }
-
-    // 1. Show Loading Screen
-    setIsTranslating(true);
-    setOpen(false);
-
-    // 2. Set Preferences
-    localStorage.setItem("lang", newLang);
-    setGoogleCookie(newLang);
-
-    // 3. Reload Page
-    // This resets the React App so Google Translate can work on a "fresh" page
-    setTimeout(() => {
-      window.location.reload();
-    }, 500); 
+    setIsOpen(false);
+    // Trigger the effect by setting targetLang
+    setTargetLang(langCode);
   };
+
+  // 4. Close dropdown on outside click
+  useEffect(() => {
+    const closeMenu = () => setIsOpen(false);
+    if (isOpen) window.addEventListener("click", closeMenu);
+    return () => window.removeEventListener("click", closeMenu);
+  }, [isOpen]);
 
   return (
     <>
-      {/* FULL SCREEN LOADING OVERLAY */}
-      {isTranslating && (
-        <div className="fixed inset-0 z-[100] bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300">
-          <Loader2 className="w-12 h-12 text-amber-600 animate-spin mb-4" />
-          <p className="text-slate-800 font-bold text-xl tracking-wide">
-            {lang === "en" ? "हिंदी में बदल रहा है..." : "Switching to English..."}
-          </p>
-          <p className="text-slate-500 text-sm mt-2">Please wait...</p>
-        </div>
-      )}
+      {/* LOADING OVERLAY - Shows when targetLang is set */}
+      {targetLang &&
+        createPortal(
+          <div className="fixed inset-0 z-[99999] bg-[#1e3a8a]/95 backdrop-blur-md flex flex-col items-center justify-center">
+            <Loader2 className="w-12 h-12 text-[#ea580c] animate-spin mb-4" />
+            <h2 className="text-white font-bold text-2xl tracking-tight">
+              {currentLang === "en" ? "Switching to Hindi..." : "Switching to English..."}
+            </h2>
+            <p className="text-slate-200 text-sm mt-2">Updating content...</p>
+          </div>,
+          document.body
+        )}
 
-      {/* DROPDOWN BUTTON */}
-      <div className="relative z-50">
+      {/* COMPONENT */}
+      <div className={`relative z-40 ${className}`} onClick={(e) => e.stopPropagation()}>
         <button
-          onClick={() => setOpen(!open)}
-          className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 border border-white/10 text-white hover:bg-white/20 transition-all shadow-sm"
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center gap-2 px-3 py-2 rounded-full bg-[#1e3a8a]/10 border border-[#1e3a8a]/20 text-[#1e3a8a] hover:bg-[#1e3a8a] hover:text-white transition-all active:scale-95"
         >
-          <Languages size={18} />
-          <span className="text-sm font-semibold">
-            {lang === "hi" ? "Hindi" : "English"}
+          <Languages size={16} className={`transition-colors ${isOpen ? "text-white" : "text-[#ea580c] group-hover:text-white"}`} />
+          <span className="text-sm font-bold uppercase tracking-wide">
+            {currentLang}
           </span>
-          <ChevronDown size={14} className={open ? "rotate-180" : ""} />
+          <ChevronDown
+            size={14}
+            className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          />
         </button>
 
-        {open && (
-          <>
-            <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-            <div className="absolute right-0 mt-3 w-48 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl z-50 overflow-hidden ring-1 ring-white/10">
-              <div className="py-1">
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="absolute right-0 mt-2 w-40 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden ring-1 ring-black/5"
+            >
+              <div className="p-1">
                 {LANGS.map((l) => (
                   <button
                     key={l.code}
-                    onClick={() => handleLanguageChange(l.code)}
-                    className={`w-full px-5 py-3 text-left flex items-center gap-4 transition-colors ${
-                      lang === l.code
-                        ? "text-amber-500 bg-white/10 font-bold"
-                        : "text-slate-300 hover:bg-white/5 hover:text-white"
+                    onClick={() => handleLanguageClick(l.code)}
+                    className={`w-full px-3 py-2.5 rounded-lg text-left flex items-center justify-between gap-3 transition-colors ${
+                      currentLang === l.code
+                        ? "bg-orange-50 text-[#ea580c] font-bold"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a]"
                     }`}
                   >
-                    <span className="text-xl">{l.flag}</span>
-                    <span className="text-sm">{l.label}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg leading-none">{l.flag}</span>
+                      <span className="text-sm">{l.label}</span>
+                    </div>
+                    {currentLang === l.code && <Check size={14} />}
                   </button>
                 ))}
               </div>
-            </div>
-          </>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );

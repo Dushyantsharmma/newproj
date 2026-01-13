@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion'; // Ensure AnimatePresence is imported
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   CheckCircle2, XCircle, Clock, RotateCcw, ChevronRight, ChevronLeft,
   Award, Download, ShieldAlert, Signal, Gauge, Eye, ArrowLeft,
@@ -9,6 +9,7 @@ import html2canvas from 'html2canvas';
 
 // FIX: Added extra '../' to go up two folders
 import { QUESTION_BANK } from '../../data/mockTestQuestions';
+
 // --- SUB-COMPONENT: Confetti Particle ---
 const ConfettiParticle = ({ delay }) => {
   const [randomValues] = useState(() => {
@@ -182,7 +183,7 @@ const MockTest = () => {
     if (passed) {
       const highMark = Math.ceil(totalQ * 0.9);
       if (score >= highMark) return { grade: 'Excellent!', color: 'text-green-600', passed: true, msg: "You're a pro! Ready for the RTO exam.", bg: 'bg-green-500', passMark };
-      return { grade: 'Passed', color: 'text-blue-600', passed: true, msg: "Good job! A bit more practice won't hurt.", bg: 'bg-blue-500', passMark };
+      return { grade: 'Passed', color: 'text-[#1e3a8a]', passed: true, msg: "Good job! A bit more practice won't hurt.", bg: 'bg-[#1e3a8a]', passMark };
     }
     return { grade: 'Failed', color: 'text-red-600', passed: false, msg: "Don't worry. Review the signs and try again.", bg: 'bg-red-500', passMark };
   };
@@ -213,25 +214,25 @@ const MockTest = () => {
   // ================= VIEW 1: LEVEL SELECTION =================
   if (!selectedLevel) {
     return (
-      <div className="min-h-[600px] bg-[#EFEDE0] flex items-center justify-center p-6">
+      <div className="min-h-[600px] bg-slate-50 flex items-center justify-center p-6">
         <div className="max-w-5xl w-full">
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-center mb-12"
             >
-               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-amber-600 text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
+               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-[#ea580c] text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
                   <Zap size={14} className="fill-current" />
                   RTO Exam Prep
                </div>
-               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Choose Your Challenge</h2>
+               <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mb-4">Choose Your Challenge</h2>
                <p className="text-slate-600 text-lg">Select a difficulty level to begin your practice test.</p>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
                 {[
                     { id: 'easy', title: 'Beginner', icon: Signal, color: 'text-green-500', bg: 'bg-green-50', border: 'hover:border-green-500' },
-                    { id: 'medium', title: 'Intermediate', icon: ShieldAlert, color: 'text-amber-500', bg: 'bg-amber-50', border: 'hover:border-amber-500' },
+                    { id: 'medium', title: 'Intermediate', icon: ShieldAlert, color: 'text-[#ea580c]', bg: 'bg-orange-50', border: 'hover:border-[#ea580c]' },
                     { id: 'hard', title: 'Expert', icon: Gauge, color: 'text-red-500', bg: 'bg-red-50', border: 'hover:border-red-500' }
                 ].map((level, idx) => (
                     <motion.button
@@ -245,10 +246,10 @@ const MockTest = () => {
                         <div className={`w-14 h-14 ${level.bg} ${level.color} rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110`}>
                             <level.icon size={28} />
                         </div>
-                        <h3 className="text-2xl font-bold text-slate-900 mb-2">{level.title}</h3>
+                        <h3 className="text-2xl font-bold text-[#1e3a8a] mb-2">{level.title}</h3>
                         <p className="text-slate-500 mb-6 text-sm">20 Questions • 20 Minutes</p>
                         
-                        <div className="flex items-center gap-2 text-sm font-bold text-slate-400 group-hover:text-slate-900 transition-colors">
+                        <div className="flex items-center gap-2 text-sm font-bold text-slate-400 group-hover:text-[#1e3a8a] transition-colors">
                             Start Now <ChevronRight size={16} />
                         </div>
                     </motion.button>
@@ -262,24 +263,24 @@ const MockTest = () => {
   // ================= VIEW 2: STUDENT DETAILS =================
   if (!detailsFilled) {
     return (
-      <div className="min-h-[600px] bg-[#EFEDE0] flex items-center justify-center p-6">
+      <div className="min-h-[600px] bg-slate-50 flex items-center justify-center p-6">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white rounded-[2rem] p-8 md:p-10 shadow-2xl shadow-slate-200/50"
+          className="max-w-md w-full bg-white rounded-[2rem] p-8 md:p-10 shadow-xl shadow-slate-200"
         >
           <button 
             onClick={() => setSelectedLevel(null)}
-            className="text-slate-400 hover:text-slate-600 flex items-center gap-1 text-sm font-bold mb-8 transition-colors"
+            className="text-slate-400 hover:text-[#1e3a8a] flex items-center gap-1 text-sm font-bold mb-8 transition-colors"
           >
             <ArrowLeft size={16} /> Change Level
           </button>
 
           <div className="text-center mb-8">
-             <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600">
+             <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-[#1e3a8a]">
                 <User size={32} />
              </div>
-             <h2 className="text-2xl font-bold text-slate-900">One Last Step</h2>
+             <h2 className="text-2xl font-bold text-[#1e3a8a]">One Last Step</h2>
              <p className="text-slate-500 mt-2">Enter your name for the certificate.</p>
           </div>
 
@@ -291,7 +292,7 @@ const MockTest = () => {
                     placeholder="e.g. Rahul Verma"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
-                    className="w-full px-5 py-4 rounded-xl bg-slate-50 border-2 border-transparent text-slate-900 font-medium placeholder-slate-400 focus:bg-white focus:border-amber-400 focus:outline-none transition-all text-lg"
+                    className="w-full px-5 py-4 rounded-xl bg-slate-50 border-2 border-transparent text-[#1e3a8a] font-medium placeholder-slate-400 focus:bg-white focus:border-[#ea580c] focus:outline-none transition-all text-lg"
                     autoFocus
                 />
             </div>
@@ -299,7 +300,7 @@ const MockTest = () => {
             <button
                 disabled={!studentName.trim()}
                 onClick={proceedToTest}
-                className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 transition-all flex items-center justify-center gap-2 text-lg"
+                className="w-full bg-[#1e3a8a] text-white font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#152865] hover:shadow-lg hover:shadow-blue-900/20 transition-all flex items-center justify-center gap-2 text-lg"
             >
                 Start Test <ChevronRight size={20} />
             </button>
@@ -319,7 +320,7 @@ const MockTest = () => {
     const selectedAnswer = answers[currentQuestion];
 
     return (
-      <div className="min-h-screen bg-[#EFEDE0] py-8 px-4 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-slate-50 py-8 px-4 flex flex-col items-center justify-center">
         <div className="max-w-3xl w-full">
           
           {/* Top Bar */}
@@ -329,20 +330,20 @@ const MockTest = () => {
                     {selectedLevel}
                 </div>
                 <div className="text-slate-400 font-medium text-sm">
-                    Question <span className="text-slate-900 font-bold">{currentQuestion + 1}</span> / {questions.length}
+                    Question <span className="text-[#1e3a8a] font-bold">{currentQuestion + 1}</span> / {questions.length}
                 </div>
              </div>
-             <div className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold border transition-colors duration-500 ${timeLeft < 60 ? 'bg-red-50 border-red-100 text-red-600' : 'bg-blue-50 border-blue-100 text-blue-600'}`}>
+             <div className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold border transition-colors duration-500 ${timeLeft < 60 ? 'bg-red-50 border-red-100 text-red-600' : 'bg-blue-50 border-blue-100 text-[#1e3a8a]'}`}>
                <Clock size={18} className={timeLeft < 60 ? "animate-pulse" : ""} /> {formatTime(timeLeft)}
              </div>
           </div>
 
           {/* Question Card */}
-          <div ref={questionCardRef} className="bg-white rounded-[2.5rem] shadow-xl overflow-hidden relative transition-all">
+          <div ref={questionCardRef} className="bg-white rounded-[2.5rem] shadow-xl overflow-hidden relative transition-all border border-slate-100">
             {/* Progress Bar */}
             <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-100">
                 <motion.div 
-                    className="h-full bg-amber-500"
+                    className="h-full bg-[#ea580c]"
                     initial={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
                     animate={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
                     transition={{ duration: 0.5 }}
@@ -350,7 +351,7 @@ const MockTest = () => {
             </div>
 
             <div className="p-8 md:p-12">
-                <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-8 leading-snug">
+                <h3 className="text-xl md:text-2xl font-bold text-[#1e3a8a] mb-8 leading-snug">
                 {question.q}
                 </h3>
 
@@ -372,16 +373,16 @@ const MockTest = () => {
                         onClick={() => selectAnswer(index)}
                         className={`group relative p-5 rounded-xl text-left border-2 transition-all duration-200 flex items-center gap-4 ${
                             selectedAnswer === index 
-                            ? 'border-amber-400 bg-amber-50 shadow-md transform scale-[1.01] z-10' 
+                            ? 'border-[#ea580c] bg-orange-50 shadow-md transform scale-[1.01] z-10' 
                             : 'border-slate-100 hover:border-slate-300 hover:bg-slate-50'
                         }`}
                     >
                         <div className={`w-8 h-8 flex-shrink-0 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-colors ${
-                            selectedAnswer === index ? 'bg-amber-400 border-amber-400 text-white' : 'bg-white border-slate-200 text-slate-400 group-hover:border-slate-400'
+                            selectedAnswer === index ? 'bg-[#ea580c] border-[#ea580c] text-white' : 'bg-white border-slate-200 text-slate-400 group-hover:border-slate-400'
                         }`}>
                             {String.fromCharCode(65 + index)}
                         </div>
-                        <span className={`text-base font-medium ${selectedAnswer === index ? 'text-slate-900' : 'text-slate-600'}`}>
+                        <span className={`text-base font-medium ${selectedAnswer === index ? 'text-[#1e3a8a]' : 'text-slate-600'}`}>
                             {option}
                         </span>
                     </button>
@@ -394,7 +395,7 @@ const MockTest = () => {
                 <button
                     onClick={previousQuestion}
                     disabled={currentQuestion === 0}
-                    className="text-slate-400 font-bold text-sm hover:text-slate-900 disabled:opacity-30 disabled:hover:text-slate-400 transition-colors flex items-center gap-2 px-4 py-2"
+                    className="text-slate-400 font-bold text-sm hover:text-[#1e3a8a] disabled:opacity-30 disabled:hover:text-slate-400 transition-colors flex items-center gap-2 px-4 py-2"
                 >
                     <ChevronLeft size={18} /> Prev
                 </button>
@@ -402,7 +403,7 @@ const MockTest = () => {
                 <button
                     onClick={nextQuestion}
                     disabled={selectedAnswer === undefined}
-                    className="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold text-sm shadow-lg shadow-slate-900/20 disabled:opacity-50 disabled:shadow-none hover:bg-slate-800 transition-all flex items-center gap-2 transform active:scale-95"
+                    className="bg-[#1e3a8a] text-white px-8 py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-900/20 disabled:opacity-50 disabled:shadow-none hover:bg-[#152865] transition-all flex items-center gap-2 transform active:scale-95"
                 >
                     {currentQuestion === questions.length - 1 ? 'Finish Test' : 'Next'}
                     <ChevronRight size={18} />
@@ -421,16 +422,16 @@ const MockTest = () => {
   // ================= VIEW 4: REVIEW MODE =================
   if (reviewMode) {
     return (
-      <div className="min-h-screen bg-[#EFEDE0] py-12 px-4">
+      <div className="min-h-screen bg-slate-50 py-12 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="sticky top-4 z-20 flex items-center justify-between mb-8 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white/20">
             <button 
               onClick={() => setReviewMode(false)}
-              className="flex items-center gap-2 text-slate-500 font-bold hover:text-slate-900 transition-colors"
+              className="flex items-center gap-2 text-slate-500 font-bold hover:text-[#1e3a8a] transition-colors"
             >
               <ArrowLeft size={18} /> Back to Results
             </button>
-            <h2 className="text-lg md:text-2xl font-bold text-slate-900">Review Answers</h2>
+            <h2 className="text-lg md:text-2xl font-bold text-[#1e3a8a]">Review Answers</h2>
           </div>
 
           <div className="space-y-6">
@@ -445,7 +446,7 @@ const MockTest = () => {
                       {qIndex + 1}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-bold text-slate-900 mb-4">{q.q}</h3>
+                      <h3 className="text-lg font-bold text-[#1e3a8a] mb-4">{q.q}</h3>
                       
                       {q.image && (
                         <div className="mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 inline-block">
@@ -481,7 +482,7 @@ const MockTest = () => {
            <div className="mt-10 text-center pb-10">
              <button 
               onClick={() => setReviewMode(false)}
-              className="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition-all"
+              className="bg-[#1e3a8a] text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-[#152865] transition-all"
              >
                Return to Summary
              </button>
@@ -496,7 +497,7 @@ const MockTest = () => {
   const result = getResult(score);
 
   return (
-    <div className="min-h-screen bg-[#EFEDE0] py-12 px-4 flex items-center justify-center">
+    <div className="min-h-screen bg-slate-50 py-12 px-4 flex items-center justify-center">
       <div className="max-w-3xl w-full">
         <motion.div 
            initial={{ opacity: 0, scale: 0.95 }}
@@ -537,7 +538,7 @@ const MockTest = () => {
             </div>
             <div className="p-6 text-center">
                <p className="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Pass Score</p>
-               <p className="text-4xl font-black text-slate-900">{result.passMark}</p>
+               <p className="text-4xl font-black text-[#1e3a8a]">{result.passMark}</p>
             </div>
           </div>
 
@@ -566,7 +567,7 @@ const MockTest = () => {
                            />
                         </div>
                         
-                        <h1 className="text-3xl font-serif font-bold text-slate-900 mb-2">Certificate of Completion</h1>
+                        <h1 className="text-3xl font-serif font-bold text-[#1e3a8a] mb-2">Certificate of Completion</h1>
                         <p className="text-slate-500 text-sm italic mb-6">Proudly presented to</p>
                         
                         <h2 className="text-4xl font-serif font-bold text-[#C5A059] mb-2 border-b-2 border-slate-100 inline-block pb-2 px-10">
@@ -574,7 +575,7 @@ const MockTest = () => {
                         </h2>
                         
                         <p className="text-slate-600 text-sm mt-6 leading-relaxed">
-                            For successfully passing the <strong className="text-slate-900">RTO Driving Mock Test</strong> <br/> with a score of <strong>{score}/20</strong>.
+                            For successfully passing the <strong className="text-[#1e3a8a]">RTO Driving Mock Test</strong> <br/> with a score of <strong>{score}/20</strong>.
                         </p>
 
                         <div className="mt-8 pt-6 border-t border-slate-200 flex justify-between items-end text-xs text-slate-400 font-bold uppercase tracking-widest">
@@ -587,7 +588,7 @@ const MockTest = () => {
                 <button 
                     onClick={downloadCertificate}
                     disabled={isGenerating}
-                    className="mt-8 flex items-center gap-2 px-8 py-3.5 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-all font-bold shadow-xl shadow-slate-900/20 transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-wait"
+                    className="mt-8 flex items-center gap-2 px-8 py-3.5 bg-[#1e3a8a] text-white rounded-xl hover:bg-[#152865] transition-all font-bold shadow-xl shadow-blue-900/20 transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-wait"
                 >
                     {isGenerating ? <Loader2 size={18} className="animate-spin" /> : <Download size={18} />}
                     {isGenerating ? 'Generating...' : 'Download High-Res Certificate'}
@@ -599,7 +600,7 @@ const MockTest = () => {
           <div className="p-8 bg-white flex flex-col sm:flex-row justify-center gap-4">
             <button 
                 onClick={() => setReviewMode(true)}
-                className="flex items-center justify-center gap-2 px-6 py-3.5 bg-white border-2 border-slate-100 text-slate-600 rounded-xl hover:border-amber-400 hover:text-amber-500 font-bold transition-all"
+                className="flex items-center justify-center gap-2 px-6 py-3.5 bg-white border-2 border-slate-100 text-slate-600 rounded-xl hover:border-[#ea580c] hover:text-[#ea580c] font-bold transition-all"
             >
                 <Eye size={18} /> Review Mistakes
             </button>

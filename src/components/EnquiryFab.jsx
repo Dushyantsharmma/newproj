@@ -21,9 +21,9 @@ const PICKUP_LOCATIONS = [
   "Sarkol"
 ];
 
-// --- SUB-COMPONENTS ---
+// --- SUB-COMPONENTS (Light Theme Updated) ---
 
-const GenderPill = ({ label, value, colorClass, currentValue, onClick }) => {
+const GenderPill = ({ label, value, currentValue, onClick }) => {
   const isSelected = currentValue === value;
   return (
     <button
@@ -31,14 +31,14 @@ const GenderPill = ({ label, value, colorClass, currentValue, onClick }) => {
       onClick={() => onClick('gender', value)}
       className={`relative px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 border flex-1 text-center whitespace-nowrap ${
         isSelected
-          ? `${colorClass} shadow-[0_0_15px_rgba(0,0,0,0.2)] scale-[1.02] border-transparent ring-1 ring-white/20`
-          : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:border-slate-500 hover:bg-slate-800'
+          ? `bg-orange-50 text-[#ea580c] border-[#ea580c] shadow-sm scale-[1.02]`
+          : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
       }`}
     >
       {isSelected && (
         <motion.div
           layoutId="gender-highlight"
-          className="absolute inset-0 rounded-xl bg-white/10"
+          className="absolute inset-0 rounded-xl bg-[#ea580c]/5"
           initial={false}
           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
         />
@@ -48,7 +48,7 @@ const GenderPill = ({ label, value, colorClass, currentValue, onClick }) => {
   );
 };
 
-const SkillPill = ({ label, value, colorClass, currentValue, onClick }) => {
+const SkillPill = ({ label, value, currentValue, onClick }) => {
   const isSelected = currentValue === value;
   return (
     <button
@@ -56,14 +56,14 @@ const SkillPill = ({ label, value, colorClass, currentValue, onClick }) => {
       onClick={() => onClick('skillLevel', value)}
       className={`relative px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 border flex-1 sm:flex-none text-center whitespace-nowrap ${
         isSelected
-          ? `${colorClass} shadow-[0_0_15px_rgba(0,0,0,0.2)] scale-[1.02] border-transparent ring-1 ring-white/20`
-          : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:border-slate-500 hover:bg-slate-800'
+          ? `bg-orange-50 text-[#ea580c] border-[#ea580c] shadow-sm scale-[1.02]`
+          : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
       }`}
     >
       {isSelected && (
         <motion.div
           layoutId="skill-highlight"
-          className="absolute inset-0 rounded-xl bg-white/10"
+          className="absolute inset-0 rounded-xl bg-[#ea580c]/5"
           initial={false}
           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
         />
@@ -73,17 +73,17 @@ const SkillPill = ({ label, value, colorClass, currentValue, onClick }) => {
   );
 };
 
-const TimePill = ({ label, value, colorClass, currentValue, onClick, isFull }) => {
+const TimePill = ({ label, value, currentValue, onClick, isFull }) => {
   const isSelected = currentValue === value;
   
   if (isFull) {
     return (
-      <div className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-bold bg-slate-900/30 border border-slate-800 text-slate-600 cursor-not-allowed opacity-70">
+      <div className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-bold bg-slate-100 border border-slate-200 text-slate-400 cursor-not-allowed">
         <span className="flex items-center gap-3">
           <Lock size={16} />
           {label}
         </span>
-        <span className="text-[10px] uppercase tracking-wider font-bold text-red-900/50 bg-red-500/10 px-2 py-1 rounded">Full</span>
+        <span className="text-[10px] uppercase tracking-wider font-bold text-red-600 bg-red-100 px-2 py-1 rounded">Full</span>
       </div>
     );
   }
@@ -94,18 +94,18 @@ const TimePill = ({ label, value, colorClass, currentValue, onClick, isFull }) =
       onClick={() => onClick('timeSlot', value)}
       className={`group relative w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 border ${
         isSelected
-          ? `${colorClass} shadow-lg translate-x-1 border-transparent ring-1 ring-white/10`
-          : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800 hover:border-slate-600'
+          ? `bg-[#1e3a8a] text-white border-[#1e3a8a] shadow-md translate-x-1`
+          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300'
       }`}
     >
       <span className="flex items-center gap-3">
-        {isSelected ? <CheckCircle2 size={16} /> : <div className="w-4" />}
+        {isSelected ? <CheckCircle2 size={16} className="text-[#ea580c]" /> : <div className="w-4" />}
         {label}
       </span>
       {isSelected && (
         <motion.div
           layoutId="time-highlight"
-          className="absolute right-4 w-2 h-2 rounded-full bg-white animate-pulse"
+          className="absolute right-4 w-2 h-2 rounded-full bg-[#ea580c] animate-pulse"
         />
       )}
     </button>
@@ -133,7 +133,7 @@ const EnquiryFab = () => {
     dateOfBirth: '',
     skillLevel: 'Beginner (Never Driven)',
     timeSlot: 'Morning (8 AM - 11 AM)',
-    pickupLocation: '', // Empty by default
+    pickupLocation: '', 
     website_honey: '' 
   });
 
@@ -265,14 +265,14 @@ Please confirm if this slot is available.`;
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="group flex items-center justify-center h-14 w-52 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 rounded-full shadow-[0_8px_30px_rgb(251,191,36,0.4)] pr-6 pl-4 gap-3 border-2 border-white/20 backdrop-blur-md"
+          className="group flex items-center justify-center h-14 w-52 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-full shadow-[0_8px_30px_rgb(234,88,12,0.4)] pr-6 pl-4 gap-3 transition-all"
           style={{ minWidth: 208, minHeight: 56 }}
         >
           <div className="relative">
             <span className="absolute inset-0 bg-white/40 rounded-full animate-ping opacity-75" />
             <FileSignature size={24} className="relative z-10" />
           </div>
-          <span className="font-bold text-sm tracking-wide uppercase text-[#0f172a]">Book Slot</span>
+          <span className="font-bold text-sm tracking-wide uppercase">Enroll Now</span>
         </motion.button>
       </div>
 
@@ -284,7 +284,7 @@ Please confirm if this slot is available.`;
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="absolute inset-0 bg-slate-950/60 backdrop-blur-md"
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
 
             <motion.div
@@ -292,27 +292,28 @@ Please confirm if this slot is available.`;
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-lg bg-[#0f172a] border border-slate-800/60 sm:rounded-3xl rounded-t-3xl shadow-2xl shadow-black/50 overflow-hidden max-h-[90vh] flex flex-col"
+              className="relative w-full max-w-lg bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-200"
             >
-              <div className="px-6 py-5 border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl flex justify-between items-start">
+              {/* HEADER: Navy Blue */}
+              <div className="px-6 py-5 border-b border-slate-100 bg-[#1e3a8a] flex justify-between items-start">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="bg-amber-500/10 text-amber-500 p-1.5 rounded-lg">
+                    <span className="bg-[#ea580c] text-white p-1.5 rounded-lg">
                       <Gauge size={18} />
                     </span>
                     <h2 className="text-xl font-bold text-white tracking-tight">Driving Admission</h2>
                   </div>
-                  <p className="text-xs font-medium text-slate-400 ml-1">Secure your training slot today</p>
+                  <p className="text-xs font-medium text-blue-200 ml-1">Secure your training slot today</p>
                 </div>
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="p-2 bg-slate-800/50 hover:bg-slate-700 rounded-full text-slate-400 hover:text-white transition-colors"
+                  className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
                 >
                   <X size={20} />
                 </button>
               </div>
 
-              <div className="p-6 overflow-y-auto custom-scrollbar bg-gradient-to-b from-[#0f172a] to-[#020617]">
+              <div className="p-6 overflow-y-auto custom-scrollbar bg-slate-50">
                 {step === 'form' && (
                   <form onSubmit={handleSubmit} className="space-y-8">
                     
@@ -328,8 +329,8 @@ Please confirm if this slot is available.`;
 
                     <div className="space-y-5">
                       <div className="space-y-2">
-                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
-                          <User size={12} /> Candidate Name
+                        <label className="text-[11px] font-bold text-[#1e3a8a] uppercase tracking-widest ml-1 flex items-center gap-1">
+                          <User size={12} className="text-[#ea580c]" /> Candidate Name
                         </label>
                         <div className="relative group">
                           <input
@@ -338,7 +339,7 @@ Please confirm if this slot is available.`;
                             required
                             value={formData.fullName}
                             onChange={handleChange}
-                            className="w-full bg-slate-800/40 border border-slate-700/60 text-white rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all placeholder:text-slate-600 font-medium"
+                            className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all placeholder:text-slate-400 font-medium"
                             placeholder="e.g. Dushyant Sharma"
                           />
                         </div>
@@ -346,8 +347,8 @@ Please confirm if this slot is available.`;
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div className="space-y-2">
-                          <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
-                            <Phone size={12} /> WhatsApp
+                          <label className="text-[11px] font-bold text-[#1e3a8a] uppercase tracking-widest ml-1 flex items-center gap-1">
+                            <Phone size={12} className="text-[#ea580c]" /> WhatsApp
                           </label>
                           <div className="relative group">
                             <input
@@ -359,16 +360,16 @@ Please confirm if this slot is available.`;
                               pattern="[0-9]{10}"
                               value={formData.mobileNumber}
                               onChange={handleChange}
-                              className={`w-full bg-slate-800/40 border ${error ? 'border-red-500/50 ring-2 ring-red-500/10' : 'border-slate-700/60'} text-white rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all placeholder:text-slate-600 font-medium tracking-wider`}
+                              className={`w-full bg-white border ${error ? 'border-red-500 ring-2 ring-red-50' : 'border-slate-200'} text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all placeholder:text-slate-400 font-medium tracking-wider`}
                               placeholder="9876543210"
                             />
                           </div>
-                          {error && <p className="text-red-400 text-xs ml-1 font-medium animate-pulse">{error}</p>}
+                          {error && <p className="text-red-500 text-xs ml-1 font-medium animate-pulse">{error}</p>}
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
-                            <CalendarDays size={12} /> Birth Date
+                          <label className="text-[11px] font-bold text-[#1e3a8a] uppercase tracking-widest ml-1 flex items-center gap-1">
+                            <CalendarDays size={12} className="text-[#ea580c]" /> Birth Date
                           </label>
                           <div className="relative group">
                             <input
@@ -378,41 +379,41 @@ Please confirm if this slot is available.`;
                               max={new Date().toISOString().split("T")[0]}
                               value={formData.dateOfBirth}
                               onChange={handleChange}
-                              className="w-full bg-slate-800/40 border border-slate-700/60 text-white rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all [color-scheme:dark] font-medium"
+                              className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all font-medium"
                             />
                           </div>
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
-                          <Users size={12} /> Gender
+                        <label className="text-[11px] font-bold text-[#1e3a8a] uppercase tracking-widest ml-1 flex items-center gap-1">
+                          <Users size={12} className="text-[#ea580c]" /> Gender
                         </label>
                         <div className="flex gap-3">
-                          <GenderPill label="Male" value="Male" currentValue={formData.gender} onClick={handlePillChange} colorClass="bg-blue-500/20 text-blue-400 border-blue-500/50" />
-                          <GenderPill label="Female" value="Female" currentValue={formData.gender} onClick={handlePillChange} colorClass="bg-pink-500/20 text-pink-400 border-pink-500/50" />
-                          <GenderPill label="Other" value="Other" currentValue={formData.gender} onClick={handlePillChange} colorClass="bg-purple-500/20 text-purple-400 border-purple-500/50" />
+                          <GenderPill label="Male" value="Male" currentValue={formData.gender} onClick={handlePillChange} />
+                          <GenderPill label="Female" value="Female" currentValue={formData.gender} onClick={handlePillChange} />
+                          <GenderPill label="Other" value="Other" currentValue={formData.gender} onClick={handlePillChange} />
                         </div>
                       </div>
                     </div>
 
-                    <div className="h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent w-full" />
+                    <div className="h-px bg-slate-200 w-full" />
 
                     <div className="space-y-6">
                       <div className="space-y-3">
-                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
-                          <Gauge size={12} /> Experience Level
+                        <label className="text-[11px] font-bold text-[#1e3a8a] uppercase tracking-widest ml-1 flex items-center gap-1">
+                          <Gauge size={12} className="text-[#ea580c]" /> Experience Level
                         </label>
                         <div className="flex flex-wrap gap-3">
-                          <SkillPill label="Beginner" value="Beginner (Never Driven)" currentValue={formData.skillLevel} onClick={handlePillChange} colorClass="bg-emerald-900/40 text-emerald-400 border-emerald-500/50" />
-                          <SkillPill label="Learner" value="Some Experience" currentValue={formData.skillLevel} onClick={handlePillChange} colorClass="bg-lime-900/40 text-lime-400 border-lime-500/50" />
-                          <SkillPill label="Refresher" value="Refresher (Long Break)" currentValue={formData.skillLevel} onClick={handlePillChange} colorClass="bg-cyan-900/40 text-cyan-400 border-cyan-500/50" />
+                          <SkillPill label="Beginner" value="Beginner (Never Driven)" currentValue={formData.skillLevel} onClick={handlePillChange} />
+                          <SkillPill label="Learner" value="Some Experience" currentValue={formData.skillLevel} onClick={handlePillChange} />
+                          <SkillPill label="Refresher" value="Refresher (Long Break)" currentValue={formData.skillLevel} onClick={handlePillChange} />
                         </div>
                       </div>
 
                       <div className="space-y-3">
-                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
-                          <Clock size={12} /> Preferred Time
+                        <label className="text-[11px] font-bold text-[#1e3a8a] uppercase tracking-widest ml-1 flex items-center gap-1">
+                          <Clock size={12} className="text-[#ea580c]" /> Preferred Time
                         </label>
                         <div className="space-y-3">
                           <TimePill 
@@ -420,7 +421,6 @@ Please confirm if this slot is available.`;
                             value="Morning (8 AM - 11 AM)" 
                             currentValue={formData.timeSlot}
                             onClick={handlePillChange}
-                            colorClass="bg-blue-900/40 text-blue-300 border-blue-500/50"
                             isFull={!availability["Morning (8 AM - 11 AM)"]}
                           />
                           <TimePill 
@@ -428,7 +428,6 @@ Please confirm if this slot is available.`;
                             value="Afternoon (12 PM - 4 PM)" 
                             currentValue={formData.timeSlot}
                             onClick={handlePillChange}
-                            colorClass="bg-indigo-900/40 text-indigo-300 border-indigo-500/50"
                             isFull={!availability["Afternoon (12 PM - 4 PM)"]}
                           />
                           <TimePill 
@@ -436,16 +435,15 @@ Please confirm if this slot is available.`;
                             value="Evening (5 PM - 7 PM)" 
                             currentValue={formData.timeSlot}
                             onClick={handlePillChange}
-                            colorClass="bg-violet-900/40 text-violet-300 border-violet-500/50"
                             isFull={!availability["Evening (5 PM - 7 PM)"]}
                           />
                         </div>
                       </div>
 
-                      {/* ✅ UPDATED PICKUP LOCATION DROPDOWN */}
+                      {/* PICKUP LOCATION DROPDOWN */}
                       <div className="space-y-2">
-                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1">
-                          <MapPin size={12} /> Pickup Location
+                        <label className="text-[11px] font-bold text-[#1e3a8a] uppercase tracking-widest ml-1 flex items-center gap-1">
+                          <MapPin size={12} className="text-[#ea580c]" /> Pickup Location
                         </label>
                         <div className="relative group">
                           <select
@@ -453,16 +451,16 @@ Please confirm if this slot is available.`;
                             required
                             value={formData.pickupLocation}
                             onChange={handleChange}
-                            className="w-full bg-slate-800/40 border border-slate-700/60 text-white rounded-xl py-3.5 pl-4 pr-10 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50 outline-none transition-all font-medium appearance-none cursor-pointer"
+                            className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl py-3.5 pl-4 pr-10 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all font-medium appearance-none cursor-pointer"
                           >
-                            <option value="" disabled className="text-slate-500 bg-slate-900">Select a location</option>
+                            <option value="" disabled className="text-slate-400">Select a location</option>
                             {PICKUP_LOCATIONS.map((loc) => (
-                              <option key={loc} value={loc} className="bg-slate-900 text-slate-300">
+                              <option key={loc} value={loc} className="text-slate-900">
                                 {loc}
                               </option>
                             ))}
                           </select>
-                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                             <ChevronDown size={16} />
                           </div>
                         </div>
@@ -471,10 +469,10 @@ Please confirm if this slot is available.`;
 
                     <button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-[#0f172a] font-extrabold py-4 rounded-xl shadow-lg shadow-amber-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4 group"
+                      className="w-full bg-[#1e3a8a] hover:bg-[#152865] text-white font-extrabold py-4 rounded-xl shadow-lg shadow-blue-900/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4 group"
                     >
                       <span>Confirm Booking</span>
-                      <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+                      <Send size={18} className="group-hover:translate-x-1 transition-transform text-[#ea580c]" />
                     </button>
                   </form>
                 )}
@@ -482,12 +480,12 @@ Please confirm if this slot is available.`;
                 {step === 'submitting' && (
                   <div className="flex flex-col items-center justify-center py-20 text-center space-y-6">
                     <div className="relative">
-                      <div className="absolute inset-0 bg-amber-500/20 blur-xl rounded-full" />
-                      <Loader2 size={64} className="text-amber-400 animate-spin relative z-10" />
+                      <div className="absolute inset-0 bg-[#ea580c]/20 blur-xl rounded-full" />
+                      <Loader2 size={64} className="text-[#ea580c] animate-spin relative z-10" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-white">Saving Registration...</h3>
-                      <p className="text-slate-400 text-sm">Please wait while we record your details securely.</p>
+                      <h3 className="text-2xl font-bold text-[#1e3a8a]">Saving Registration...</h3>
+                      <p className="text-slate-500 text-sm">Please wait while we record your details securely.</p>
                     </div>
                   </div>
                 )}
@@ -498,20 +496,20 @@ Please confirm if this slot is available.`;
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                      className={`w-24 h-24 rounded-full flex items-center justify-center border-4 shadow-2xl ${
+                      className={`w-24 h-24 rounded-full flex items-center justify-center border-4 shadow-xl ${
                         isOfflineMode 
-                          ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' 
-                          : 'bg-green-500/10 border-green-500/30 text-green-500'
+                          ? 'bg-orange-50 border-orange-100 text-[#ea580c]' 
+                          : 'bg-green-50 border-green-100 text-green-500'
                       }`}
                     >
                       {isOfflineMode ? <WifiOff size={40} /> : <FaWhatsapp size={48} />}
                     </motion.div>
                     
-                    <div className="space-y-3 bg-slate-800/30 p-6 rounded-2xl border border-slate-700/50 w-full">
-                      <h3 className={`text-2xl font-bold ${isOfflineMode ? 'text-amber-400' : 'text-green-400'}`}>
+                    <div className="space-y-3 bg-white p-6 rounded-2xl border border-slate-200 w-full shadow-sm">
+                      <h3 className={`text-2xl font-bold ${isOfflineMode ? 'text-[#ea580c]' : 'text-[#1e3a8a]'}`}>
                         {isOfflineMode ? "Connection Weak" : "Registration Saved!"}
                       </h3>
-                      <p className="text-slate-300 text-sm leading-relaxed">
+                      <p className="text-slate-600 text-sm leading-relaxed">
                         {isOfflineMode 
                           ? "We couldn't reach the server, but your data is safe. Please click below to send the details directly via WhatsApp." 
                           : "We have received your details in our system. Please click below to send the final confirmation via WhatsApp."}
@@ -529,7 +527,7 @@ Please confirm if this slot is available.`;
 
                       <button 
                         onClick={() => setIsOpen(false)}
-                        className="text-slate-500 text-sm font-medium hover:text-slate-300 transition-colors py-2"
+                        className="text-slate-500 text-sm font-medium hover:text-[#1e3a8a] transition-colors py-2"
                       >
                         Close Window
                       </button>

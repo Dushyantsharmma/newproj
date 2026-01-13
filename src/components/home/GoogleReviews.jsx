@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useAnimationControls } from "framer-motion";
 import { FaGoogle, FaStar, FaQuoteRight } from "react-icons/fa";
-import { CheckCircle2, Star, User } from "lucide-react";
+import { CheckCircle2, Star } from "lucide-react";
 
 const reviews = [
   {
@@ -86,23 +86,23 @@ const GoogleReviews = () => {
   }, [width, controls]);
 
   return (
-    <section className="relative py-20 bg-[#EFEDE0] overflow-hidden">
+    <section className="relative py-20 bg-slate-50 overflow-hidden font-sans border-y border-slate-200">
       {/* Background Texture */}
       <div className="absolute inset-0 opacity-[0.03]" 
-           style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '32px 32px' }} 
+           style={{ backgroundImage: 'radial-gradient(#1e3a8a 1px, transparent 1px)', backgroundSize: '32px 32px' }} 
       />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* HEADER */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-amber-600 text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-[#ea580c] text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
             <Star size={14} className="fill-current" />
             Student Success Stories
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-            Trusted by <span className="text-amber-600">Himachal's Drivers</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mb-6">
+            Trusted by <span className="text-[#ea580c]">Himachal's Drivers</span>
           </h2>
           
           {/* Trust Badge */}
@@ -110,7 +110,7 @@ const GoogleReviews = () => {
             <FaGoogle className="text-2xl text-slate-700" />
             <div className="h-8 w-px bg-slate-200"></div>
             <div className="text-left">
-              <div className="flex items-center gap-1 text-amber-500 text-lg">
+              <div className="flex items-center gap-1 text-[#ea580c] text-lg">
                 <span className="font-bold text-slate-900">5.0</span>
                 {[...Array(5)].map((_, i) => <FaStar key={i} />)}
               </div>
@@ -122,8 +122,8 @@ const GoogleReviews = () => {
         {/* MARQUEE CAROUSEL */}
         <div className="relative -mx-6 md:-mx-0">
           {/* Fade Edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#EFEDE0] to-transparent z-20 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#EFEDE0] to-transparent z-20 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-20 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-20 pointer-events-none" />
 
           <motion.div 
             ref={carousel} 
@@ -141,38 +141,38 @@ const GoogleReviews = () => {
               {[...reviews, ...reviews].map((review, idx) => ( // Duplicate for seamless loop
                 <div 
                   key={idx}
-                  className="w-[320px] md:w-[380px] bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex-shrink-0 relative group"
+                  className="w-[320px] md:w-[380px] bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex-shrink-0 relative group hover:border-[#ea580c]/30"
                 >
                   {/* Quote Icon */}
-                  <div className="absolute top-6 right-6 text-slate-100 group-hover:text-amber-50 transition-colors duration-300">
+                  <div className="absolute top-6 right-6 text-slate-100 group-hover:text-orange-50 transition-colors duration-300">
                     <FaQuoteRight size={40} />
                   </div>
 
                   {/* Reviewer Info */}
                   <div className="flex items-center gap-4 mb-6 relative z-10">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${review.color}`}>
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg border border-slate-100 shadow-sm ${review.color}`}>
                       {review.initial}
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 text-lg leading-tight">{review.name}</h4>
-                      <div className="flex gap-0.5 text-amber-400 text-xs mt-1">
+                      <h4 className="font-bold text-[#1e3a8a] text-lg leading-tight">{review.name}</h4>
+                      <div className="flex gap-0.5 text-[#ea580c] text-xs mt-1">
                         {[...Array(5)].map((_, i) => <FaStar key={i} />)}
                       </div>
                     </div>
                   </div>
 
                   {/* Review Text */}
-                  <p className="text-slate-600 text-base leading-relaxed mb-6 min-h-[80px]">
+                  <p className="text-slate-600 text-base leading-relaxed mb-6 min-h-[80px] font-medium">
                     "{review.text}"
                   </p>
 
                   {/* Footer */}
                   <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
-                    <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">
                       {review.date}
                     </span>
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-100">
-                      <CheckCircle2 size={12} />
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full border border-green-100">
+                      <CheckCircle2 size={12} className="text-green-600" />
                       Verified
                     </div>
                   </div>
@@ -188,7 +188,7 @@ const GoogleReviews = () => {
             href="https://g.page/r/YOUR_GOOGLE_MAPS_LINK" // Replace with actual link
             target="_blank" 
             rel="noreferrer"
-            className="inline-flex items-center gap-2 text-slate-500 hover:text-amber-600 font-medium transition-colors text-sm border-b border-slate-300 hover:border-amber-600 pb-0.5"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-[#ea580c] font-bold transition-colors text-sm border-b border-slate-300 hover:border-[#ea580c] pb-0.5"
           >
             Read all reviews on Google Maps
           </a>

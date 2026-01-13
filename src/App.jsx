@@ -1,11 +1,10 @@
-
 import { Suspense, lazy } from "react";
-import GoogleTranslate from "./components/common/GoogleTranslate";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navigation from "./components/layout/Navigation";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import EnquiryFab from './components/EnquiryFab';
+import About from "./pages/About";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const CoursesPage = lazy(() => import("./pages/CoursesPage"));
@@ -13,21 +12,24 @@ const StudentCornerPage = lazy(() => import("./pages/StudentCornerPage"));
 const GalleryPage = lazy(() => import("./pages/GalleryPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 
-
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f6f4ec] text-slate-900 transition-colors duration-300">
-      {/* Google Translate at the top level for whole site */}
-      <div style={{ position: 'fixed', top: 10, right: 10, zIndex: 9999 }}>
-        <GoogleTranslate />
-      </div>
+    // Updated background to bg-slate-50 for the clean light theme
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-[#ea580c] selection:text-white">
+      
       <Navigation />
       <ScrollToTop />
+      
       {/* Main Content */}
       <main className="flex-1 pt-[64px] lg:pt-0">
-        <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center text-[#1e3a8a] font-bold">
+            Loading...
+          </div>
+        }>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About />} />
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/student-corner" element={<StudentCornerPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
@@ -37,6 +39,7 @@ function App() {
           </Routes>
         </Suspense>
       </main>
+      
       <EnquiryFab />
       <Footer />
     </div>

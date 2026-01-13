@@ -33,7 +33,7 @@ const SIGNS = [
   {
     id: "oil",
     label: "Oil Pressure",
-    icon: AlertTriangle, // Replaced Oil with AlertTriangle
+    icon: AlertTriangle,
     meaning: "Low engine oil pressure.",
     action: "Stop engine and check oil level.",
     type: "critical"
@@ -97,9 +97,10 @@ const SIGNS = [
 ];
 
 const colorMap = {
-  critical: "bg-red-500 text-white",
-  warning: "bg-amber-500 text-white",
-  info: "bg-blue-500 text-white"
+  critical: "bg-red-500 text-white shadow-red-500/50",
+  // Using Brand Orange for Warnings
+  warning: "bg-[#ea580c] text-white shadow-orange-500/50",
+  info: "bg-blue-500 text-white shadow-blue-500/50"
 };
 
 const DashboardTrainer = () => {
@@ -107,68 +108,86 @@ const DashboardTrainer = () => {
 
   const getIcon = (type) => {
     if (type === "critical") return <XCircle className="text-red-500" />;
-    if (type === "warning") return <AlertCircle className="text-amber-500" />;
+    if (type === "warning") return <AlertCircle className="text-[#ea580c]" />;
     return <Info className="text-blue-500" />;
   };
 
   return (
-    <section className="bg-[#EFEDE0] rounded-3xl p-6 md:p-10">
-      <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h3 className="text-2xl font-bold flex items-center gap-2">
-            <Gauge className="text-amber-500" /> Dashboard Warning Lights
-          </h3>
-          <p className="text-sm text-slate-500">
-            Tap a symbol to understand what it means.
-          </p>
-        </div>
+    <section className="bg-white rounded-[2.5rem] p-6 md:p-10 border border-slate-200 shadow-xl">
+      <div className="mb-8 flex flex-col gap-2">
+        <h3 className="text-2xl md:text-3xl font-extrabold flex items-center gap-3 text-[#1e3a8a]">
+          <Gauge className="text-[#ea580c]" size={32} /> 
+          Dashboard Warning Lights
+        </h3>
+        <p className="text-sm text-slate-600 pl-1">
+          Tap a symbol below to understand what it means and what action to take.
+        </p>
       </div>
 
-      {/* SYMBOL GRID */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 bg-slate-900 p-6 rounded-2xl shadow-xl">
+      {/* SYMBOL GRID (Dark Dashboard Look) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 bg-[#0f172a] p-8 rounded-3xl shadow-inner border border-slate-800 relative overflow-hidden">
+        {/* Decorative Gloss Effect */}
+        <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+
         {SIGNS.map((s) => {
           const Icon = s.icon;
+          const isActive = active?.id === s.id;
+          
           return (
             <button
               key={s.id}
               onClick={() => setActive(s)}
-              className={`flex flex-col items-center justify-center p-4 rounded-xl shadow-lg hover:scale-105 transition-all ${colorMap[s.type]}`}
+              className={`
+                relative flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-300
+                ${isActive 
+                  ? `${colorMap[s.type]} scale-110 shadow-lg ring-2 ring-white/50` 
+                  : "bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                }
+              `}
             >
-              <Icon size={36} />
-              <span className="mt-2 text-xs font-bold">{s.label}</span>
+              <Icon size={32} strokeWidth={isActive ? 2.5 : 2} />
+              <span className={`mt-3 text-[10px] font-bold uppercase tracking-wider ${isActive ? "opacity-100" : "opacity-60"}`}>
+                {s.label}
+              </span>
             </button>
           );
         })}
       </div>
 
       {/* DETAILS PANEL */}
-      <div className="mt-8 min-h-[140px]">
+      <div className="mt-8 min-h-[160px]">
         {active ? (
           <div
-            className={`p-6 rounded-2xl border-l-4 ${
+            className={`p-6 rounded-2xl border-l-8 shadow-lg transition-all duration-300 animate-fade-in-up ${
               active.type === "critical"
                 ? "bg-red-50 border-red-500"
                 : active.type === "warning"
-                ? "bg-amber-50 border-amber-500"
+                ? "bg-orange-50 border-[#ea580c]"
                 : "bg-blue-50 border-blue-500"
             }`}
           >
-            <div className="flex gap-4">
-              <div className="p-3 bg-white rounded-full shadow">
+            <div className="flex gap-5 items-start">
+              <div className="p-4 bg-white rounded-full shadow-sm shrink-0">
                 {getIcon(active.type)}
               </div>
               <div>
-                <h4 className="text-lg font-bold">{active.label}</h4>
-                <p className="text-sm text-slate-700 mb-2">{active.meaning}</p>
-                <p className="text-sm font-bold text-slate-900">
-                  Action: {active.action}
-                </p>
+                <h4 className={`text-xl font-extrabold mb-1 ${
+                    active.type === "critical" ? "text-red-600" : active.type === "warning" ? "text-[#ea580c]" : "text-blue-600"
+                }`}>
+                    {active.label}
+                </h4>
+                <p className="text-slate-700 font-medium mb-3">{active.meaning}</p>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-lg border border-slate-200 text-sm font-bold text-[#1e3a8a] shadow-sm">
+                   <span className="uppercase text-[10px] tracking-wider text-slate-400">Action:</span> 
+                   {active.action}
+                </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="bg-slate-100 p-6 rounded-xl text-center text-slate-500">
-            Select a warning symbol above to learn what it means.
+          <div className="bg-slate-50 border border-slate-200 p-8 rounded-2xl text-center flex flex-col items-center justify-center h-full text-slate-400 dashed-border">
+            <Info size={32} className="mb-2 opacity-50" />
+            <p>Select a warning symbol above to view details.</p>
           </div>
         )}
       </div>

@@ -1,5 +1,16 @@
 import { useState } from "react";
-import { MapPin, Phone, Clock, FileText, User, FileBadge, ArrowRight, Wallet, Navigation, Info } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Clock,
+  FileText,
+  User,
+  FileBadge,
+  Wallet,
+  Navigation,
+  ShieldCheck,
+  Info
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SEO from "../SEO";
 
@@ -9,240 +20,218 @@ export default function RTOInfo() {
   const rto = {
     code: "HP-30",
     city: "Karsog",
-    address: "Mini Secretariat, SDM Office, Karsog, Mandi, HP – 175011",
+    address: "Mini Secretariat, SDM Office, Karsog, Mandi (HP) – 175011",
     phone: "01907-222236",
-    timings: "10:00 AM – 5:00 PM",
+    timings: "Mon–Fri 10:00 AM – 5:00 PM",
   };
 
   const tabs = [
-    { id: "process", label: "Step-by-Step Process", icon: Navigation },
-    { id: "documents", label: "Required Documents", icon: FileText },
-    { id: "fees", label: "Fee Structure", icon: Wallet },
-    { id: "route", label: "Test Track Map", icon: MapPin },
+    { id: "process", label: "How to Apply", icon: Navigation },
+    { id: "documents", label: "Documents", icon: FileText },
+    { id: "fees", label: "Fees", icon: Wallet },
+    { id: "rules", label: "Test Rules", icon: ShieldCheck },
+    { id: "route", label: "Test Track", icon: MapPin },
   ];
 
   return (
-    <div className="bg-[#FDFCF8] min-h-screen font-sans text-slate-800 selection:bg-amber-200">
+    <div className="bg-slate-50 min-h-screen text-slate-800">
       <SEO
-        title="Karsog RTO (HP-30) – Ultimate License Guide"
-        description="Complete guide for Learner & Driving License at SDM Office Karsog (HP-30). Fees, documents, and test track details."
+        title="Karsog RTO HP-30 | Driving License Guide"
+        description="Complete RTO guide for Karsog HP-30. Process, documents, fees, rules and test track."
         canonical="https://rajannrajdrivingschool.com/rto"
       />
 
-      {/* 1. MODERN HEADER WITH GLASS EFFECT */}
-      <div className="relative bg-white pt-20 pb-24 overflow-hidden border-b border-slate-100">
-        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-amber-50/50 to-transparent pointer-events-none" />
-        <div className="absolute right-0 top-0 w-[500px] h-[500px] bg-amber-100/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-        
-        <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-bold uppercase tracking-widest mb-6 shadow-xl shadow-slate-200"
-          >
-            Official Code • {rto.code}
-          </motion.div>
-          
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-6">
-            {rto.city} <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">RTO Guide</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            Your comprehensive handbook for obtaining a driving license at the <strong>Registering & Licensing Authority, {rto.city}</strong>.
-          </p>
+      {/* HEADER */}
+      <div className="bg-white border-b border-slate-200 pt-24 pb-10">
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 bg-orange-50 text-[#ea580c] px-4 py-2 rounded-full text-xs font-bold mb-4 border border-orange-100">
+              RTO Code {rto.code}
+            </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a]">
+              {rto.city} Regional Transport Office
+            </h1>
+            <p className="mt-4 text-slate-600 max-w-xl text-lg">
+              Official information hub for Learner License & Driving License for Karsog (HP-30).
+            </p>
 
-          {/* Quick Stats Bar */}
-          <div className="mt-12 flex flex-wrap justify-center gap-4 md:gap-12">
-            {[
-              { icon: MapPin, label: "Location", val: "Mini Secretariat" },
-              { icon: Phone, label: "Helpline", val: rto.phone },
-              { icon: Clock, label: "Hours", val: rto.timings },
-            ].map((stat, i) => (
-              <div key={i} className="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-slate-100 shadow-sm">
-                <div className="p-2 bg-slate-50 rounded-lg text-slate-600">
-                  <stat.icon className="w-5 h-5" />
-                </div>
-                <div className="text-left">
-                  <div className="text-xs text-slate-400 font-medium uppercase">{stat.label}</div>
-                  <div className="font-semibold text-slate-900">{stat.val}</div>
-                </div>
+            <div className="mt-6 flex flex-wrap gap-4 text-sm">
+              <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-xl text-slate-700">
+                <MapPin size={16} className="text-[#ea580c]" /> {rto.address}
               </div>
-            ))}
+              <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-xl text-slate-700">
+                <Phone size={16} className="text-[#ea580c]" /> {rto.phone}
+              </div>
+              <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-xl text-slate-700">
+                <Clock size={16} className="text-[#ea580c]" /> {rto.timings}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#1e3a8a] text-white rounded-2xl p-8 shadow-xl relative overflow-hidden">
+             {/* Decor */}
+             <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+             
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#ea580c]">
+              <Info size={20} /> Important Notes
+            </h3>
+            <ul className="space-y-3 text-sm text-blue-100 font-medium">
+              <li className="flex items-start gap-2"><span className="text-[#ea580c]">•</span> Slot booking is mandatory</li>
+              <li className="flex items-start gap-2"><span className="text-[#ea580c]">•</span> Tests are conducted Mon–Fri</li>
+              <li className="flex items-start gap-2"><span className="text-[#ea580c]">•</span> Aadhaar must match application</li>
+              <li className="flex items-start gap-2"><span className="text-[#ea580c]">•</span> Original vehicle required for DL test</li>
+              <li className="flex items-start gap-2"><span className="text-[#ea580c]">•</span> CCTV monitored test track</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      {/* 2. FLOATING TAB NAVIGATION */}
-      <div className="sticky top-4 z-40 px-4 mb-12">
-        <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-md border border-slate-200/60 p-1.5 rounded-full shadow-lg shadow-slate-200/50 flex justify-between overflow-x-auto">
+      {/* TABS */}
+      <div className="sticky top-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40">
+        <div className="max-w-6xl mx-auto px-4 flex overflow-x-auto scrollbar-hide">
           {tabs.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`relative flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all whitespace-nowrap ${
-                tab === t.id ? "text-slate-900" : "text-slate-500 hover:bg-slate-50"
+              className={`flex items-center gap-2 px-6 py-4 border-b-2 font-bold whitespace-nowrap transition-colors ${
+                tab === t.id
+                  ? "border-[#ea580c] text-[#ea580c]"
+                  : "border-transparent text-slate-500 hover:text-[#1e3a8a]"
               }`}
             >
-              {tab === t.id && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-amber-400 rounded-full shadow-sm"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              <span className="relative z-10 flex items-center gap-2">
-                <t.icon className={`w-4 h-4 ${tab === t.id ? "text-slate-900" : "text-slate-400"}`} />
-                {t.label}
-              </span>
+              <t.icon size={18} /> {t.label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* 3. DYNAMIC CONTENT AREA */}
-      <div className="max-w-4xl mx-auto px-6 pb-24 min-h-[600px]">
+      {/* CONTENT */}
+      <div className="max-w-6xl mx-auto px-6 py-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={tab}
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            
-            {/* --- PROCESS TAB --- */}
+            {/* PROCESS */}
             {tab === "process" && (
-              <div className="relative">
-                <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-slate-100 hidden md:block"></div>
-                <div className="space-y-8">
-                  {[
-                    { title: "Online Registration", text: "Visit parivahan.gov.in -> Online Services -> Driving License Related Services. Select state 'Himachal Pradesh'." },
-                    { title: "Fill Application", text: "Choose 'Apply for Learner License'. Fill in your details matching your Aadhaar card exactly." },
-                    { title: "Upload Documents", text: "Upload scanned copies of Address Proof (Aadhaar) and Age Proof. Photo & Signature must be clear." },
-                    { title: "Fee Payment", text: "Pay the government fees online via the cyber treasury portal linked in the application." },
-                    { title: "Slot Booking", text: "Book an appointment slot for scrutiny. Without a slot, the SDM office will not accept your file." },
-                    { title: "Visit RTO Office", text: "Go to SDM Office Karsog (Room No. 4) with original documents for physical verification." },
-                    { title: "Computer Test", text: "Take the test. 10 questions about road signs. You need 6 correct answers to pass." },
-                  ].map((step, i) => (
-                    <div key={i} className="relative md:pl-24 group">
-                      <div className="hidden md:flex absolute left-0 top-0 w-16 h-16 bg-white border border-slate-100 rounded-2xl items-center justify-center font-bold text-xl text-slate-300 group-hover:text-amber-500 group-hover:border-amber-500 transition-colors shadow-sm z-10">
-                        {i + 1}
-                      </div>
-                      <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-                        <h3 className="text-xl font-bold text-slate-900 mb-2">{step.title}</h3>
-                        <p className="text-slate-600 leading-relaxed">{step.text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              <div className="grid md:grid-cols-2 gap-8">
+                {[
+                  "Register on parivahan.gov.in",
+                  "Apply for Learner License",
+                  "Upload Aadhaar & documents",
+                  "Pay government fee",
+                  "Book RTO slot",
+                  "Visit RTO for test",
+                  "After 30 days, apply for DL"
+                ].map((step, i) => (
+                  <div key={i} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-[#ea580c]/50 transition-colors group">
+                    <div className="text-[#ea580c] font-bold mb-2 text-sm uppercase tracking-wider">Step {i + 1}</div>
+                    <p className="font-semibold text-slate-800 group-hover:text-[#1e3a8a] transition-colors">{step}</p>
+                  </div>
+                ))}
               </div>
             )}
 
-            {/* --- DOCUMENTS TAB --- */}
+            {/* DOCUMENTS */}
             {tab === "documents" && (
               <div className="grid md:grid-cols-2 gap-8">
-                {/* Learner Card */}
-                <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50">
-                  <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
-                    <User className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Learner License</h3>
-                  <ul className="space-y-4">
-                    {[
-                      "Aadhaar Card (Address + Age)",
-                      "10th Marksheet (Date of Birth)",
-                      "Passport Size Photo (x2)",
-                      "Medical Certificate (Form 1A)"
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-slate-600">
-                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+                  <h3 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#1e3a8a]">
+                    <User className="text-[#ea580c]" /> Learner License
+                  </h3>
+                  <ul className="space-y-3 font-medium text-slate-600">
+                    <li>• Aadhaar Card</li>
+                    <li>• 10th Marksheet / Birth Proof</li>
+                    <li>• Passport size photo</li>
+                    <li>• Medical Certificate (if above 40)</li>
                   </ul>
-                  <div className="mt-8 p-4 bg-blue-50/50 rounded-xl text-sm text-blue-800 font-medium">
-                    💡 Tip: If you are above 40 years old, Medical Certificate is mandatory.
-                  </div>
                 </div>
 
-                {/* DL Card */}
-                <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50">
-                  <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
-                    <FileBadge className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">Driving License</h3>
-                  <ul className="space-y-4">
-                    {[
-                      "Original Learner License",
-                      "Online Application Form 4",
-                      "Valid RC & Insurance of Vehicle",
-                      "Driving School Certificate (Form 5)"
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-slate-600">
-                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+                  <h3 className="text-xl font-bold flex items-center gap-2 mb-6 text-[#1e3a8a]">
+                    <FileBadge className="text-[#ea580c]" /> Driving License
+                  </h3>
+                  <ul className="space-y-3 font-medium text-slate-600">
+                    <li>• Original Learner License</li>
+                    <li>• Application Form 4</li>
+                    <li>• Vehicle RC & Insurance</li>
+                    <li>• Driving School Certificate</li>
                   </ul>
                 </div>
               </div>
             )}
 
-            {/* --- FEES TAB --- */}
+            {/* FEES */}
             {tab === "fees" && (
-              <div className="bg-white rounded-[2rem] border border-slate-100 shadow-2xl shadow-slate-200/40 overflow-hidden">
-                <div className="bg-slate-900 text-white p-8 text-center">
-                  <h3 className="text-2xl font-bold">Official Fee Structure</h3>
-                  <p className="text-slate-400 mt-2">Fees valid for non-transport vehicles (MCWG/LMV)</p>
-                </div>
-                <div className="divide-y divide-slate-100">
-                  {[
-                    { item: "Learner License (New)", cost: "150" },
-                    { item: "LL Test Fee", cost: "50" },
-                    { item: "Permanent License Issue", cost: "200" },
-                    { item: "Driving Test (Per Class)", cost: "300" },
-                    { item: "Smart Card Fee", cost: "200" },
-                    { item: "Renewal of DL", cost: "200" },
-                  ].map((row, i) => (
-                    <div key={i} className="flex items-center justify-between p-6 hover:bg-slate-50 transition-colors">
-                      <span className="font-medium text-slate-700">{row.item}</span>
-                      <span className="text-xl font-bold text-slate-900">₹{row.cost}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-6 bg-amber-50 text-center">
-                  <p className="text-amber-800 text-sm font-semibold flex items-center justify-center gap-2">
-                    <Info className="w-4 h-4" /> Total estimated cost for New DL: ₹900 - ₹1200
-                  </p>
+              <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-2xl mx-auto">
+                {[
+                  ["Learner License", "₹150"],
+                  ["Learner Test Fee", "₹50"],
+                  ["Driving Test", "₹300"],
+                  ["Permanent DL", "₹200"],
+                  ["Smart Card", "₹200"],
+                ].map(([item, price]) => (
+                  <div key={item} className="flex justify-between px-8 py-5 border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                    <span className="font-medium text-slate-700">{item}</span>
+                    <span className="font-bold text-[#1e3a8a]">{price}</span>
+                  </div>
+                ))}
+                <div className="p-6 bg-orange-50 text-center text-[#ea580c] font-bold text-lg">
+                  Total approx: ₹900 – ₹1200
                 </div>
               </div>
             )}
 
-            {/* --- ROUTE TAB --- */}
+            {/* RULES */}
+            {tab === "rules" && (
+              <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-3xl mx-auto">
+                <h3 className="text-xl font-bold mb-6 text-[#1e3a8a] flex items-center gap-2">
+                    <ShieldCheck className="text-[#ea580c]"/> Essential Test Rules
+                </h3>
+                <ul className="space-y-4">
+                    {[
+                        "Seat belt mandatory at all times",
+                        "No touching yellow/white boundary lines",
+                        "Do not put foot on ground while riding two-wheeler",
+                        "Helmet strictly mandatory for two-wheeler tests",
+                        "Reverse 'S' and steep slope test are included",
+                        "If failed, re-test can be booked after 7 days"
+                    ].map((rule, idx) => (
+                        <li key={idx} className="flex items-start gap-3 text-slate-700 font-medium">
+                            <span className="text-[#ea580c] mt-1.5 w-1.5 h-1.5 rounded-full bg-[#ea580c]"></span>
+                            {rule}
+                        </li>
+                    ))}
+                </ul>
+              </div>
+            )}
+
+            {/* TRACK */}
             {tab === "route" && (
-              <div className="bg-white p-4 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50">
-                 <div className="relative rounded-[2rem] overflow-hidden bg-slate-100 group">
-                    <img 
-                      src="/symbols/Driving Test Route..webp" 
-                      alt="Karsog Driving Test Track" 
-                      className="w-full h-auto object-cover md:min-h-[500px]"
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-4xl mx-auto">
+                <div className="aspect-video bg-slate-100 rounded-xl overflow-hidden mb-6 relative">
+                    {/* Placeholder for Route Map/Image */}
+                    <img
+                        src="/symbols/Driving Test Route..webp"
+                        alt="Karsog Test Track"
+                        className="w-full h-full object-cover"
                     />
-                    
-                    {/* Overlay Details */}
-                    <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-8 text-white">
-                      <h3 className="text-2xl font-bold mb-2">The "8" and "H" Track</h3>
-                      <p className="text-slate-200 max-w-lg">
-                        The test at Karsog involves a Forward-8 maneuver followed by a Reverse-S or Gradient test. Ensure you do not touch the yellow lines.
-                      </p>
-                    </div>
-                 </div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/5 pointer-events-none"></div>
+                </div>
+                
+                <h3 className="text-xl font-bold text-[#1e3a8a] mb-2">Track Overview</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  The Karsog test track includes an <strong>8-shape driving test</strong> and a <strong>reverse-S slope test</strong>.
+                  Candidates must navigate these without stopping the engine or touching the boundary lines.
+                </p>
               </div>
             )}
-
           </motion.div>
         </AnimatePresence>
       </div>
-
     </div>
   );
 }

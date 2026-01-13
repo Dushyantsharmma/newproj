@@ -9,8 +9,6 @@
     "allowJs": true,
     "checkJs": false,
     "noEmit": true,
-
-    "types": ["react", "react-dom"],
     "skipLibCheck": true
   },
   "include": ["src", "vite.config.js"],

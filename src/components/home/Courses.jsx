@@ -5,12 +5,7 @@ import {
   Heart,
   CheckCircle2,
   MessageCircle,
-  Shield,
-  Mountain,
-  Users,
-  Route,
   Zap,
-  Star
 } from "lucide-react";
 import SEO from "../SEO";
 
@@ -89,7 +84,7 @@ export default function Courses() {
   };
 
   return (
-    <section id="courses" className="bg-[#F8F9FA] py-24">
+    <section id="courses" className="bg-slate-50 py-24">
       <SEO
         title="Driving Courses | Raj Ann Raj Driving School"
         description="Hill driving courses for beginners, refresher drivers and nervous learners in Karsog, Mandi."
@@ -99,11 +94,12 @@ export default function Courses() {
 
         {/* HEADER */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border text-amber-600 text-xs font-bold mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#ea580c] text-xs font-bold mb-6 shadow-sm">
             <Zap size={14} /> Pricing & Plans
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-            Master the <span className="text-amber-600">Mountain Roads</span>
+          {/* Main Headline: Navy Blue */}
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mb-4">
+            Master the <span className="text-[#ea580c]">Mountain Roads</span>
           </h2>
           <p className="text-slate-600">
             Choose the right driving course designed for Himachal roads
@@ -116,10 +112,10 @@ export default function Courses() {
             <button
               key={c.id}
               onClick={() => setActiveTab(c.id)}
-              className={`px-5 py-2 mx-1 rounded-full text-sm font-bold ${
+              className={`px-5 py-2 mx-1 rounded-full text-sm font-bold transition-colors ${
                 activeTab === c.id
-                  ? "bg-slate-900 text-white"
-                  : "bg-white text-slate-600"
+                  ? "bg-[#1e3a8a] text-white"
+                  : "bg-white text-slate-600 border border-slate-200"
               }`}
             >
               {c.title.split(" ")[0]}
@@ -132,87 +128,102 @@ export default function Courses() {
           {COURSES.map((course) => (
             <div
               key={course.id}
-              className={`p-8 rounded-3xl border shadow-lg bg-white ${
+              className={`p-8 rounded-3xl border bg-white transition-all duration-300 ${
                 activeTab !== course.id ? "hidden md:block" : ""
-              } ${course.highlight ? "border-amber-400" : "border-slate-100"}`}
+              } ${
+                course.highlight 
+                  ? "border-[#ea580c] shadow-xl shadow-orange-100 ring-1 ring-[#ea580c]/20" 
+                  : "border-slate-200 shadow-lg hover:shadow-xl hover:-translate-y-1"
+              }`}
             >
-              <course.icon className="text-amber-600 mb-6" size={40} />
+              {/* Icon in Brand Orange */}
+              <course.icon className="text-[#ea580c] mb-6" size={40} />
 
-              <h3 className="text-2xl font-bold mb-3">{course.title}</h3>
+              {/* Title in Navy Blue */}
+              <h3 className="text-2xl font-bold mb-3 text-[#1e3a8a]">{course.title}</h3>
               <p className="text-slate-600 mb-6">{course.description}</p>
 
               <ul className="space-y-3 mb-8">
                 {course.features.map((f, i) => (
-                  <li key={i} className="flex gap-3">
-                    <CheckCircle2 size={18} className="text-green-600" />
+                  <li key={i} className="flex gap-3 text-slate-700">
+                    {/* Checkmark in Navy Blue */}
+                    <CheckCircle2 size={18} className="text-[#1e3a8a] shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
 
-              <div className="flex justify-between mb-6">
-                <span className="font-bold">{course.duration}</span>
+              <div className="flex justify-between mb-6 pb-6 border-b border-slate-100">
+                <span className="font-bold text-[#1e3a8a]">{course.duration}</span>
                 <span className="text-slate-500">Practical + Theory</span>
               </div>
 
+              {/* Primary Button: Orange */}
               <button
                 onClick={() => handleWhatsApp(course.title)}
-                className="w-full py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800"
+                className="w-full py-3 bg-[#ea580c] text-white font-bold rounded-xl hover:bg-[#c2410c] transition-colors shadow-lg shadow-orange-200 flex items-center justify-center gap-2"
               >
-                <MessageCircle className="inline mr-2" size={18} />
+                <MessageCircle size={18} />
                 {course.cta}
               </button>
             </div>
           ))}
         </div>
 
-        {/* COMPARISON */}
+        {/* COMPARISON TABLE */}
         <div className="mt-24 hidden md:block">
-          <h3 className="text-center text-3xl font-bold mb-8">
+          <h3 className="text-center text-3xl font-bold mb-8 text-[#1e3a8a]">
             Compare Programs
           </h3>
-          <table className="w-full bg-white rounded-xl overflow-hidden border">
-            <thead>
-              <tr className="bg-slate-100">
-                <th className="p-4 text-left">Feature</th>
-                <th className="p-4">Beginner</th>
-                <th className="p-4">Refresher</th>
-                <th className="p-4">Nervous</th>
-              </tr>
-            </thead>
-            <tbody>
-              {COMPARISON.map((r, i) => (
-                <tr key={i} className="border-t">
-                  <td className="p-4">{r.feature}</td>
-                  {["beginner", "refresher", "nervous"].map((k) => (
-                    <td key={k} className="p-4 text-center">
-                      {r[k] ? (
-                        <CheckCircle2 className="mx-auto text-green-600" />
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                  ))}
+          <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-lg">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="p-6 text-left text-[#1e3a8a] font-bold">Feature</th>
+                  <th className="p-6 text-[#1e3a8a] font-bold">Beginner</th>
+                  <th className="p-6 text-[#1e3a8a] font-bold">Refresher</th>
+                  <th className="p-6 text-[#1e3a8a] font-bold">Nervous</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {COMPARISON.map((r, i) => (
+                  <tr key={i} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+                    <td className="p-6 font-medium text-slate-700">{r.feature}</td>
+                    {["beginner", "refresher", "nervous"].map((k) => (
+                      <td key={k} className="p-6 text-center">
+                        {r[k] ? (
+                          <CheckCircle2 className="mx-auto text-[#ea580c]" size={20} />
+                        ) : (
+                          <span className="text-slate-300 font-bold">—</span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* FINAL CTA */}
-        <div className="mt-24 text-center bg-slate-900 text-white p-16 rounded-3xl">
-          <h3 className="text-3xl font-bold mb-4">Ready to Start?</h3>
-          <p className="text-slate-300 mb-8">
-            Start your hill driving journey today
+        {/* FINAL CTA SECTION (Navy Blue Background) */}
+        <div className="mt-24 text-center bg-[#1e3a8a] text-white p-12 md:p-16 rounded-[2.5rem] shadow-2xl shadow-blue-900/20 relative overflow-hidden">
+           {/* Decorative circles */}
+           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white opacity-5"></div>
+           <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-[#ea580c] opacity-20"></div>
+
+          <h3 className="text-3xl font-bold mb-4 relative z-10">Ready to Start?</h3>
+          <p className="text-blue-100 mb-8 relative z-10">
+            Start your hill driving journey today with Raj Ann Raj Driving School.
           </p>
           <button
             onClick={() => handleWhatsApp("Consultation")}
-            className="bg-green-500 px-10 py-4 rounded-full text-lg font-bold"
+            className="bg-[#ea580c] text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-[#c2410c] transition-all shadow-xl shadow-orange-900/20 relative z-10 flex items-center justify-center gap-2 mx-auto"
           >
-            <MessageCircle className="inline mr-2" />
+            <MessageCircle />
             Chat on WhatsApp
           </button>
         </div>
+
       </div>
     </section>
   );

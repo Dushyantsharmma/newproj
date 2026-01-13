@@ -25,23 +25,23 @@ const features = [
 
 const WhyHillDriving = () => {
   return (
-    <section className="bg-[#0B1222] py-24 px-4">
+    <section className="bg-slate-50 py-24 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
         {/* LEFT CONTENT */}
         <div>
-          <span className="text-amber-500 font-bold tracking-widest uppercase">
+          <span className="text-[#ea580c] font-bold tracking-widest uppercase text-sm bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
             Himachal Pradesh
           </span>
 
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-white mt-4 leading-tight">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#1e3a8a] mt-6 leading-tight">
             Why Hill Driving <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+            <span className="text-[#ea580c]">
               Is Different
             </span>
           </h2>
 
-          <p className="text-slate-400 mt-6 text-lg max-w-xl">
+          <p className="text-slate-600 mt-6 text-lg max-w-xl leading-relaxed">
             Driving in the mountains is not the same as driving on highways.
             We train you to handle steep slopes, blind curves, and real hill
             traffic with confidence and control.
@@ -49,7 +49,7 @@ const WhyHillDriving = () => {
 
           <a
             href="#contact"
-            className="inline-block mt-8 bg-amber-500 text-[#0B1222] font-bold px-8 py-4 rounded-xl shadow-lg hover:bg-amber-600 transition"
+            className="inline-block mt-8 bg-[#ea580c] text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-orange-200 hover:bg-[#c2410c] hover:-translate-y-1 transition-all duration-300"
           >
             Talk to an Instructor
           </a>
@@ -60,17 +60,17 @@ const WhyHillDriving = () => {
           {features.map((f, i) => (
             <div
               key={i}
-              className="bg-[#141B2E] p-8 rounded-2xl border border-white/5 hover:border-amber-500/50 transition group"
+              className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#ea580c] transition-all duration-300 group"
             >
-              <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center mb-6 group-hover:bg-amber-500 transition">
-                <f.icon className="text-amber-500 group-hover:text-[#0B1222]" size={28} />
+              <div className="w-14 h-14 rounded-xl bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-[#ea580c] transition-colors duration-300">
+                <f.icon className="text-[#ea580c] group-hover:text-white transition-colors duration-300" size={28} />
               </div>
 
-              <h3 className="text-white font-bold text-xl mb-2">
+              <h3 className="text-[#1e3a8a] font-bold text-xl mb-2">
                 {f.title}
               </h3>
 
-              <p className="text-slate-400 leading-relaxed">
+              <p className="text-slate-600 leading-relaxed text-sm">
                 {f.desc}
               </p>
             </div>
