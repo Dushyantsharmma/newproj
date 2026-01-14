@@ -46,24 +46,24 @@ function useCountUp(target, duration = 2000) {
 
 /* ================= DATA ================= */
 
-const TEAM_MEMBERS = [
-  {
-    id: 1,
-    name: "Girdhari Lal",
-    role: "Senior Instructor",
-    image: "/team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp",
-    tags: ["Hill Specialist", "20+ Years Exp."],
-    bio: "The master of mountain roads. Girdhari ensures every student masters the clutch on steep inclines safely."
-  },
-  {
-    id: 2,
-    name: "Tarun Wala",
-    role: "Clerk",
-    image: "/team/tarun-wala-clerk.webp",
-    tags: ["Student Support", "RTO Expert"],
-    bio: "Ensuring your license process is as smooth as your driving. She handles all RTO documentation and scheduling."
-  }
-];
+  const TEAM_MEMBERS = [
+    {
+      id: 1,
+      name: "Girdhari Lal",
+      role: "Senior Instructor",
+      image: "/team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp",
+      tags: ["Hill Specialist", "20+ Years Exp."],
+      bio: "The master of mountain roads. Girdhari ensures every student masters the clutch on steep inclines safely."
+    },
+    {
+      id: 2,
+      name: "Tarun Wala",
+      role: "Clerk",
+      image: "/team/tarun-wala-clerk.webp",
+      tags: ["Student Support", "RTO Expert"],
+      bio: "Ensuring your license process is as smooth as your driving. She handles all RTO documentation and scheduling."
+    }
+  ];
 
 const FEATURES = [
   { title: "Patient Instructors", desc: "We specialize in teaching nervous beginners with a calm, friendly approach.", icon: Users },
@@ -74,7 +74,7 @@ const FEATURES = [
 
 const TIMELINE = [
   { year: "2005", title: "The Beginning", desc: "Raj N Raj was founded with a single car and a mission to teach safe driving in Mandi." },
-  { year: "2010", title: "Fleet Expansion", desc: "We expanded our fleet to 5 vehicles and introduced specialized hill-training courses." },
+  { year: "2010", title: "Fleet Expansion", desc: "We expanded our fleet and introduced specialized hill-training courses." },
   { year: "2018", title: "Top Rated School", desc: "Recognized as one of the highest-rated driving schools in the district for student pass rates." },
   { year: "2025", title: "Digital Era", desc: "Launched our new digital platform to make booking and tracking progress easier for students." },
 ];
@@ -89,18 +89,11 @@ const PROCESS_STEPS = [
 /* --- NEW FLEET DATA --- */
 const FLEET = [
   {
-    name: "Maruti Swift",
-    category: "Hatchback",
-    desc: "Perfect for learning highway stability and modern vehicle controls.",
-    features: ["Dual Control", "Power Steering", "ABS"],
-    image: "/fleet/swift-placeholder.webp" // Replace with real image path
-  },
-  {
-    name: "Maruti Alto 800",
-    category: "Compact",
-    desc: "The best car to master clutch control on steep Himachal roads.",
-    features: ["Hill Assist Training", "Manual Transmission", "Dual Control"],
-    image: "/fleet/alto-placeholder.webp" // Replace with real image path
+    name: "Maruti Suzuki Baleno",
+    category: "Premium Hatchback",
+    desc: "A modern, comfortable, and safe car ideal for learning advanced driving skills and highway stability.",
+    features: ["Dual Control", "Power Steering", "ABS", "Spacious Cabin"],
+    image: "/fleet/baleno-placeholder.webp" // Replace with real image path
   }
 ];
 
@@ -158,7 +151,7 @@ export default function About({ variant = "full" }) {
               </span>
             </h2>
             <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-              At <strong>Raj N Raj Driving School</strong>, we believe that learning to drive is about more than just passing a test—it is about building the confidence to navigate the roads safely for a lifetime.
+              At <strong>Raj Ann Raj Driving School</strong>, we believe that learning to drive is about more than just passing a test—it is about building the confidence to navigate the roads safely for a lifetime.
             </p>
             
             <div className="mt-8 flex gap-8">
@@ -183,7 +176,7 @@ export default function About({ variant = "full" }) {
             <div className="absolute inset-0 bg-[#ea580c] rounded-[2rem] rotate-3 opacity-10"></div>
             <img
               src="/team/owner-pushap-raj.webp"
-              alt="Pushp Raj"
+              alt="Pushap Raj"
               className="relative rounded-[2rem] shadow-2xl w-full max-w-md mx-auto object-cover z-10 border-4 border-white"
             />
           </motion.div>
@@ -195,7 +188,7 @@ export default function About({ variant = "full" }) {
   /* ===== FULL PAGE VARIANT ===== */
   return (
     <div className="bg-slate-50 font-sans pt-20">
-      {/* <SEO title="About Us - Raj N Raj Driving School" description="Over 20 years of experience teaching safe driving in Himachal Pradesh." /> */}
+      {/* <SEO title="About Us - Raj Ann Raj Driving School" description="Over 20 years of experience teaching safe driving in Himachal Pradesh." /> */}
 
       {/* 1. HERO HEADER */}
       <section className="pt-20 pb-24 bg-white text-center relative overflow-hidden">
@@ -210,7 +203,7 @@ export default function About({ variant = "full" }) {
               Your Journey <span className="text-[#ea580c]">Starts Here.</span>
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed font-medium">
-              We don't just teach you how to operate a car; we teach you road etiquette, safety rules, and the split-second decision-making skills required for real-world driving.
+              At <strong>Raj Ann Raj Driving School</strong>, we don't just teach you how to operate a car; we teach you road etiquette, safety rules, and the split-second decision-making skills required for real-world driving.
             </p>
           </motion.div>
         </div>
@@ -245,7 +238,7 @@ export default function About({ variant = "full" }) {
                 <div className="absolute -inset-4 bg-gradient-to-r from-[#ea580c] to-orange-400 rounded-3xl opacity-20 blur-lg group-hover:opacity-30 transition duration-500"></div>
                 <img
                   src="/team/owner-pushap-raj.webp"
-                  alt="Pushp Raj Founder"
+                  alt="Pushap Raj Founder"
                   className="relative rounded-2xl shadow-2xl w-full object-cover"
                 />
              </div>
@@ -253,7 +246,7 @@ export default function About({ variant = "full" }) {
           
           <div className="lg:col-span-7 order-1 lg:order-2">
             <Quote className="text-orange-200 mb-6" size={64} />
-            <h2 className="text-3xl font-bold text-[#1e3a8a] mb-2">Pushp Raj</h2>
+            <h2 className="text-3xl font-bold text-[#1e3a8a] mb-2">Pushap Raj</h2>
             <p className="text-[#ea580c] font-bold uppercase text-sm tracking-wide mb-6">Founder & Managing Director</p>
             
             <div className="space-y-4 text-slate-600 text-lg leading-relaxed font-medium">
@@ -261,7 +254,7 @@ export default function About({ variant = "full" }) {
                 "I started Raj Ann Raj with a simple mission: to make our roads safer, one driver at a time. Located in the heart of Himachal, we understand the unique challenges of hill driving."
               </p>
               <p>
-                "At our school, you aren't just another student; you are family. We take the stress out of learning by offering a calm, supportive environment where questions are encouraged and safety is paramount."
+                "At Raj Ann Raj Driving School, you aren't just another student; you are family. We take the stress out of learning by offering a calm, supportive environment where questions are encouraged and safety is paramount."
               </p>
             </div>
             
@@ -490,9 +483,9 @@ export default function About({ variant = "full" }) {
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <Car size={48} className="mx-auto mb-6 text-[#ea580c]" />
           <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to hit the road?</h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-            Join thousands of happy students who learned to drive with Raj N Raj. Book your first lesson today.
-          </p>
+            <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+              Join thousands of happy students who learned to drive with Raj Ann Raj. Book your first lesson today.
+            </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="tel:+919882034930" className="px-8 py-4 bg-white text-[#1e3a8a] rounded-xl font-bold text-lg hover:bg-slate-100 transition-colors shadow-lg">
               Book a Lesson

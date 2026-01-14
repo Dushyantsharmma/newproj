@@ -35,43 +35,45 @@ export default function Navigation() {
 
   return (
     <>
-      {/* ================= DESKTOP NAV ================= */}
+      {/* ================= DESKTOP ================= */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="fixed top-0 inset-x-0 z-50 hidden lg:flex justify-center"
       >
-        <div className="mt-5 w-[95%] max-w-7xl flex items-center justify-between bg-[#1e3a8a]/95 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl px-6 py-3">
+        <div className="mt-6 w-[95%] max-w-7xl bg-[#1e3a8a]/95 backdrop-blur-xl border border-white/10 rounded-[2.2rem] shadow-[0_20px_60px_rgba(0,0,0,0.35)] px-8 py-4 flex items-center justify-between">
 
-          {/* Logo */}
-          <div onClick={() => navigate("/")} className="flex items-center gap-3 cursor-pointer">
-            <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center bg-white p-1 shadow-lg">
+          {/* LOGO */}
+          <div onClick={() => navigate("/")} className="flex items-center gap-4 cursor-pointer">
+            <div className="w-16 h-16 rounded-full bg-white shadow-[inset_0_0_10px_rgba(0,0,0,0.4)] overflow-hidden flex items-center justify-center">
               <img
                 src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
+                className="w-full h-full object-cover scale-[1.5]"
                 alt="Raj Ann Raj"
-                className="w-full h-full object-cover scale-110 rounded-full"
               />
             </div>
-            <div className="flex flex-col leading-none">
-              <div className="font-extrabold text-[#ea580c] text-lg lg:text-2xl">
+            <div className="leading-tight">
+              <div className="text-2xl font-extrabold text-[#ea580c] tracking-wide">
                 {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
               </div>
-              <div className="text-xs lg:text-base tracking-widest text-white font-bold mt-0.5">
+              <div className="text-[12px] tracking-[0.28em] text-white font-bold">
                 DRIVING TRAINING SCHOOL
               </div>
             </div>
           </div>
 
-          {/* Nav Capsule */}
-          <div className="flex items-center bg-white/95 rounded-full px-3 py-2 shadow-xl">
+          {/* NAV CAPSULE */}
+          <div className="flex items-center bg-white rounded-full p-1 shadow-[0_10px_40px_rgba(0,0,0,0.15)]">
             {NAV_ITEMS.map((item) => (
               <NavLink key={item.to} to={item.to}>
                 {({ isActive }) => (
-                  <div className={`px-5 py-2 rounded-full font-semibold flex items-center gap-2 transition ${
-                    isActive
-                      ? "bg-[#ea580c] text-white shadow-lg"
-                      : "text-[#1e3a8a] hover:text-[#ea580c]"
-                  }`}>
+                  <div
+                    className={`px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-semibold transition-all duration-300 ${
+                      isActive
+                        ? "bg-[#ea580c] text-white shadow-[0_10px_30px_rgba(234,88,12,0.6)]"
+                        : "text-[#1e3a8a] hover:text-[#ea580c]"
+                    }`}
+                  >
                     <item.icon size={16} />
                     {item.name}
                   </div>
@@ -80,12 +82,13 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Right Actions */}
+          {/* ACTIONS */}
           <div className="flex items-center gap-4">
             <GoogleTranslate />
+
             <a
               href="tel:+919882034930"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#ea580c] text-white font-bold shadow-lg hover:scale-105 transition"
+              className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#ea580c] to-orange-500 text-white font-bold shadow-[0_10px_40px_rgba(234,88,12,0.7)] hover:scale-105 transition"
             >
               <Phone size={16} />
               Call Now
@@ -94,22 +97,25 @@ export default function Navigation() {
         </div>
       </motion.header>
 
-      {/* ================= MOBILE HEADER ================= */}
-      <header className="lg:hidden fixed top-0 inset-x-0 z-50 bg-[#1e3a8a]/95 backdrop-blur-xl shadow-xl py-3">
+      {/* ================= MOBILE ================= */}
+      <header className="lg:hidden fixed top-0 inset-x-0 z-50 bg-[#1e3a8a]/95 backdrop-blur-xl shadow-xl py-4">
         <div className="flex justify-between items-center px-4">
+
           <div onClick={() => navigate("/")} className="flex items-center gap-3">
-            <img
-              src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
-              className="w-9 h-9 rounded-full"
-              alt="Logo"
-            />
-            <div className="flex flex-col leading-none">
-              <span className="font-extrabold text-[#ea580c]">
+            <div className="w-12 h-12 rounded-full bg-white shadow-inner overflow-hidden">
+              <img
+                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
+                className="w-full h-full object-cover scale-[1.35]"
+                alt="Logo"
+              />
+            </div>
+            <div className="leading-tight">
+              <div className="text-[#ea580c] font-extrabold text-lg">
                 {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
-              </span>
-              <span className="text-[9px] text-white tracking-widest font-bold mt-0.5">
+              </div>
+              <div className="text-[9px] tracking-[0.3em] text-white font-bold">
                 DRIVING TRAINING SCHOOL
-              </span>
+              </div>
             </div>
           </div>
 
@@ -117,9 +123,9 @@ export default function Navigation() {
             <GoogleTranslate />
             <button
               onClick={() => setIsOpen(true)}
-              className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white"
+              className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white"
             >
-              <Menu size={20} />
+              <Menu size={22} />
             </button>
           </div>
         </div>
@@ -130,9 +136,6 @@ export default function Navigation() {
         {isOpen && (
           <>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
               className="fixed inset-0 bg-black/60 z-[9990]"
             />
@@ -143,8 +146,8 @@ export default function Navigation() {
               exit={{ x: "100%" }}
               className="fixed right-0 top-0 bottom-0 z-[9999] w-[80vw] max-w-sm bg-[#1e3a8a] p-6"
             >
-              <div className="flex justify-between items-center mb-6">
-                <div className="text-[#ea580c] font-bold text-lg">
+              <div className="flex justify-between items-center mb-8">
+                <div className="text-[#ea580c] font-extrabold text-xl">
                   {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
                 </div>
                 <button onClick={() => setIsOpen(false)}>
@@ -158,7 +161,7 @@ export default function Navigation() {
                     key={item.to}
                     to={item.to}
                     onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 rounded-lg bg-white/10 text-white hover:bg-[#ea580c]"
+                    className="block px-4 py-3 rounded-xl bg-white/10 text-white hover:bg-[#ea580c]"
                   >
                     {item.name}
                   </NavLink>
@@ -167,7 +170,7 @@ export default function Navigation() {
 
               <a
                 href="tel:+919882034930"
-                className="mt-8 block text-center py-4 bg-[#ea580c] text-white font-bold rounded-xl"
+                className="mt-10 block text-center py-4 bg-gradient-to-r from-[#ea580c] to-orange-500 text-white font-bold rounded-xl shadow-xl"
               >
                 Call Now
               </a>

@@ -38,7 +38,7 @@ export default function HomePage() {
 
           <p className="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
             Expert car driving training designed for the steep slopes and sharp turns of Himachal. 
-            Join <strong className="text-[#1e3a8a]">Raj N Raj Driving School</strong> and get your license to freedom.
+            Join <strong className="text-[#1e3a8a]">Raj Ann Raj Driving School</strong> and get your license to freedom.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] mb-4">
-              Why Choose <span className="text-[#ea580c]">Raj N Raj?</span>
+              Why Choose <span className="text-[#ea580c]">Raj Ann Raj?</span>
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto text-lg">
               We don't just teach you how to move a car; we teach you how to survive and thrive on mountain roads.

@@ -1,11 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Phone, Mail, MapPin, Clock, Car, ShieldCheck } from "lucide-react";
+import { Phone, MapPin, Clock, ArrowRight } from "lucide-react";
 import { motion, useAnimationControls } from "framer-motion";
-import { FaGoogle, FaStar, FaQuoteRight } from "react-icons/fa";
-import { CheckCircle2, Star } from "lucide-react";
+import { FaGoogle, FaStar, FaQuoteRight, FaWhatsapp } from "react-icons/fa";
 import SEO from "../components/SEO";
 
-/* ================= GOOGLE REVIEWS DATA ================= */
+/* ================= DATA ================= */
 
 const reviews = [
   {
@@ -13,53 +12,70 @@ const reviews = [
     text: "Best driving school in Mandi. Very experienced instructor and excellent guidance. Passed in first attempt.",
     date: "3 months ago",
     initial: "A",
-    color: "bg-blue-50 text-blue-700",
+    color: "bg-indigo-100 text-indigo-700",
   },
   {
     name: "Vinay Kumar",
     text: "Professional and patient teaching. Strong focus on safety and real driving skills.",
     date: "2 months ago",
     initial: "V",
-    color: "bg-orange-50 text-orange-700",
+    color: "bg-orange-100 text-orange-700",
   },
   {
     name: "Priya Thakur",
     text: "Perfect for beginners. Calm instructor and very supportive environment.",
     date: "1 month ago",
     initial: "P",
-    color: "bg-slate-100 text-slate-700",
+    color: "bg-purple-100 text-purple-700",
   },
   {
     name: "Rohit Sharma",
     text: "Excellent driving techniques and traffic rule explanation. Highly recommended.",
     date: "4 months ago",
     initial: "R",
-    color: "bg-blue-50 text-blue-700",
-  },
-  {
-    name: "Sneha Patel",
-    text: "Very professional training. Got my license easily after learning here.",
-    date: "3 weeks ago",
-    initial: "S",
-    color: "bg-orange-50 text-orange-700",
+    color: "bg-blue-100 text-blue-700",
   },
 ];
 
-/* ================= INFO CARD ================= */
+const openingHours = [
+  { day: "Monday", time: "08:00 - 19:00" },
+  { day: "Tuesday", time: "08:00 - 19:00" },
+  { day: "Wednesday", time: "08:00 - 19:00" },
+  { day: "Thursday", time: "08:00 - 19:00" },
+  { day: "Friday", time: "08:00 - 19:00" },
+  { day: "Saturday", time: "08:00 - 19:00" },
+  { day: "Sunday", time: "Closed", isClosed: true },
+];
 
-function Info({ title, icon, children }) {
+/* ================= COMPONENTS ================= */
+
+function ContactCard({ title, subtext, action, highlight, className }) {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="text-[#ea580c]">{icon}</div>
-        <h3 className="font-bold text-[#1e3a8a]">{title}</h3>
+    <motion.div 
+      whileHover={{ y: -5 }}
+      className={`p-6 rounded-3xl border transition-all duration-300 flex flex-col h-full ${
+        highlight 
+          ? "bg-[#1e3a8a] border-[#1e3a8a] text-white shadow-xl shadow-blue-900/20" 
+          : "bg-white border-slate-100 text-slate-800 shadow-lg shadow-slate-200/50"
+      } ${className || ""}`}
+    >
+      <div className="flex-1">
+        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 text-xl ${
+          highlight ? "bg-white/10 text-white" : "bg-orange-50 text-[#ea580c]"
+        }`}>
+          {/* Removed Icon usage to fix eslint no-unused-vars */}
+        </div>
+        <h3 className={`font-bold text-lg mb-3 ${highlight ? "text-white" : "text-slate-800"}`}>{title}</h3>
+        <div className={`text-sm font-medium leading-relaxed ${highlight ? "text-blue-200" : "text-slate-500"}`}>
+          {subtext}
+        </div>
       </div>
-      <div className="text-slate-600 text-sm leading-relaxed font-medium">{children}</div>
-    </div>
+      {action && <div className="mt-6">{action}</div>}
+    </motion.div>
   );
 }
 
-/* ================= PAGE ================= */
+/* ================= MAIN PAGE ================= */
 
 export default function ContactPage() {
   const carousel = useRef();
@@ -76,92 +92,178 @@ export default function ContactPage() {
     if (width > 0) {
       controls.start({
         x: -width,
-        transition: {
-          duration: 40,
-          ease: "linear",
-          repeat: Infinity,
-          repeatType: "loop",
-        },
+        transition: { duration: 45, ease: "linear", repeat: Infinity, repeatType: "loop" },
       });
     }
   }, [width, controls]);
 
   return (
-    <section className="bg-slate-50 min-h-screen py-24 pt-32 px-4 relative overflow-hidden font-sans">
+    <section className="bg-slate-50 min-h-screen py-24 pt-32 px-4 relative overflow-hidden font-sans selection:bg-orange-100">
       <SEO 
         title="Contact Us | Raj Ann Raj Driving School" 
         description="Get in touch for driving lessons, RTO inquiries, and bookings in Mandi, HP." 
       />
       
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-         <div className="absolute top-40 right-0 w-96 h-96 bg-[#ea580c]/5 blur-3xl rounded-full" />
-         <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#1e3a8a]/5 blur-3xl rounded-full" />
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+         <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-orange-200/20 blur-[100px] rounded-full" />
+         <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-200/20 blur-[120px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
 
-        {/* ================= HERO ================= */}
+        {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mb-4">
-            Contact <span className="text-[#ea580c]">Us</span>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 bg-white px-4 py-1.5 rounded-full border border-slate-200 shadow-sm text-[#ea580c] font-bold text-xs uppercase tracking-wider mb-6"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#ea580c] animate-pulse"></span>
+            Open for New Admissions
+          </motion.div>
+          
+          <h1 className="text-5xl md:text-7xl font-black text-[#1e3a8a] mb-6 tracking-tight">
+            Let's Start <br className="md:hidden" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-orange-500">Driving.</span>
           </h1>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto font-medium">
-            Trusted driving institute in <b className="text-[#1e3a8a]">Karsog, Mandi (HP-30)</b> for hill road training, RTO test and license support.
+          <p className="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
+            Visit our training center in <span className="text-[#1e3a8a] font-bold underline decoration-orange-300 decoration-2 underline-offset-4">Karsog, Mandi</span> or give us a call to book your slot.
           </p>
         </div>
 
-        {/* ================= GOOGLE REVIEWS ================= */}
-        <div className="mb-20">
-
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-[#ea580c] font-bold text-xs uppercase tracking-wider">
-              <Star size={14} className="fill-current" /> Student Reviews
-            </div>
-            <h2 className="text-3xl font-bold text-[#1e3a8a] mt-6">
-              Trusted by Drivers Across Himachal
-            </h2>
-
-            <div className="inline-flex items-center gap-4 bg-white px-6 py-3 rounded-2xl border border-slate-200 shadow-sm mt-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => window.open('https://g.page/r/YOUR_LINK', '_blank')}>
-              <FaGoogle className="text-xl text-slate-700" />
-              <div className="flex items-center gap-1 text-[#ea580c]">
-                <span className="font-bold text-[#1e3a8a] text-lg">5.0</span>
-                {[...Array(5)].map((_, i) => <FaStar key={i} />)}
-              </div>
-              <span className="text-xs text-slate-500 font-bold border-l border-slate-200 pl-4 ml-2">120+ Reviews</span>
-            </div>
+        {/* ================= NEW LAYOUT GRID ================= */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24 auto-rows-min">
+          
+          {/* 1. Visit Us (Top Left) */}
+          <div className="col-span-1">
+            <ContactCard 
+              icon={MapPin}
+              title="Visit Us"
+              subtext={<>Bhanthal, Karsog<br/>District Mandi<br/>Himachal Pradesh – 175011</>}
+              action={
+                <a href="#map" className="inline-flex items-center text-sm font-bold text-[#ea580c] hover:underline">
+                  View on Map <ArrowRight size={16} className="ml-1" />
+                </a>
+              }
+            />
           </div>
 
-          <div className="relative overflow-hidden -mx-4 md:-mx-0">
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-50 to-transparent z-20 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-50 to-transparent z-20 pointer-events-none" />
+          {/* 2. Map (Top & Middle Right - Spans 2 cols, 2 rows) */}
+          <motion.div 
+            id="map"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="col-span-1 md:col-span-2 md:row-span-2 min-h-[400px] md:min-h-auto bg-slate-200 rounded-3xl overflow-hidden relative shadow-2xl border-4 border-white ring-1 ring-slate-900/5 group"
+          >
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28187816.144688107!2d83.7034612!3d30.4107059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3905a08da5cd688b%3A0x13721873736c3e1b!2sRaj%20%22Ann%22%20Raj%20Driving%20Training%20School%20Bhanthal!5e0!3m2!1sen!2sin!4v1768374491234!5m2!1sen!2sin" 
+              className="absolute inset-0 w-full h-full grayscale-[50%] group-hover:grayscale-0 transition-all duration-700 ease-in-out"
+              style={{ border: 0 }} 
+              allowFullScreen="" 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Raj N Raj Location"
+            ></iframe>
             
-            <motion.div ref={carousel} className="cursor-grab active:cursor-grabbing pl-4">
+            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-lg border border-white/50 pointer-events-none">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="font-bold text-[#1e3a8a] text-sm">Live Location</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 3. Opening Hours (Middle & Bottom Left - Spans 2 rows to fill gap) */}
+          <div className="col-span-1 md:row-span-2">
+            <ContactCard 
+              icon={Clock}
+              title="Opening Hours"
+              subtext={
+                <div className="space-y-3 mt-2">
+                  {openingHours.map((item, idx) => (
+                    <div key={idx} className={`flex justify-between items-center text-sm border-b border-slate-50 pb-2 last:border-0 last:pb-0 ${item.isClosed ? 'text-red-500 font-bold' : ''}`}>
+                      <span className="font-semibold opacity-80">{item.day}</span>
+                      <span className="font-mono bg-slate-50 px-2 py-0.5 rounded text-xs">{item.time}</span>
+                    </div>
+                  ))}
+                </div>
+              }
+            />
+          </div>
+
+          {/* 4. WhatsApp (Bottom Middle) */}
+          <div className="col-span-1">
+             <ContactCard 
+              icon={FaWhatsapp}
+              title="Chat Now"
+              subtext="Quick replies on WhatsApp"
+              action={
+                <a href="https://wa.me/919882034930" className="block w-full bg-[#25D366] text-white py-3 rounded-xl font-bold text-center hover:bg-[#20bd5a] transition-colors shadow-lg shadow-green-500/20">
+                  Message Us
+                </a>
+              }
+            />
+          </div>
+
+          {/* 5. Call Us (Bottom Right - MOVED HERE) */}
+          <div className="col-span-1">
+             <ContactCard 
+              highlight={true}
+              icon={Phone}
+              title="Call Us"
+              subtext="Mon-Sat from 8am to 7pm"
+              action={
+                <a href="tel:+919882034930" className="block w-full bg-white text-[#1e3a8a] py-3 rounded-xl font-bold text-center hover:bg-blue-50 transition-colors">
+                  +91 98820 34930
+                </a>
+              }
+            />
+          </div>
+
+        </div>
+
+        {/* Reviews Section */}
+        <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-slate-100">
+          <div className="flex flex-col md:flex-row justify-between items-end md:items-center mb-10 gap-4">
+            <div>
+              <h2 className="text-3xl font-bold text-[#1e3a8a]">Student Stories</h2>
+              <div className="flex items-center gap-2 mt-2">
+                <div className="flex text-[#ea580c]">
+                  {[...Array(5)].map((_, i) => <FaStar key={i} />)}
+                </div>
+                <span className="text-slate-500 font-medium">4.9/5 Rating on Google</span>
+              </div>
+            </div>
+            <button 
+              onClick={() => window.open('https://g.page/r/YOUR_LINK', '_blank')}
+              className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-colors flex items-center gap-2"
+            >
+              <FaGoogle /> Write a Review
+            </button>
+          </div>
+
+          {/* Review Carousel */}
+          <div className="relative overflow-hidden -mx-8 md:-mx-12">
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            
+            <motion.div ref={carousel} className="flex gap-6 pl-12">
               <motion.div animate={controls} className="flex gap-6">
-                {[...reviews, ...reviews].map((r, i) => (
-                  <div
-                    key={i}
-                    className="w-[320px] bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex-shrink-0 relative hover:border-[#ea580c]/30 hover:shadow-lg transition-all"
-                  >
-                    <FaQuoteRight className="absolute top-6 right-6 text-slate-100 text-3xl" />
-                    <div className="flex items-center gap-3 mb-4 relative z-10">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-sm ${r.color}`}>
+                {[...reviews, ...reviews, ...reviews].map((r, i) => (
+                  <div key={i} className="w-[350px] flex-shrink-0 bg-slate-50 p-6 rounded-3xl border border-slate-100 relative group hover:bg-white hover:shadow-lg transition-all duration-300">
+                    <FaQuoteRight className="absolute top-6 right-6 text-slate-200 text-4xl group-hover:text-orange-100 transition-colors" />
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-sm ${r.color}`}>
                         {r.initial}
                       </div>
                       <div>
                         <h4 className="font-bold text-[#1e3a8a]">{r.name}</h4>
-                        <div className="flex text-[#ea580c] text-xs mt-0.5">
-                          {[...Array(5)].map((_, i) => <FaStar key={i} />)}
-                        </div>
+                        <span className="text-xs text-slate-400 font-bold uppercase">{r.date}</span>
                       </div>
                     </div>
-                    <p className="text-slate-600 mb-6 text-sm leading-relaxed font-medium relative z-10">"{r.text}"</p>
-                    <div className="flex justify-between text-xs text-slate-400 font-bold uppercase tracking-wide pt-4 border-t border-slate-50">
-                      <span>{r.date}</span>
-                      <span className="text-green-600 flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded border border-green-100">
-                        <CheckCircle2 size={12} /> Verified
-                      </span>
-                    </div>
+                    <p className="text-slate-600 text-sm font-medium leading-relaxed relative z-10">"{r.text}"</p>
                   </div>
                 ))}
               </motion.div>
@@ -169,66 +271,6 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* ================= CONTACT GRID ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-          <div className="space-y-6">
-            <Info title="Training Center" icon={<MapPin />}>
-              Bhanthal, Karsog<br />District Mandi, Himachal Pradesh – 175011
-            </Info>
-
-            <Info title="Opening Hours" icon={<Clock />}>
-              Mon–Sat: <b className="text-green-600">08:00 AM – 7:00 PM</b><br />
-              Sunday: <b className="text-red-500">Closed</b>
-            </Info>
-
-            <Info title="Coverage Area" icon={<Car />}>
-              Bhanthal, Karsog, Sanarli, Baral Bypass & nearby villages
-            </Info>
-
-            <Info title="Why Choose Us?" icon={<ShieldCheck />}>
-              Dual control cars, hill training, RTO test routes & high pass rate
-            </Info>
-          </div>
-
-          <div className="space-y-8">
-            <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-200 h-[350px]">
-              <iframe
-                title="Raj Ann Raj Driving School Map"
-                src="https://maps.google.com/?q=Raj+Ann+Raj+Driving+School+Karsog"
-                className="w-full h-full"
-                loading="lazy"
-                style={{ border: 0 }}
-                allowFullScreen=""
-              />
-            </div>
-
-            <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 space-y-6">
-              <h3 className="text-xl font-bold text-[#1e3a8a] mb-4">Direct Contact</h3>
-              
-              <div className="space-y-4">
-                <a href="tel:+919882034930" className="flex gap-4 font-bold text-slate-700 hover:text-[#1e3a8a] transition-colors items-center group">
-                  <div className="p-3 bg-orange-50 rounded-xl text-[#ea580c] group-hover:bg-[#ea580c] group-hover:text-white transition-colors"><Phone size={20} /></div>
-                  <span className="text-lg">+91 98820 34930</span>
-                </a>
-                <a href="mailto:rajannraj.dts@gmail.com" className="flex gap-4 font-bold text-slate-700 hover:text-[#1e3a8a] transition-colors items-center group">
-                  <div className="p-3 bg-orange-50 rounded-xl text-[#ea580c] group-hover:bg-[#ea580c] group-hover:text-white transition-colors"><Mail size={20} /></div>
-                  <span className="text-lg">rajannraj.dts@gmail.com</span>
-                </a>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-100">
-                <a href="tel:+919882034930" className="flex-1 bg-[#1e3a8a] text-white py-3.5 rounded-xl font-bold text-center hover:bg-[#152865] transition-colors shadow-lg shadow-blue-900/20 active:scale-95">
-                  Call Now
-                </a>
-                <a href="https://wa.me/919882034930" className="flex-1 bg-[#ea580c] text-white py-3.5 rounded-xl font-bold text-center hover:bg-[#c2410c] transition-colors shadow-lg shadow-orange-500/20 active:scale-95">
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
       </div>
     </section>
   );
