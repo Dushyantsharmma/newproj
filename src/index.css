@@ -17,20 +17,74 @@
   --text-muted: #64748b;
 }
 
+/* =========================================
+   GOOGLE TRANSLATE FINAL FIX (The Combo Strategy)
+   * We use ALL methods at once to ensure it never appears *
+========================================= */
+
+/* 1. Target every possible Google Banner Element */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+.goog-te-gadget,
+#google_translate_element,
+iframe[name="goog-te-banner-frame"],
+iframe[id=":1.container"],
+iframe[id=":2.container"],
+iframe[class*="goog-te-banner-frame"] {
+  /* Plan A: Remove it */
+  display: none !important;
+  
+  /* Plan B: If Google forces it to display, hide it anyway */
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+  
+  /* Plan C: Send it behind the wallpaper */
+  z-index: -99999 !important;
+  position: absolute !important;
+  top: -1000px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 2. Clean up the text highlighting and tooltips */
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+#goog-gt-tt {
+  display: none !important;
+}
+
+/* 3. CRITICAL: Force your website to sit ON TOP of the hidden bar */
+/* We set background color here so the hidden bar doesn't show through */
+html, body, #root {
+  /* Reset Google's margins */
+  top: 0px !important; 
+  margin-top: 0px !important;
+  position: relative !important;
+  
+  /* Bring content forward */
+  z-index: 10 !important;
+  background-color: var(--bg-main) !important;
+  min-height: 100vh;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--bg-main);
   }
 
   body {
     margin: 0;
-    background-color: var(--bg-main);
     color: var(--text-primary);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.6;
-    top: 0 !important;
   }
 
   h1, h2, h3, h4, strong {
@@ -41,22 +95,4 @@
   p {
     color: var(--text-muted);
   }
-}
-
-/* ===== GOOGLE TRANSLATE CLEANUP ===== */
-.goog-te-banner-frame,
-.goog-te-balloon-frame,
-.goog-te-gadget,
-.goog-te-spinner,
-.goog-logo-link,
-.goog-te-float,
-.goog-te-menu-frame,
-#goog-gt-tt,
-iframe[title="Language Translate Widget"] {
-  display: none !important;
-}
-
-.goog-text-highlight {
-  background: transparent !important;
-  box-shadow: none !important;
 }

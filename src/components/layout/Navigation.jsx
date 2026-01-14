@@ -8,15 +8,16 @@ import {
   GraduationCap,
   Image as ImageIcon,
   Users,
-  X
+  X,
+  ChevronRight
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../common/useLanguage";
-import GoogleTranslate from "../common/GoogleTranslate";
+import TranslateComponent from "../common/TranslateComponent";
 
 const NAV_ITEMS = [
   { name: "Home", to: "/", icon: Home },
-  { name: "About Us", to: "/about", icon: Users },
+  { name: "About", to: "/about", icon: Users },
   { name: "Courses", to: "/courses", icon: BookOpen },
   { name: "Students", to: "/student-corner", icon: GraduationCap },
   { name: "Gallery", to: "/gallery", icon: ImageIcon },
@@ -25,107 +26,148 @@ const NAV_ITEMS = [
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const lang = useLanguage();
+  
+  // Custom hook to check current language (code provided below)
+  const lang = useLanguage(); 
 
+  // Detect scroll to change navbar appearance
   useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    
+    // Lock body scroll when mobile menu is open
     document.body.style.overflow = isOpen ? "hidden" : "unset";
-    return () => (document.body.style.overflow = "unset");
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.body.style.overflow = "unset";
+    };
   }, [isOpen]);
 
   return (
     <>
-      {/* ================= DESKTOP ================= */}
+      {/* ================= DESKTOP HEADER ================= */}
       <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="fixed top-0 inset-x-0 z-50 hidden lg:flex justify-center"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed top-0 inset-x-0 z-[100] hidden lg:flex justify-center transition-all duration-300 ${
+          scrolled ? "py-2" : "py-5"
+        }`}
       >
-        <div className="mt-6 w-[95%] max-w-7xl bg-[#1e3a8a]/95 backdrop-blur-xl border border-white/10 rounded-[2.2rem] shadow-[0_20px_60px_rgba(0,0,0,0.35)] px-8 py-4 flex items-center justify-between">
-
-          {/* LOGO */}
-          <div onClick={() => navigate("/")} className="flex items-center gap-4 cursor-pointer">
-            <div className="w-16 h-16 rounded-full bg-white shadow-[inset_0_0_10px_rgba(0,0,0,0.4)] overflow-hidden flex items-center justify-center">
+        <div 
+          className={`
+            w-[95%] max-w-7xl 
+            bg-[#1e3a8a]/90 backdrop-blur-md 
+            border border-white/10 
+            shadow-lg shadow-blue-900/20
+            flex items-center justify-between 
+            px-6 transition-all duration-300
+            ${scrolled ? "h-16 rounded-xl" : "h-20 rounded-2xl"}
+          `}
+        >
+          
+          {/* LEFT: LOGO */}
+          <div 
+            onClick={() => navigate("/")} 
+            className="flex items-center gap-3 cursor-pointer group"
+          >
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden border-2 border-orange-500/50 transition-transform group-hover:scale-110">
               <img
-                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
-                className="w-full h-full object-cover scale-[1.5]"
-                alt="Raj Ann Raj"
+                src="/branding/raj-ann-raj-logo.webp" // Make sure this path is correct
+                className="w-full h-full object-cover scale-125"
+                alt="Raj Ann Raj Logo"
               />
             </div>
-            <div className="leading-tight">
-              <div className="text-2xl font-extrabold text-[#ea580c] tracking-wide">
+            <div className="flex flex-col">
+              <span className="text-white font-bold text-lg leading-none tracking-wide group-hover:text-orange-400 transition-colors">
+                {/* Dynamically change text based on language */}
                 {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
-              </div>
-              <div className="text-[12px] tracking-[0.28em] text-white font-bold">
-                DRIVING TRAINING SCHOOL
-              </div>
+              </span>
+              <span className="text-[10px] text-blue-200 tracking-[0.2em] font-medium uppercase opacity-70">
+                Driving School
+              </span>
             </div>
           </div>
 
-          {/* NAV CAPSULE */}
-          <div className="flex items-center bg-white rounded-full p-1 shadow-[0_10px_40px_rgba(0,0,0,0.15)]">
+          {/* CENTER: NAVIGATION LINKS */}
+          <nav className="flex items-center gap-1 bg-black/20 rounded-full p-1 px-2 border border-white/5">
             {NAV_ITEMS.map((item) => (
               <NavLink key={item.to} to={item.to}>
                 {({ isActive }) => (
                   <div
-                    className={`px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-semibold transition-all duration-300 ${
-                      isActive
-                        ? "bg-[#ea580c] text-white shadow-[0_10px_30px_rgba(234,88,12,0.6)]"
-                        : "text-[#1e3a8a] hover:text-[#ea580c]"
-                    }`}
+                    className={`
+                      relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2
+                      ${isActive 
+                        ? "text-white bg-white/10 shadow-inner" 
+                        : "text-blue-100 hover:text-white hover:bg-white/5"
+                      }
+                    `}
                   >
-                    <item.icon size={16} />
+                    <item.icon size={15} className={isActive ? "text-orange-400" : "opacity-70"} />
                     {item.name}
+                    
+                    {isActive && (
+                      <motion.div 
+                        layoutId="active-nav"
+                        className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500"
+                      />
+                    )}
                   </div>
                 )}
               </NavLink>
             ))}
-          </div>
+          </nav>
 
-          {/* ACTIONS */}
+          {/* RIGHT: ACTIONS */}
           <div className="flex items-center gap-4">
-            <GoogleTranslate />
+            {/* The Cookie-based Translate Component */}
+            <div className="scale-90 opacity-90 hover:opacity-100 transition">
+              <TranslateComponent />
+            </div>
 
             <a
               href="tel:+919882034930"
-              className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#ea580c] to-orange-500 text-white font-bold shadow-[0_10px_40px_rgba(234,88,12,0.7)] hover:scale-105 transition"
+              className="group flex items-center gap-2 pl-1 pr-4 py-1 bg-orange-600 hover:bg-orange-500 text-white rounded-full transition-all duration-300 shadow-lg shadow-orange-900/20"
             >
-              <Phone size={16} />
-              Call Now
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-orange-600 group-hover:rotate-12 transition-transform">
+                <Phone size={16} fill="currentColor" />
+              </div>
+              <span className="text-sm font-bold">Call Now</span>
             </a>
           </div>
+
         </div>
       </motion.header>
 
-      {/* ================= MOBILE ================= */}
-      <header className="lg:hidden fixed top-0 inset-x-0 z-50 bg-[#1e3a8a]/95 backdrop-blur-xl shadow-xl py-4">
+      {/* ================= MOBILE HEADER ================= */}
+      <header className={`lg:hidden fixed top-0 inset-x-0 z-[100] bg-[#1e3a8a]/95 backdrop-blur-xl shadow-xl border-b border-white/5 transition-all duration-300 ${scrolled ? 'py-2' : 'py-3'}`}>
         <div className="flex justify-between items-center px-4">
-
           <div onClick={() => navigate("/")} className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-white shadow-inner overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-white shadow-inner overflow-hidden">
               <img
-                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.webp`}
+                src="/branding/raj-ann-raj-logo.webp"
                 className="w-full h-full object-cover scale-[1.35]"
                 alt="Logo"
               />
             </div>
             <div className="leading-tight">
-              <div className="text-[#ea580c] font-extrabold text-lg">
-                {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
-              </div>
-              <div className="text-[9px] tracking-[0.3em] text-white font-bold">
-                DRIVING TRAINING SCHOOL
+              <div className="text-white font-bold text-lg">
+                 {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <GoogleTranslate />
+            <div className="scale-75 origin-right">
+              <TranslateComponent />
+            </div>
             <button
               onClick={() => setIsOpen(true)}
-              className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white"
+              className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white active:bg-orange-600 transition"
             >
-              <Menu size={22} />
+              <Menu size={20} />
             </button>
           </div>
         </div>
@@ -136,42 +178,57 @@ export default function Navigation() {
         {isOpen && (
           <>
             <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/60 z-[9990]"
+              className="fixed inset-0 bg-black/60 z-[9990] backdrop-blur-sm"
             />
-
             <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              className="fixed right-0 top-0 bottom-0 z-[9999] w-[80vw] max-w-sm bg-[#1e3a8a] p-6"
+              transition={{type: "spring", damping: 25, stiffness: 200}}
+              className="fixed right-0 top-0 bottom-0 z-[9999] w-[80vw] max-w-xs bg-[#1e3a8a] border-l border-white/10 p-6 flex flex-col shadow-2xl"
             >
               <div className="flex justify-between items-center mb-8">
-                <div className="text-[#ea580c] font-extrabold text-xl">
-                  {lang === "hi" ? "राज एन राज" : "Raj Ann Raj"}
-                </div>
-                <button onClick={() => setIsOpen(false)}>
-                  <X className="text-white" />
+                <span className="text-orange-500 font-extrabold text-xl tracking-wide">MENU</span>
+                <button onClick={() => setIsOpen(false)} className="p-2 bg-white/10 rounded-full text-white hover:bg-white/20 transition">
+                  <X size={20} />
                 </button>
               </div>
 
-              <div className="space-y-4">
+              <div className="flex-1 space-y-2 overflow-y-auto">
                 {NAV_ITEMS.map((item) => (
                   <NavLink
                     key={item.to}
                     to={item.to}
                     onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 rounded-xl bg-white/10 text-white hover:bg-[#ea580c]"
                   >
-                    {item.name}
+                    {({ isActive }) => (
+                        <div className={`
+                            group flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 border border-transparent
+                            ${isActive 
+                              ? "bg-orange-600 text-white shadow-lg shadow-orange-900/20" 
+                              : "text-blue-100 hover:bg-white/5 hover:border-white/5"
+                            }
+                        `}>
+                            <div className="flex items-center gap-3">
+                                <item.icon size={18} />
+                                <span className="font-medium">{item.name}</span>
+                            </div>
+                            <ChevronRight size={16} className={`opacity-50 group-hover:translate-x-1 transition ${isActive ? "text-white" : ""}`} />
+                        </div>
+                    )}
                   </NavLink>
                 ))}
               </div>
 
               <a
                 href="tel:+919882034930"
-                className="mt-10 block text-center py-4 bg-gradient-to-r from-[#ea580c] to-orange-500 text-white font-bold rounded-xl shadow-xl"
+                className="mt-6 flex items-center justify-center gap-2 w-full py-3.5 bg-white text-[#1e3a8a] font-bold rounded-xl shadow-lg active:scale-95 transition"
               >
+                <Phone size={18} />
                 Call Now
               </a>
             </motion.aside>

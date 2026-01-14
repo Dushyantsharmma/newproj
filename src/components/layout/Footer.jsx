@@ -140,7 +140,7 @@ const Footer = () => {
               </a>
             </div>
             <a
-              href="https://www.google.com/maps/place/Bhanthal,+Karsog,+Mandi,+Himachal+Pradesh+175011"
+              href="https://maps.app.goo.gl/uKX7DuD6DgV6SrKVA"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow text-[#1e3a8a] font-bold text-base cursor-pointer hover:bg-blue-50 transition mb-4"

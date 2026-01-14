@@ -49,7 +49,8 @@ const openingHours = [
 
 /* ================= COMPONENTS ================= */
 
-function ContactCard({ title, subtext, action, highlight, className }) {
+// FIXED: Properly accepting and rendering the 'icon' prop
+function ContactCard({ icon: Icon, title, subtext, action, highlight, className }) {
   return (
     <motion.div 
       whileHover={{ y: -5 }}
@@ -63,7 +64,8 @@ function ContactCard({ title, subtext, action, highlight, className }) {
         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 text-xl ${
           highlight ? "bg-white/10 text-white" : "bg-orange-50 text-[#ea580c]"
         }`}>
-          {/* Removed Icon usage to fix eslint no-unused-vars */}
+          {/* FIXED: Conditional rendering for the icon */}
+          {Icon && <Icon size={24} />}
         </div>
         <h3 className={`font-bold text-lg mb-3 ${highlight ? "text-white" : "text-slate-800"}`}>{title}</h3>
         <div className={`text-sm font-medium leading-relaxed ${highlight ? "text-blue-200" : "text-slate-500"}`}>
@@ -133,10 +135,10 @@ export default function ContactPage() {
         </div>
 
         {/* ================= NEW LAYOUT GRID ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24 auto-rows-min">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
           
           {/* 1. Visit Us (Top Left) */}
-          <div className="col-span-1">
+          <div className="col-span-1 h-full">
             <ContactCard 
               icon={MapPin}
               title="Visit Us"
@@ -155,10 +157,11 @@ export default function ContactPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="col-span-1 md:col-span-2 md:row-span-2 min-h-[400px] md:min-h-auto bg-slate-200 rounded-3xl overflow-hidden relative shadow-2xl border-4 border-white ring-1 ring-slate-900/5 group"
+            className="col-span-1 md:col-span-2 md:row-span-2 min-h-[400px] bg-slate-200 rounded-3xl overflow-hidden relative shadow-2xl border-4 border-white ring-1 ring-slate-900/5 group"
           >
+            {/* FIXED: Working Google Maps Embed for 'Raj Ann Raj Driving School Karsog' */}
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28187816.144688107!2d83.7034612!3d30.4107059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3905a08da5cd688b%3A0x13721873736c3e1b!2sRaj%20%22Ann%22%20Raj%20Driving%20Training%20School%20Bhanthal!5e0!3m2!1sen!2sin!4v1768374491234!5m2!1sen!2sin" 
+              src="https://maps.google.com/maps?q=Raj%20Ann%20Raj%20Driving%20School%20Karsog%20Mandi&t=&z=14&ie=UTF8&iwloc=&output=embed"
               className="absolute inset-0 w-full h-full grayscale-[50%] group-hover:grayscale-0 transition-all duration-700 ease-in-out"
               style={{ border: 0 }} 
               allowFullScreen="" 
@@ -175,8 +178,8 @@ export default function ContactPage() {
             </div>
           </motion.div>
 
-          {/* 3. Opening Hours (Middle & Bottom Left - Spans 2 rows to fill gap) */}
-          <div className="col-span-1 md:row-span-2">
+          {/* 3. Opening Hours (Middle Left) */}
+          <div className="col-span-1 row-span-2">
             <ContactCard 
               icon={Clock}
               title="Opening Hours"
@@ -194,21 +197,21 @@ export default function ContactPage() {
           </div>
 
           {/* 4. WhatsApp (Bottom Middle) */}
-          <div className="col-span-1">
+          <div className="col-span-1 md:col-span-1">
              <ContactCard 
               icon={FaWhatsapp}
               title="Chat Now"
               subtext="Quick replies on WhatsApp"
               action={
-                <a href="https://wa.me/919882034930" className="block w-full bg-[#25D366] text-white py-3 rounded-xl font-bold text-center hover:bg-[#20bd5a] transition-colors shadow-lg shadow-green-500/20">
+                <a href="https://wa.me/919882034930" target="_blank" rel="noreferrer" className="block w-full bg-[#25D366] text-white py-3 rounded-xl font-bold text-center hover:bg-[#20bd5a] transition-colors shadow-lg shadow-green-500/20">
                   Message Us
                 </a>
               }
             />
           </div>
 
-          {/* 5. Call Us (Bottom Right - MOVED HERE) */}
-          <div className="col-span-1">
+          {/* 5. Call Us (Bottom Right) */}
+          <div className="col-span-1 md:col-span-1">
              <ContactCard 
               highlight={true}
               icon={Phone}
@@ -237,7 +240,8 @@ export default function ContactPage() {
               </div>
             </div>
             <button 
-              onClick={() => window.open('https://g.page/r/YOUR_LINK', '_blank')}
+              /* FIXED: Added your specific Google Review Link */
+              onClick={() => window.open('https://g.page/r/CRs-bHNzGHITEAE/review', '_blank')}
               className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-colors flex items-center gap-2"
             >
               <FaGoogle /> Write a Review
@@ -249,7 +253,7 @@ export default function ContactPage() {
             <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
             
-            <motion.div ref={carousel} className="flex gap-6 pl-12">
+            <motion.div ref={carousel} className="flex gap-6 pl-12 cursor-grab active:cursor-grabbing">
               <motion.div animate={controls} className="flex gap-6">
                 {[...reviews, ...reviews, ...reviews].map((r, i) => (
                   <div key={i} className="w-[350px] flex-shrink-0 bg-slate-50 p-6 rounded-3xl border border-slate-100 relative group hover:bg-white hover:shadow-lg transition-all duration-300">

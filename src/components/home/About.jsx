@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Star, Clock, Users, Quote, ShieldCheck, MapPin, Award, 
-  ArrowRight, Car, Fuel, Settings, HelpCircle, ChevronDown 
+  Car, Fuel, Settings, HelpCircle, ChevronDown 
 } from "lucide-react";
 
 // NOTE: Uncomment this if you have the SEO component
@@ -46,24 +46,24 @@ function useCountUp(target, duration = 2000) {
 
 /* ================= DATA ================= */
 
-  const TEAM_MEMBERS = [
-    {
-      id: 1,
-      name: "Girdhari Lal",
-      role: "Senior Instructor",
-      image: "/team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp",
-      tags: ["Hill Specialist", "20+ Years Exp."],
-      bio: "The master of mountain roads. Girdhari ensures every student masters the clutch on steep inclines safely."
-    },
-    {
-      id: 2,
-      name: "Tarun Wala",
-      role: "Clerk",
-      image: "/team/tarun-wala-clerk.webp",
-      tags: ["Student Support", "RTO Expert"],
-      bio: "Ensuring your license process is as smooth as your driving. She handles all RTO documentation and scheduling."
-    }
-  ];
+const TEAM_MEMBERS = [
+  {
+    id: 1,
+    name: "Girdhari Lal",
+    role: "Senior Instructor",
+    image: "/team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp",
+    tags: ["Hill Specialist", "20+ Years Exp."],
+    bio: "The master of mountain roads. Girdhari ensures every student masters the clutch on steep inclines safely."
+  },
+  {
+    id: 2,
+    name: "Tarun Wala",
+    role: "Clerk",
+    image: "/team/tarun-wala-clerk.webp",
+    tags: ["Student Support", "RTO Expert"],
+    bio: "Ensuring your license process is as smooth as your driving. She handles all RTO documentation and scheduling."
+  }
+];
 
 const FEATURES = [
   { title: "Patient Instructors", desc: "We specialize in teaching nervous beginners with a calm, friendly approach.", icon: Users },
@@ -86,18 +86,18 @@ const PROCESS_STEPS = [
   { id: 4, title: "License Test", desc: "We assist with the RTO test to help you get your license." },
 ];
 
-/* --- NEW FLEET DATA --- */
+/* --- UPDATED FLEET DATA --- */
 const FLEET = [
   {
     name: "Maruti Suzuki Baleno",
     category: "Premium Hatchback",
     desc: "A modern, comfortable, and safe car ideal for learning advanced driving skills and highway stability.",
     features: ["Dual Control", "Power Steering", "ABS", "Spacious Cabin"],
-    image: "/fleet/baleno-placeholder.webp" // Replace with real image path
+    // Matches the path you provided
+    image: "/courses/Baleno-white.png" 
   }
 ];
 
-/* --- NEW FAQ DATA --- */
 const FAQS = [
   {
     q: "Do you help with the driving license?",
@@ -188,8 +188,7 @@ export default function About({ variant = "full" }) {
   /* ===== FULL PAGE VARIANT ===== */
   return (
     <div className="bg-slate-50 font-sans pt-20">
-      {/* <SEO title="About Us - Raj Ann Raj Driving School" description="Over 20 years of experience teaching safe driving in Himachal Pradesh." /> */}
-
+      
       {/* 1. HERO HEADER */}
       <section className="pt-20 pb-24 bg-white text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
@@ -320,7 +319,7 @@ export default function About({ variant = "full" }) {
         </div>
       </section>
 
-      {/* 6. OUR FLEET (NEW SECTION) */}
+      {/* 6. OUR FLEET (COMPLETELY REDESIGNED) */}
       <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -328,33 +327,47 @@ export default function About({ variant = "full" }) {
             <p className="mt-4 text-slate-600">Learn on well-maintained, dual-control vehicles tailored for hill terrain.</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-8">
             {FLEET.map((car, idx) => (
               <motion.div 
                 key={idx}
                 whileHover={{ y: -5 }}
-                className="bg-white rounded-3xl p-6 border border-slate-200 flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-xl transition-all"
+                className="bg-white rounded-[2rem] border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col md:flex-row group"
               >
-                {/* Car Icon/Image Placeholder */}
-                <div className="w-full md:w-2/5 h-40 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-400 relative overflow-hidden group">
-                  <Car size={48} className="text-[#1e3a8a]/40" />
-                  {/* UNCOMMENT BELOW LINE IF YOU HAVE REAL IMAGES */}
-                  {/* <img src={car.image} alt={car.name} className="absolute inset-0 w-full h-full object-cover" /> */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a8a]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                {/* Image Section (Responsive: Top on mobile, Left on Desktop) */}
+                <div className="w-full md:w-1/2 relative min-h-[250px] bg-slate-100 overflow-hidden">
+                   {/* Badge floating on image */}
+                   <div className="absolute top-4 left-4 z-20">
+                      <span className="px-3 py-1 bg-white/95 backdrop-blur text-[#ea580c] text-xs font-bold uppercase tracking-wider rounded-full shadow-md border border-orange-100">
+                        {car.category}
+                      </span>
+                   </div>
+                   
+                   {/* Gradient overlay for better text contrast if needed */}
+                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent z-10"/>
+                   
+                   <img 
+                     src={car.image} 
+                     alt={car.name} 
+                     className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                   />
                 </div>
                 
-                <div className="w-full md:w-3/5 text-left">
-                  <div className="inline-block px-2 py-1 bg-orange-50 text-[#ea580c] text-[10px] font-bold uppercase tracking-wider rounded mb-2 border border-orange-100">
-                    {car.category}
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#1e3a8a] mb-2">{car.name}</h3>
-                  <p className="text-slate-500 text-sm mb-4 leading-relaxed">{car.desc}</p>
+                {/* Content Section */}
+                <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
+                  <h3 className="text-2xl font-bold text-[#1e3a8a] mb-3">{car.name}</h3>
+                  <p className="text-slate-500 text-sm mb-6 leading-relaxed">
+                    {car.desc}
+                  </p>
                   
-                  {/* Features Tags */}
-                  <div className="flex flex-wrap gap-2">
+                  {/* Features Grid */}
+                  <div className="grid grid-cols-2 gap-3">
                     {car.features.map((f, i) => (
-                      <div key={i} className="flex items-center gap-1 text-xs font-semibold text-slate-700 bg-slate-100 px-2 py-1 rounded">
-                        {f === "Dual Control" ? <Settings size={12} className="text-[#ea580c]"/> : <Fuel size={12} className="text-blue-500"/>}
+                      <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 group-hover:border-orange-100 transition-colors">
+                        {f === "Dual Control" ? 
+                          <Settings size={14} className="text-[#ea580c]"/> : 
+                          <ShieldCheck size={14} className="text-blue-500"/>
+                        }
                         {f}
                       </div>
                     ))}
@@ -446,7 +459,7 @@ export default function About({ variant = "full" }) {
         </div>
       </section>
 
-      {/* 9. FAQ (NEW SECTION) */}
+      {/* 9. FAQ */}
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">

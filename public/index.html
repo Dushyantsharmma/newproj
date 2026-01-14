@@ -4,32 +4,109 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="theme-color" content="#EFEDE0" />
-    <meta name="description" content="Raj Ann Raj Driving School - Best car driving training in Karsog, Mandi, Himachal Pradesh. Learn hill driving, RTO test, and more." />
-    <link rel="icon" href="/favicon.ico" />
+    
+    <meta name="description" content="Raj Ann Raj Driving School - Best car driving training in Karsog, Mandi, Himachal Pradesh." />
+    <link rel="icon" type="image/webp" href="/branding/raj-ann-raj-logo.webp" />
     <title>Raj Ann Raj Driving School</title>
 
-    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://translate.googleapis.com">
-    <link rel="preconnect" href="https://translate.google.com">
-
-    <!-- Google Fonts (example, update as needed) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="/src/index.css" />
+    <style>
+      /* Force hide the Google Bar */
+      .goog-te-banner-frame {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+      }
+      
+      /* Target the iframe specifically by attribute */
+      iframe[name="goog-te-banner-frame"], 
+      iframe.goog-te-banner-frame {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+
+      /* Force Body and HTML to top */
+      body {
+        top: 0px !important; 
+        margin-top: 0px !important;
+        position: static !important;
+      }
+      
+      html {
+        margin-top: 0px !important;
+        height: 100% !important;
+      }
+
+      /* Hide the element wrapper */
+      #google_translate_element {
+        display: none !important;
+      }
+    </style>
+
     <script>
-      // FORCE ENGLISH EVERY LOAD (for local/dev)
-      document.cookie = "googtrans=/en/en; path=/; max-age=315360000";
+      (function() {
+        // Force cookie to English if not set (prevents auto-banner)
+        if (document.cookie.indexOf('googtrans') === -1) {
+          document.cookie = "googtrans=/en/en; path=/";
+        }
+
+        function nukeGoogleBar() {
+          // 1. Get the body and html
+          const body = document.body;
+          const html = document.documentElement;
+          
+          // 2. Reset margins if Google changed them
+          if (body.style.top !== '0px' || body.style.marginTop !== '0px') {
+            body.style.setProperty('top', '0px', 'important');
+            body.style.setProperty('margin-top', '0px', 'important');
+            body.style.setProperty('position', 'static', 'important');
+          }
+          if (html.style.marginTop !== '0px') {
+            html.style.setProperty('margin-top', '0px', 'important');
+          }
+
+          // 3. Find and delete the iframe
+          const banner = document.querySelector('.goog-te-banner-frame');
+          if (banner) {
+             banner.remove(); // Actually remove it from DOM
+          }
+        }
+
+        // Run extremely fast for the first 2 seconds to beat the Google Script
+        const intervalId = setInterval(nukeGoogleBar, 10);
+        
+        // Stop checking after 5 seconds to save performance
+        setTimeout(() => clearInterval(intervalId), 5000);
+        
+        // Also run when the page finishes loading
+        window.onload = nukeGoogleBar;
+      })();
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Main JS (Vite injects here) -->
-    <script type="module" src="/src/main.jsx" defer></script>
-    <!-- Example: async/defer for third-party scripts -->
-    <!-- <script src="https://example.com/third-party.js" async></script> -->
+    
+    <div id="google_translate_element" style="display:none"></div>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { 
+            pageLanguage: 'en', 
+            includedLanguages: 'en,hi', 
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
+            autoDisplay: false 
+          },
+          'google_translate_element'
+        );
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
