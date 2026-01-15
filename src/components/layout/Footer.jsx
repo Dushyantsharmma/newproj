@@ -14,11 +14,11 @@ const Footer = () => {
     <footer className="bg-[#1e3a8a] text-blue-100 font-sans border-t border-blue-900 w-full">
       
       {/* ===== MAIN FOOTER ===== */}
-      <div className="max-w-7xl mx-auto px-6 py-16 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 w-full">
+      <div className="max-w-screen-xl mx-auto px-6 py-8 lg:py-12 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 w-full break-words">
         
           {/* 1. BRAND & SOCIAL */}
-          <div className="space-y-6">
+          <div className="space-y-6 break-words">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-white p-1 shadow-lg">
                 <img
@@ -28,13 +28,13 @@ const Footer = () => {
                 />
               </div>
               <div>
-                <h3 className="text-2xl font-extrabold" style={{ color: '#ea580c', textTransform: 'none' }}>{brand}</h3>
-                <p className="text-sm font-bold tracking-widest text-white px-3 py-0.5 rounded mt-1 inline-block">
+                <h3 className="text-2xl font-extrabold break-words" style={{ color: '#ea580c', textTransform: 'none' }}>{brand}</h3>
+                <p className="text-sm font-bold tracking-widest text-white px-3 py-0.5 rounded mt-1 inline-block break-words">
                   Driving Training School
                 </p>
               </div>
             </div>
-            <p className="text-sm text-blue-200 leading-relaxed font-medium">
+            <p className="text-sm text-blue-200 leading-relaxed font-medium break-words">
               Professional hill driving training in Himachal Pradesh. 
               Learn to drive safely, confidently, and independently on steep terrains.
             </p>
@@ -67,8 +67,8 @@ const Footer = () => {
 
           {/* 2. QUICK LINKS */}
           <div>
-            <h4 className="text-white font-bold mb-6 text-lg">Quick Links</h4>
-              <ul className="space-y-3 text-sm font-medium">
+            <h4 className="text-white font-bold mb-6 text-lg break-words">Quick Links</h4>
+              <ul className="space-y-3 text-sm font-medium break-words">
                 {[ 
                   { name: "Home", to: "/" }, 
                   { name: "About", to: "/about" },
@@ -89,8 +89,8 @@ const Footer = () => {
 
           {/* 3. CONTACT INFO */}
           <div>
-            <h4 className="text-white font-bold mb-6 text-lg">Contact Us</h4>
-            <div className="space-y-4 text-sm font-medium">
+            <h4 className="text-white font-bold mb-6 text-lg break-words">Contact Us</h4>
+            <div className="space-y-4 text-sm font-medium break-words">
               <div className="flex gap-3 items-start">
                 <MapPin className="text-[#ea580c] shrink-0 mt-0.5" size={18} />
                 <a
@@ -118,9 +118,9 @@ const Footer = () => {
           </div>
 
           {/* 4. CALL TO ACTION */}
-          <div className="space-y-6">
-            <h4 className="text-white font-bold text-lg">Book a Lesson</h4>
-            <p className="text-sm text-blue-200">
+          <div className="space-y-6 break-words">
+            <h4 className="text-white font-bold text-lg break-words">Book a Lesson</h4>
+            <p className="text-sm text-blue-200 break-words">
               Ready to hit the road? Schedule your first training session today.
             </p>
             <div className="flex flex-col gap-3">
@@ -155,11 +155,11 @@ const Footer = () => {
 
       {/* ===== BOTTOM BAR ===== */}
       <div className="border-t border-white/10 py-6 bg-[#172e6e] w-full">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-blue-300 gap-3 font-medium w-full">
-          <p className="text-center md:text-left w-full md:w-auto">© {new Date().getFullYear()} {brand} Driving School. All rights reserved.</p>
-          <p className="flex items-center gap-2 justify-center md:justify-end w-full md:w-auto">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-blue-300 gap-3 font-medium w-full break-words">
+          <p className="text-center md:text-left w-full md:w-auto break-words">9 {new Date().getFullYear()} {brand} Driving School. All rights reserved.</p>
+          <p className="flex items-center gap-2 justify-center md:justify-end w-full md:w-auto break-words">
             Built by
-            <a href="https://github.com/Dushyantsharmma" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-white hover:text-[#ea580c] transition-colors">
+            <a href="https://github.com/Dushyantsharmma" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-white hover:text-[#ea580c] transition-colors break-words">
               <Github size={12} /> Dushyant Sharma
             </a>
           </p>

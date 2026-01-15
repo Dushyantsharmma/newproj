@@ -86,27 +86,27 @@ const GoogleReviews = () => {
   }, [width, controls]);
 
   return (
-    <section className="relative py-20 bg-slate-50 overflow-hidden font-sans border-y border-slate-200">
+    <section className="relative py-12 lg:py-20 bg-slate-50 overflow-hidden font-sans border-y border-slate-200">
       {/* Background Texture */}
       <div className="absolute inset-0 opacity-[0.03]" 
            style={{ backgroundImage: 'radial-gradient(#1e3a8a 1px, transparent 1px)', backgroundSize: '32px 32px' }} 
       />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-screen-xl mx-auto px-6 relative z-10">
         
         {/* HEADER */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-[#ea580c] text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-[#ea580c] text-xs font-bold tracking-widest uppercase mb-6 shadow-sm break-words">
             <Star size={14} className="fill-current" />
             Student Success Stories
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mb-6">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mb-6 break-words leading-tight">
             Trusted by <span className="text-[#ea580c]">Himachal's Drivers</span>
           </h2>
           
           {/* Trust Badge */}
-          <div className="inline-flex items-center gap-4 bg-white px-6 py-3 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+          <div className="inline-flex items-center gap-4 bg-white px-6 py-3 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow break-words">
             <FaGoogle className="text-2xl text-slate-700" />
             <div className="h-8 w-px bg-slate-200"></div>
             <div className="text-left">
@@ -114,7 +114,7 @@ const GoogleReviews = () => {
                 <span className="font-bold text-slate-900">5.0</span>
                 {[...Array(5)].map((_, i) => <FaStar key={i} />)}
               </div>
-              <p className="text-xs text-slate-500 font-medium">Based on 120+ Reviews</p>
+              <p className="text-xs text-slate-500 font-medium break-words">Based on 120+ Reviews</p>
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@ const GoogleReviews = () => {
 
                   {/* Review Text */}
                   <p className="text-slate-600 text-base leading-relaxed mb-6 min-h-[80px] font-medium">
-                    "{review.text}"
+                    <span className="break-words">"{review.text}"</span>
                   </p>
 
                   {/* Footer */}

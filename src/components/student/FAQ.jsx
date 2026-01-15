@@ -44,7 +44,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="relative py-24 bg-slate-50 overflow-hidden">
+    <section className="relative py-12 lg:py-20 bg-slate-50 overflow-hidden">
       <SEO schema={faqSchema} />
 
       {/* Background Decor (Light Theme) */}
@@ -56,20 +56,20 @@ export default function FAQ() {
          />
       </div>
 
-      <div className="relative max-w-5xl mx-auto px-6">
+      <div className="relative max-w-screen-xl mx-auto px-6 break-words">
 
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white border border-slate-200 rounded-full text-[#ea580c] font-semibold shadow-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white border border-slate-200 rounded-full text-[#ea580c] font-semibold shadow-sm break-words">
             <HelpCircle size={16} />
             Help Center
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mt-8">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] mt-8 break-words leading-tight">
             Questions Before You Start Driving?
           </h2>
 
-          <p className="text-slate-600 mt-5 max-w-xl mx-auto text-lg">
+          <p className="text-slate-600 mt-5 max-w-xl mx-auto text-lg break-words leading-relaxed">
             Everything you need to know about training, RTO test and learning to drive in Himachal.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function FAQ() {
               key={i}
               layout
               className={`
-                rounded-2xl p-6 cursor-pointer transition-all duration-300 border
+                rounded-2xl p-6 cursor-pointer transition-all duration-300 border break-words
                 ${open === i 
                    ? "bg-white border-[#ea580c] shadow-lg shadow-orange-100" 
                    : "bg-white border-slate-200 hover:border-[#ea580c]/50 hover:shadow-md"
@@ -90,7 +90,7 @@ export default function FAQ() {
               onClick={() => setOpen(open === i ? null : i)}
             >
               <div className="flex justify-between items-center">
-                <h3 className={`font-bold text-lg ${open === i ? "text-[#ea580c]" : "text-[#1e3a8a]"}`}>
+                <h3 className={`font-bold text-lg ${open === i ? "text-[#ea580c]" : "text-[#1e3a8a]"} break-words`}>
                   {item.q}
                 </h3>
                 <ChevronDown
@@ -106,7 +106,7 @@ export default function FAQ() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="text-slate-600 mt-4 leading-relaxed border-t border-slate-100 pt-4"
+                    className="text-slate-600 mt-4 leading-relaxed border-t border-slate-100 pt-4 break-words"
                   >
                     {item.a}
                   </motion.p>

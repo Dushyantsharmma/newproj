@@ -25,23 +25,23 @@ const features = [
 
 const WhyHillDriving = () => {
   return (
-    <section className="bg-slate-50 py-24 px-4">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section className="bg-slate-50 py-12 lg:py-20 px-4">
+      <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
         {/* LEFT CONTENT */}
         <div>
-          <span className="text-[#ea580c] font-bold tracking-widest uppercase text-sm bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
+          <span className="text-[#ea580c] font-bold tracking-widest uppercase text-sm bg-orange-50 px-3 py-1 rounded-full border border-orange-100 break-words">
             Himachal Pradesh
           </span>
 
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#1e3a8a] mt-6 leading-tight">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#1e3a8a] mt-6 leading-tight break-words">
             Why Hill Driving <br />
             <span className="text-[#ea580c]">
               Is Different
             </span>
           </h2>
 
-          <p className="text-slate-600 mt-6 text-lg max-w-xl leading-relaxed">
+          <p className="text-slate-600 mt-6 text-lg max-w-xl leading-relaxed break-words">
             Driving in the mountains is not the same as driving on highways.
             We train you to handle steep slopes, blind curves, and real hill
             traffic with confidence and control.
@@ -49,7 +49,7 @@ const WhyHillDriving = () => {
 
           <a
             href="#contact"
-            className="inline-block mt-8 bg-[#ea580c] text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-orange-200 hover:bg-[#c2410c] hover:-translate-y-1 transition-all duration-300"
+            className="inline-block mt-8 bg-[#ea580c] text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-orange-200 hover:bg-[#c2410c] hover:-translate-y-1 transition-all duration-300 break-words"
           >
             Talk to an Instructor
           </a>
@@ -66,11 +66,11 @@ const WhyHillDriving = () => {
                 <f.icon className="text-[#ea580c] group-hover:text-white transition-colors duration-300" size={28} />
               </div>
 
-              <h3 className="text-[#1e3a8a] font-bold text-xl mb-2">
+              <h3 className="text-[#1e3a8a] font-bold text-xl mb-2 break-words">
                 {f.title}
               </h3>
 
-              <p className="text-slate-600 leading-relaxed text-sm">
+              <p className="text-slate-600 leading-relaxed text-sm break-words">
                 {f.desc}
               </p>
             </div>

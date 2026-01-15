@@ -3,6 +3,7 @@ import { Phone, MapPin, Clock, ArrowRight } from "lucide-react";
 import { motion, useAnimationControls } from "framer-motion";
 import { FaGoogle, FaStar, FaQuoteRight, FaWhatsapp } from "react-icons/fa";
 import SEO from "../components/SEO";
+import Navigation from "../components/layout/Navigation";
 
 /* ================= DATA ================= */
 
@@ -79,7 +80,7 @@ function ContactCard({ icon: Icon, title, subtext, action, highlight, className 
 
 /* ================= MAIN PAGE ================= */
 
-export default function ContactPage() {
+export default function ContactPage({ theme, setTheme }) {
   const carousel = useRef();
   const controls = useAnimationControls();
   const [width, setWidth] = useState(0);
@@ -100,7 +101,9 @@ export default function ContactPage() {
   }, [width, controls]);
 
   return (
-    <section className="bg-slate-50 min-h-screen py-24 pt-32 px-4 relative overflow-hidden font-sans selection:bg-orange-100">
+    <>
+      <Navigation theme={theme} setTheme={setTheme} />
+      <section className="bg-slate-50 min-h-screen py-24 pt-32 px-4 relative overflow-hidden font-sans selection:bg-orange-100">
       <SEO 
         title="Contact Us | Raj Ann Raj Driving School" 
         description="Get in touch for driving lessons, RTO inquiries, and bookings in Mandi, HP." 
@@ -276,6 +279,7 @@ export default function ContactPage() {
         </div>
 
       </div>
-    </section>
+      </section>
+    </>
   );
 }

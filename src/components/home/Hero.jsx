@@ -4,8 +4,7 @@ import { MapPin, Phone, MessageCircle, Mountain } from "lucide-react";
 const Hero = () => {
   return (
     <section
-      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden
-      bg-slate-50"
+      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-50"
     >
       {/* ================= LCP IMAGE (Maintained as per your setup) ================= */}
       {/* Kept hidden/preload logic as per your original code */}
@@ -47,8 +46,7 @@ const Hero = () => {
 
           {/* ================= LOCATION BADGE ================= */}
           <div
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full
-            bg-white border border-slate-200 text-[#ea580c] text-xs sm:text-sm font-bold tracking-wide shadow-sm mb-8"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-slate-200 text-[#ea580c] text-xs sm:text-sm font-bold tracking-wide shadow-sm mb-8 break-words"
           >
             <MapPin size={14} />
             Karsog • Mandi • Himachal Pradesh
@@ -56,22 +54,23 @@ const Hero = () => {
 
           {/* ================= HEADING ================= */}
           <h1
-            className="font-extrabold leading-[1.1] text-[#1e3a8a] tracking-tight"
+            className="font-extrabold leading-[1.1] text-[#1e3a8a] tracking-tight break-words"
             style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}
           >
-            Master the Art of
-            <span className="block text-[#ea580c] relative">
-              Hill Driving
-              {/* Optional: Subtle underline SVG */}
-              <svg className="absolute w-1/3 h-3 -bottom-2 left-1/2 -translate-x-1/2 text-orange-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
-                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
-              </svg>
+            {/* Example: Use a span for the highlighted part, with box-decoration-break: clone for multi-line */}
+            <span
+              className="inline-block bg-blue-100 px-2 py-1"
+              style={{ boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone' }}
+            >
+              आत्मविश्वास के साथ गाड़ी चलाएं।
+              <br />
+              पहाड़ियों पर महारत हासिल करें।
             </span>
           </h1>
 
           {/* ================= SUBTITLE ================= */}
           <p
-            className="mt-6 text-slate-600 leading-relaxed max-w-2xl mx-auto font-medium"
+            className="mt-6 text-slate-600 leading-relaxed max-w-2xl mx-auto font-medium break-words"
             style={{ fontSize: "clamp(1.125rem, 2vw, 1.25rem)" }}
           >
             Learn safe and confident driving on real hill roads with
@@ -119,8 +118,7 @@ const Hero = () => {
             ].map((feature) => (
               <span
                 key={feature}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-                bg-white border border-slate-200 text-slate-700 text-sm font-bold shadow-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-bold shadow-sm break-words"
               >
                 {/* Icon in Brand Orange */}
                 <Mountain size={14} className="text-[#ea580c]" />

@@ -75,18 +75,18 @@ export default function Gallery() {
       <SEO title="Gallery | Raj Ann Raj Driving School" />
 
       {/* HEADER - White/Slate Theme */}
-      <div className="bg-slate-50 pt-[140px] pb-12 border-b border-slate-200">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-center text-[#1e3a8a]">
+      <div className="bg-slate-50 pt-16 lg:pt-24 pb-8 lg:pb-12 border-b border-slate-200">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-center text-[#1e3a8a] break-words leading-tight">
           Raj Ann Raj <span className="text-[#ea580c]">Gallery</span>
         </h1>
-        <p className="text-center text-slate-500 mt-3">
+        <p className="text-center text-slate-500 mt-3 break-words leading-relaxed">
           Glimpses of our training, students, and events.
         </p>
       </div>
 
       {/* FILTERS - Sticky Bar */}
       <div className="sticky top-[80px] bg-slate-50/95 backdrop-blur-sm z-30 p-4 border-b border-slate-200 shadow-sm">
-        <div className="flex gap-3 overflow-x-auto justify-center max-w-7xl mx-auto px-4 scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto justify-center max-w-screen-xl mx-auto px-4 scrollbar-hide">
           {categories.map((c) => (
             <button
               key={c}
@@ -108,7 +108,7 @@ export default function Gallery() {
         <VirtuosoGrid
           useWindowScroll
           totalCount={filtered.length}
-          listClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 max-w-7xl mx-auto"
+          listClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 max-w-screen-xl mx-auto"
           itemContent={(i) => {
             const img = filtered[i];
             return (
@@ -137,8 +137,8 @@ export default function Gallery() {
                 </div>
                 
                 <div className="p-4">
-                  <h3 className="font-bold text-[#1e3a8a] text-lg mb-1 line-clamp-1">{img.title}</h3>
-                  <p className="text-xs text-[#ea580c] flex gap-1 items-center font-medium">
+                  <h3 className="font-bold text-[#1e3a8a] text-lg mb-1 line-clamp-1 break-words">{img.title}</h3>
+                  <p className="text-xs text-[#ea580c] flex gap-1 items-center font-medium break-words">
                     <MapPin size={12} /> {img.location}
                   </p>
                 </div>

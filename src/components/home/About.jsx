@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Star, Clock, Users, Quote, ShieldCheck, MapPin, Award, 
-  Car, Fuel, Settings, HelpCircle, ChevronDown 
+  Car, Settings, HelpCircle, ChevronDown, CheckCircle2, ArrowRight
 } from "lucide-react";
 
 // NOTE: Uncomment this if you have the SEO component
@@ -93,7 +93,7 @@ const FLEET = [
     category: "Premium Hatchback",
     desc: "A modern, comfortable, and safe car ideal for learning advanced driving skills and highway stability.",
     features: ["Dual Control", "Power Steering", "ABS", "Spacious Cabin"],
-    // Matches the path you provided
+    // UPDATED IMAGE PATH
     image: "/courses/Baleno-white.png" 
   }
 ];
@@ -141,28 +141,32 @@ export default function About({ variant = "full" }) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-[#ea580c] border border-orange-100 text-xs font-bold uppercase tracking-wider mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-[#ea580c] border border-orange-100 text-xs font-bold uppercase tracking-wider mb-6 break-words">
               <Star size={14} className="fill-current" /> Since 2005
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] leading-tight">
-              Driving Confidence, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-orange-500">
-                Delivered Safely.
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a] leading-tight break-words">
+              <span
+                className="inline-block bg-blue-100 px-2 py-1"
+                style={{ boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone' }}
+              >
+                आत्मविश्वास के साथ गाड़ी चलाएं।
+                <br />
+                पहाड़ियों पर महारत हासिल करें।
               </span>
             </h2>
-            <p className="mt-6 text-lg text-slate-600 leading-relaxed">
+            <p className="mt-6 text-lg text-slate-600 leading-relaxed break-words">
               At <strong>Raj Ann Raj Driving School</strong>, we believe that learning to drive is about more than just passing a test—it is about building the confidence to navigate the roads safely for a lifetime.
             </p>
             
             <div className="mt-8 flex gap-8">
               <div>
                 <div className="text-3xl font-bold text-[#1e3a8a]">5000+</div>
-                <div className="text-sm text-slate-500 font-medium">Students Trained</div>
+                <div className="text-sm text-slate-500 font-medium break-words">Students Trained</div>
               </div>
               <div className="w-px bg-slate-200 h-12"></div>
               <div>
                 <div className="text-3xl font-bold text-[#1e3a8a]">98%</div>
-                <div className="text-sm text-slate-500 font-medium">Pass Rate</div>
+                <div className="text-sm text-slate-500 font-medium break-words">Pass Rate</div>
               </div>
             </div>
           </motion.div>
@@ -187,21 +191,21 @@ export default function About({ variant = "full" }) {
 
   /* ===== FULL PAGE VARIANT ===== */
   return (
-    <div className="bg-slate-50 font-sans pt-20">
+    <div className="bg-slate-50 font-sans pt-10 lg:pt-16">
       
       {/* 1. HERO HEADER */}
       <section className="pt-20 pb-24 bg-white text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-        <div className="max-w-3xl mx-auto px-6 relative z-10">
+        <div className="max-w-screen-xl mx-auto px-6 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-6xl font-extrabold text-[#1e3a8a] mb-6">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-[#1e3a8a] mb-6 break-words leading-tight">
               Your Journey <span className="text-[#ea580c]">Starts Here.</span>
             </h1>
-            <p className="text-xl text-slate-600 leading-relaxed font-medium">
+            <p className="text-xl text-slate-600 leading-relaxed font-medium break-words">
               At <strong>Raj Ann Raj Driving School</strong>, we don't just teach you how to operate a car; we teach you road etiquette, safety rules, and the split-second decision-making skills required for real-world driving.
             </p>
           </motion.div>
@@ -210,7 +214,7 @@ export default function About({ variant = "full" }) {
 
       {/* 2. STATS BAR */}
       <div className="max-w-6xl mx-auto px-6 -mt-12 relative z-20">
-        <div className="bg-[#1e3a8a] rounded-3xl shadow-2xl shadow-blue-900/20 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-blue-800 p-8 md:p-12 text-white">
+        <div className="bg-[#1e3a8a] rounded-3xl shadow-2xl shadow-blue-900/20 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-blue-800 p-6 md:p-10 text-white break-words">
           <div ref={yearsRef} className="text-center p-4">
             <Clock className="text-[#ea580c] mx-auto mb-3" size={32} />
             <div className="text-5xl font-bold mb-1">{yearsCount}+</div>
@@ -231,7 +235,7 @@ export default function About({ variant = "full" }) {
 
       {/* 3. FOUNDER SPOTLIGHT */}
       <section className="py-24">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
+        <div className="max-w-screen-xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5 order-2 lg:order-1">
              <div className="relative group">
                 <div className="absolute -inset-4 bg-gradient-to-r from-[#ea580c] to-orange-400 rounded-3xl opacity-20 blur-lg group-hover:opacity-30 transition duration-500"></div>
@@ -249,16 +253,16 @@ export default function About({ variant = "full" }) {
             <p className="text-[#ea580c] font-bold uppercase text-sm tracking-wide mb-6">Founder & Managing Director</p>
             
             <div className="space-y-4 text-slate-600 text-lg leading-relaxed font-medium">
-              <p>
+              <p className="break-words">
                 "I started Raj Ann Raj with a simple mission: to make our roads safer, one driver at a time. Located in the heart of Himachal, we understand the unique challenges of hill driving."
               </p>
-              <p>
+              <p className="break-words">
                 "At Raj Ann Raj Driving School, you aren't just another student; you are family. We take the stress out of learning by offering a calm, supportive environment where questions are encouraged and safety is paramount."
               </p>
             </div>
             
             <div className="mt-8 pt-8 border-t border-slate-200">
-               <p className="font-serif italic text-2xl text-slate-400">Drive with confidence.</p>
+               <p className="font-serif italic text-2xl text-slate-400 break-words">Drive with confidence.</p>
             </div>
           </div>
         </div>
@@ -266,7 +270,7 @@ export default function About({ variant = "full" }) {
 
       {/* 4. HISTORY TIMELINE */}
       <section className="py-20 bg-[#1e3a8a] text-white">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-screen-lg mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-[#ea580c] font-bold uppercase tracking-wider text-sm bg-white/10 px-3 py-1 rounded-full">Our Story</span>
             <h2 className="text-3xl md:text-4xl font-bold mt-4">A Legacy of Safe Driving</h2>
@@ -274,15 +278,15 @@ export default function About({ variant = "full" }) {
 
           <div className="relative border-l border-blue-800 ml-4 md:ml-1/2 space-y-12">
             {TIMELINE.map((item, idx) => (
-              <div key={idx} className="relative pl-8 md:pl-0">
+              <div key={idx} className="relative pl-8 md:pl-0 break-words">
                 <div className="absolute -left-[5px] top-1 w-3 h-3 rounded-full bg-[#ea580c] ring-4 ring-[#1e3a8a]"></div>
                 <div className="md:grid md:grid-cols-5 md:gap-8 items-start">
                   <div className="md:col-span-1 md:text-right">
                     <span className="text-2xl font-bold text-[#ea580c]">{item.year}</span>
                   </div>
                   <div className="md:col-span-4 mt-1 md:mt-0">
-                    <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                    <p className="text-blue-200">{item.desc}</p>
+                    <h3 className="text-xl font-bold text-white mb-2 break-words">{item.title}</h3>
+                    <p className="text-blue-200 break-words leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -293,7 +297,7 @@ export default function About({ variant = "full" }) {
 
       {/* 5. PROCESS STEPS */}
       <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-6">
           <div className="text-center mb-16">
              <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">How You'll Learn</h2>
              <p className="mt-4 text-slate-600">From your first day to your driving test.</p>
@@ -307,8 +311,8 @@ export default function About({ variant = "full" }) {
                    <div className="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-[#ea580c] mb-4 font-bold border border-orange-100">
                      {step.id}
                    </div>
-                   <h3 className="text-xl font-bold text-[#1e3a8a] mb-3">{step.title}</h3>
-                   <p className="text-slate-600 text-sm font-medium">{step.desc}</p>
+                   <h3 className="text-xl font-bold text-[#1e3a8a] mb-3 break-words">{step.title}</h3>
+                   <p className="text-slate-600 text-sm font-medium break-words leading-relaxed">{step.desc}</p>
                 </div>
                 {idx !== PROCESS_STEPS.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-slate-200"></div>
@@ -319,7 +323,7 @@ export default function About({ variant = "full" }) {
         </div>
       </section>
 
-      {/* 6. OUR FLEET (COMPLETELY REDESIGNED) */}
+      {/* 6. OUR FLEET (REDESIGNED PREMIUM) */}
       <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -327,50 +331,65 @@ export default function About({ variant = "full" }) {
             <p className="mt-4 text-slate-600">Learn on well-maintained, dual-control vehicles tailored for hill terrain.</p>
           </div>
 
+          {/* Grid optimized for readability - stacks nicely on mobile, expands on desktop */}
           <div className="grid lg:grid-cols-2 gap-8">
             {FLEET.map((car, idx) => (
               <motion.div 
                 key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 whileHover={{ y: -5 }}
-                className="bg-white rounded-[2rem] border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col md:flex-row group"
+                className="bg-white rounded-[2rem] p-4 shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300 border border-slate-100 flex flex-col md:flex-row gap-6 group overflow-hidden"
               >
-                {/* Image Section (Responsive: Top on mobile, Left on Desktop) */}
-                <div className="w-full md:w-1/2 relative min-h-[250px] bg-slate-100 overflow-hidden">
-                   {/* Badge floating on image */}
+                {/* Premium Image Container - Modern "Bento Grid" style */}
+                <div className="w-full md:w-1/2 relative h-64 md:h-auto rounded-[1.5rem] overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50/50 border border-slate-100">
+                   {/* Glassmorphism Badge */}
                    <div className="absolute top-4 left-4 z-20">
-                      <span className="px-3 py-1 bg-white/95 backdrop-blur text-[#ea580c] text-xs font-bold uppercase tracking-wider rounded-full shadow-md border border-orange-100">
+                      <span className="px-3 py-1.5 bg-white/90 backdrop-blur-md text-[#ea580c] text-[10px] font-extrabold uppercase tracking-widest rounded-full shadow-sm border border-orange-100 flex items-center gap-1.5">
+                        <Award size={12} className="stroke-[3px]" />
                         {car.category}
                       </span>
                    </div>
                    
-                   {/* Gradient overlay for better text contrast if needed */}
-                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent z-10"/>
-                   
+                   {/* Hover Zoom Effect on Image */}
                    <img 
                      src={car.image} 
                      alt={car.name} 
-                     className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                    />
+                   
+                   {/* Subtle gradient overlay for depth */}
+                   <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a8a]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
                 </div>
                 
-                {/* Content Section */}
-                <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold text-[#1e3a8a] mb-3">{car.name}</h3>
-                  <p className="text-slate-500 text-sm mb-6 leading-relaxed">
+                {/* Details Content */}
+                <div className="w-full md:w-1/2 flex flex-col justify-center py-2 md:pr-4">
+                  <h3 className="text-2xl font-extrabold text-[#1e3a8a] mb-3 group-hover:text-[#ea580c] transition-colors break-words">
+                    {car.name}
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-6 border-l-2 border-orange-200 pl-4 break-words">
                     {car.desc}
                   </p>
                   
-                  {/* Features Grid */}
+                  {/* Features List with Custom Icons */}
                   <div className="grid grid-cols-2 gap-3">
                     {car.features.map((f, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 group-hover:border-orange-100 transition-colors">
-                        {f === "Dual Control" ? 
-                          <Settings size={14} className="text-[#ea580c]"/> : 
-                          <ShieldCheck size={14} className="text-blue-500"/>
-                        }
-                        {f}
+                      <div key={i} className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-100 group-hover:border-orange-100/50 transition-colors">
+                        <div className={`p-1.5 rounded-full ${i % 2 === 0 ? 'bg-blue-100 text-[#1e3a8a]' : 'bg-orange-100 text-[#ea580c]'}`}>
+                           {f === "Dual Control" ? <Settings size={12} strokeWidth={2.5}/> : <CheckCircle2 size={12} strokeWidth={2.5}/>}
+                        </div>
+                        <span className="text-xs font-bold text-slate-700">{f}</span>
                       </div>
                     ))}
+                  </div>
+                  
+                  {/* Decorative CTA */}
+                  <div className="mt-6 flex items-center gap-2 text-[#1e3a8a] text-xs font-bold uppercase tracking-wider group/btn cursor-pointer">
+                    View Details 
+                    <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center group-hover/btn:bg-[#ea580c] group-hover/btn:text-white transition-all duration-300">
+                        <ArrowRight size={12} strokeWidth={3} />
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -399,8 +418,8 @@ export default function About({ variant = "full" }) {
                 <div className="w-12 h-12 bg-white text-[#ea580c] rounded-xl flex items-center justify-center mb-4 border border-orange-100 shadow-sm">
                   <feature.icon size={24} />
                 </div>
-                <h3 className="text-xl font-bold text-[#1e3a8a] mb-2">{feature.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed font-medium">{feature.desc}</p>
+                <h3 className="text-xl font-bold text-[#1e3a8a] mb-2 break-words">{feature.title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed font-medium break-words">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -437,7 +456,7 @@ export default function About({ variant = "full" }) {
                 </div>
                 {/* Content */}
                 <div className="flex-1 flex flex-col justify-center p-6 md:p-8">
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="flex flex-wrap gap-2 mb-3 break-words">
                     {m.tags.map((t, i) => (
                       <span
                         key={i}
@@ -448,8 +467,8 @@ export default function About({ variant = "full" }) {
                     ))}
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-[#1e3a8a] mb-1">{m.name}</h3>
-                  <p className="text-[#ea580c] text-xs md:text-sm font-bold mb-2 md:mb-4">{m.role}</p>
-                  <p className="text-slate-600 text-sm leading-relaxed font-medium">
+                  <p className="text-[#ea580c] text-xs md:text-sm font-bold mb-2 md:mb-4 break-words">{m.role}</p>
+                  <p className="text-slate-600 text-sm leading-relaxed font-medium break-words">
                     {m.bio}
                   </p>
                 </div>
@@ -470,8 +489,8 @@ export default function About({ variant = "full" }) {
           <div className="space-y-4">
             {FAQS.map((faq, idx) => (
               <details key={idx} className="group bg-slate-50 rounded-2xl p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer border border-transparent hover:border-orange-200 transition-all">
-                <summary className="flex justify-between items-center font-bold text-[#1e3a8a] text-lg">
-                  <div className="flex items-center gap-3">
+                <summary className="flex justify-between items-center font-bold text-[#1e3a8a] text-lg break-words">
+                  <div className="flex items-center gap-3 break-words">
                     <HelpCircle size={20} className="text-[#ea580c]" />
                     {faq.q}
                   </div>
@@ -479,7 +498,7 @@ export default function About({ variant = "full" }) {
                     <ChevronDown size={16} />
                   </span>
                 </summary>
-                <div className="mt-4 ml-8 text-slate-600 leading-relaxed border-l-2 border-orange-100 pl-4">
+                <div className="mt-4 ml-8 text-slate-600 leading-relaxed border-l-2 border-orange-100 pl-4 break-words">
                   {faq.a}
                 </div>
               </details>

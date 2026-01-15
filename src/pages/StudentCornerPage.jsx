@@ -19,7 +19,7 @@ import DashboardTrainer from "../components/student/DashboardTrainer";
 import TrafficFines from "../components/student/TrafficFines";
 import DrivingSymbols from "../components/student/DrivingSymbols";
 
-export default function StudentCornerPage() {
+export default function StudentCornerPage({ theme, setTheme }) {
   const [activeSection, setActiveSection] = useState('rto');
 
   const menuItems = [
