@@ -24,7 +24,7 @@ const NAV_ITEMS = [
   { name: "Contact", to: "/contact", icon: Phone },
 ];
 
-export default function Navigation({ theme, setTheme }) {
+export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -40,22 +40,20 @@ export default function Navigation({ theme, setTheme }) {
     };
   }, [isOpen]);
 
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
-
   return (
     <>
       {/* ================= DESKTOP HEADER ================= */}
       <motion.header
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="fixed top-4 inset-x-0 z-[100] hidden lg:flex justify-center"
+        className="fixed top-0 inset-x-0 z-[100] hidden lg:flex justify-center"
       >
         <div
-          className={`w-[94%] max-w-7xl flex items-center px-6 transition-all duration-300
-          ${scrolled ? "h-16" : "h-20"}
+          className={`w-[97%] max-w-7xl flex items-center px-4 transition-all duration-300
+          ${scrolled ? "h-14" : "h-16"}
           bg-[#1e3a8a]/95 backdrop-blur-xl 
-          rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.25)]
-          border border-white/10`}
+          rounded-none shadow-[0_8px_24px_rgba(0,0,0,0.18)]
+          border-b border-white/10`}
         >
           {/* LOGO */}
           <div onClick={() => navigate("/")} className="flex items-center gap-3 cursor-pointer">
@@ -103,13 +101,6 @@ export default function Navigation({ theme, setTheme }) {
           <div className="flex items-center gap-4">
             <TranslateComponent />
 
-            <button
-              onClick={toggleTheme}
-              className="w-9 h-9 rounded-full bg-white/10 text-white hover:bg-white/20 transition"
-            >
-              {theme === "dark" ? "🌙" : "☀️"}
-            </button>
-
             <a
               href="tel:+919882034930"
               className="px-5 py-2 bg-orange-600 hover:bg-orange-500 transition text-white rounded-full font-semibold"
@@ -122,7 +113,7 @@ export default function Navigation({ theme, setTheme }) {
 
       {/* ================= MOBILE HEADER ================= */}
       <header className="lg:hidden fixed top-0 inset-x-0 z-[100] bg-[#1e3a8a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex justify-between items-center px-4 py-3">
+        <div className="flex justify-between items-center px-3 py-2">
           <div onClick={() => navigate("/")} className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-white overflow-hidden">
               <img src="/branding/raj-ann-raj-logo.webp" className="w-full h-full object-cover scale-125" />
@@ -161,9 +152,9 @@ export default function Navigation({ theme, setTheme }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="fixed right-0 top-0 bottom-0 z-[9999] w-[80vw] max-w-xs bg-[#1e3a8a] p-6 flex flex-col"
+              className="fixed right-0 top-0 bottom-0 z-[9999] w-[85vw] max-w-xs bg-[#1e3a8a] p-4 flex flex-col"
             >
-              <div className="flex justify-between items-center mb-8">
+              <div className="flex justify-between items-center mb-6">
                 <span className="text-orange-500 font-bold text-xl">MENU</span>
                 <button onClick={() => setIsOpen(false)} className="text-white">
                   <X size={22} />
@@ -195,7 +186,7 @@ export default function Navigation({ theme, setTheme }) {
 
               <a
                 href="tel:+919882034930"
-                className="mt-6 w-full py-3 bg-white text-[#1e3a8a] rounded-xl flex justify-center items-center gap-2 font-bold"
+                className="mt-4 w-full py-3 bg-white text-[#1e3a8a] rounded-xl flex justify-center items-center gap-2 font-bold"
               >
                 <Phone size={18} />
                 Call Now

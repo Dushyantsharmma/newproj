@@ -74,8 +74,7 @@ const ImageSlideshow = () => {
   };
 
   return (
-    <section className="relative w-full h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[85vh] overflow-hidden bg-slate-900 group">
-      
+    <section className="relative w-full min-h-[250px] xs:min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] aspect-video max-h-[90vh] overflow-hidden bg-slate-900 group">
       {/* 1. SLIDESHOW IMAGES */}
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
@@ -91,10 +90,10 @@ const ImageSlideshow = () => {
           <img
             src={SLIDES[current].image}
             alt={SLIDES[current].title}
-            className="w-full h-full object-cover"
+            className="w-full h-full max-w-full max-h-full object-cover object-center"
+            style={{ aspectRatio: '16/9' }}
             loading="lazy"
           />
-          
           {/* Cinematic Overlay (Darker at bottom/left for text readability) */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         </motion.div>

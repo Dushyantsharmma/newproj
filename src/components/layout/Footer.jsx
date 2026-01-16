@@ -14,8 +14,8 @@ const Footer = () => {
     <footer className="bg-[#1e3a8a] text-blue-100 font-sans border-t border-blue-900 w-full">
       
       {/* ===== MAIN FOOTER ===== */}
-      <div className="max-w-screen-xl mx-auto px-6 py-8 lg:py-12 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 w-full break-words">
+      <div className="max-w-screen-xl mx-auto px-4 py-4 lg:py-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full break-words">
         
           {/* 1. BRAND & SOCIAL */}
           <div className="space-y-6 break-words">

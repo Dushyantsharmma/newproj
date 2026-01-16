@@ -103,7 +103,7 @@ export default function ContactPage({ theme, setTheme }) {
   return (
     <>
       <Navigation theme={theme} setTheme={setTheme} />
-      <section className="bg-slate-50 min-h-screen py-24 pt-32 px-4 relative overflow-hidden font-sans selection:bg-orange-100">
+      <section className="bg-slate-50 min-h-screen py-24 pt-32 px-2 relative overflow-hidden font-sans selection:bg-orange-100">
       <SEO 
         title="Contact Us | Raj Ann Raj Driving School" 
         description="Get in touch for driving lessons, RTO inquiries, and bookings in Mandi, HP." 
@@ -115,7 +115,7 @@ export default function ContactPage({ theme, setTheme }) {
          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-200/20 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 px-2">
 
         {/* Header */}
         <div className="text-center mb-16">
@@ -231,7 +231,7 @@ export default function ContactPage({ theme, setTheme }) {
         </div>
 
         {/* Reviews Section */}
-        <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-slate-100">
+        <div className="bg-white rounded-[3rem] p-4 md:p-8 shadow-xl shadow-slate-200/50 border border-slate-100">
           <div className="flex flex-col md:flex-row justify-between items-end md:items-center mb-10 gap-4">
             <div>
               <h2 className="text-3xl font-bold text-[#1e3a8a]">Student Stories</h2>

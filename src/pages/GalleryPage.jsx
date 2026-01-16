@@ -58,8 +58,8 @@ export default function GalleryPage({ theme, setTheme }) {
   return (
     <>
       <Navigation theme={theme} setTheme={setTheme} />
-      <section className="max-w-7xl mx-auto px-4 py-16 mt-10 bg-slate-50 min-h-screen">
-        <div className="mb-12 text-center">
+      <section className="max-w-7xl mx-auto px-2 py-16 mt-10 bg-slate-50 min-h-screen">
+        <div className="mb-12 text-center px-1">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a8a] tracking-tight mb-3">
             Our <span className="text-[#ea580c]">Gallery</span>
           </h2>
@@ -81,7 +81,7 @@ export default function GalleryPage({ theme, setTheme }) {
           ))}
         </div>
 
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
           {filtered.map((img, i) => (
             <div
               key={i}
@@ -109,7 +109,7 @@ export default function GalleryPage({ theme, setTheme }) {
         </div>
 
         {lightbox && (
-          <div className="fixed inset-0 z-[100] bg-[#1e3a8a]/95 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
+          <div className="fixed inset-0 z-[100] bg-[#1e3a8a]/95 backdrop-blur-sm flex items-center justify-center p-2" onClick={() => setLightbox(null)}>
             <button className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors" onClick={() => setLightbox(null)}>
               <X size={32} />
             </button>

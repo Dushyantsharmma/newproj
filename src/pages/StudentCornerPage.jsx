@@ -19,7 +19,7 @@ import DashboardTrainer from "../components/student/DashboardTrainer";
 import TrafficFines from "../components/student/TrafficFines";
 import DrivingSymbols from "../components/student/DrivingSymbols";
 
-export default function StudentCornerPage({ theme, setTheme }) {
+export default function StudentCornerPage() {
   const [activeSection, setActiveSection] = useState('rto');
 
   const menuItems = [
@@ -91,7 +91,7 @@ export default function StudentCornerPage({ theme, setTheme }) {
         description="Resources for driving students: RTO info, Road Signs, Mock Tests, and FAQs."
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4">
         
         {/* HEADER */}
         <div className="flex flex-col items-center justify-center mb-12 px-2 text-center">
@@ -110,7 +110,7 @@ export default function StudentCornerPage({ theme, setTheme }) {
         </div>
 
         {/* GRID NAVIGATION */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="flex flex-wrap gap-4 justify-center mb-12">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -119,8 +119,8 @@ export default function StudentCornerPage({ theme, setTheme }) {
               <button
                 key={item.id}
                 onClick={() => setActiveSection(item.id)}
-                className={`relative group overflow-hidden rounded-2xl p-4 md:p-6 text-left transition-all duration-300 border-2 ${
-                  isActive 
+                className={`relative group overflow-hidden rounded-2xl p-4 md:p-6 text-left transition-all duration-300 border-2 min-w-[180px] max-w-full flex-1
+                  ${isActive 
                     ? 'bg-white border-[#ea580c] shadow-lg ring-1 ring-orange-100 scale-[1.02]' 
                     : 'bg-white border-slate-200 hover:border-[#1e3a8a] hover:shadow-md'
                 }`}

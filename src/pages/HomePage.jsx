@@ -25,7 +25,7 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#1e3a8a]/5 rounded-full blur-3xl pointer-events-none" />
         
         {/* Content */}
-        <div className="relative z-10 max-w-screen-xl mx-auto px-6 pt-10 lg:pt-16 text-center">
+        <div className="relative z-10 max-w-screen-xl mx-auto px-3 pt-10 lg:pt-14 text-center">
           
           {/* Location Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#ea580c] text-sm font-bold mb-8 shadow-sm animate-fade-in-up">
@@ -66,7 +66,7 @@ export default function HomePage() {
 
       {/* ================= WHY CHOOSE US ================= */}
       <section className="py-12 lg:py-20 bg-white">
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-3">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] mb-4">
               Why Choose <span className="text-[#ea580c]">Raj Ann Raj?</span>
@@ -113,7 +113,7 @@ export default function HomePage() {
 
       {/* ================= HOW IT WORKS (3 STEPS - Light Theme) ================= */}
       <section className="py-12 lg:py-20 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-3">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-[#1e3a8a]">How It Works</h2>
             <p className="text-slate-600 text-lg">Get your license in 3 simple steps</p>
@@ -142,7 +142,7 @@ export default function HomePage() {
 
       {/* ================= SERVICES TEASER ================= */}
       <section className="py-12 lg:py-20 bg-white">
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-3">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] mb-2">
@@ -209,7 +209,7 @@ export default function HomePage() {
 
       {/* ================= FINAL CTA ================= */}
       <section className="py-20 bg-[#ea580c]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-3 text-center">
           <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">
             Ready to hit the road?
           </h2>
