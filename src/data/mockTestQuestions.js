@@ -90,8 +90,18 @@ export const QUESTION_BANK = {
       q: "Identify this sign:", 
       q_hi: "इस संकेत को पहचानें:",
       image: "/symbols/cautionary/15.webp", 
-      options: ["School Ahead", "Men at Work", "Pedestrian Crossing", "Park"], 
-      options_hi: ["आगे स्कूल है", "काम चालू है", "पैदल यात्री क्रॉसिंग", "पार्क"],
+      options: [
+        { text: "School Ahead", image: "/symbols/cautionary/school-ahead.webp" },
+        { text: "Men at Work", image: "/symbols/cautionary/men-at-work.webp" },
+        { text: "Pedestrian Crossing", image: "/symbols/cautionary/pedestrian-crossing.webp" },
+        { text: "Park", image: "/symbols/cautionary/park.webp" }
+      ],
+      options_hi: [
+        { text: "आगे स्कूल है", image: "/symbols/cautionary/school-ahead.webp" },
+        { text: "काम चालू है", image: "/symbols/cautionary/men-at-work.webp" },
+        { text: "पैदल यात्री क्रॉसिंग", image: "/symbols/cautionary/pedestrian-crossing.webp" },
+        { text: "पार्क", image: "/symbols/cautionary/park.webp" }
+      ],
       correct: 0 
     },
     { 

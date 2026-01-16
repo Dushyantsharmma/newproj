@@ -1,27 +1,32 @@
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect, useRef } from 'react'; 
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FileSignature, X, User, Phone, MapPin, Send, Loader2, 
-  CalendarDays, WifiOff, CheckCircle2, Clock, Gauge, Users, Lock, ChevronDown
+  CalendarDays, WifiOff, CheckCircle2, Clock, Gauge, Users, Lock, ChevronDown, AlertCircle
 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
-// Use your latest script URL here
+// ⚠️ IMPORTANT: REPLACE THIS WITH YOUR NEW DEPLOYED SCRIPT URL
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwHuW54HrmmrB6WiJAU_9uujwDHsy-qUC_EFJRFGU0wrCK13AujMM7rsW8z1ddAenQT/exec";
+
+// --- HELPER: UUID Generator (Idempotency Token) ---
+const generateUUID = () => {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
 
 // --- CONSTANTS ---
 const PICKUP_LOCATIONS = [
-  "Bhanthal",
-  "Sanarali",
-  "Baral Bypass",
-  "Mamail",
-  "Near GDC Karsog",
-  "Batala Bahali",
-  "Karsog Bus Stand",
-  "Sarkol"
+  "Bhanthal", "Sanarali", "Baral Bypass", "Mamail",
+  "Near GDC Karsog", "Batala Bahali", "Karsog Bus Stand", "Sarkol"
 ];
 
-// --- SUB-COMPONENTS (Light Theme Updated) ---
+// --- SUB-COMPONENTS ---
 
 const GenderPill = ({ label, value, currentValue, onClick }) => {
   const isSelected = currentValue === value;
@@ -120,6 +125,9 @@ const EnquiryFab = () => {
   const [isOfflineMode, setIsOfflineMode] = useState(false);
   const [error, setError] = useState('');
   
+  // Ref for Idempotency Token
+  const submissionIdRef = useRef(generateUUID());
+
   const [availability, setAvailability] = useState({
     "Morning (8 AM - 11 AM)": true,
     "Afternoon (12 PM - 4 PM)": true,
@@ -137,20 +145,23 @@ const EnquiryFab = () => {
     website_honey: '' 
   });
 
+  // Reset UUID on open (New Session) & Fetch Availability
   useEffect(() => {
-    const fetchAvailability = async () => {
-      try {
-        const res = await fetch(WEBHOOK_URL);
-        const data = await res.json();
-        if (data.status === "success" && data.availability) {
-          setAvailability(data.availability);
+    if (isOpen) {
+      submissionIdRef.current = generateUUID();
+      const fetchAvailability = async () => {
+        try {
+          const res = await fetch(WEBHOOK_URL);
+          const data = await res.json();
+          if (data.status === "success" && data.availability) {
+            setAvailability(data.availability);
+          }
+        } catch (e) {
+          console.warn("Could not fetch availability", e);
         }
-      } catch (e) {
-        console.warn("Could not fetch availability", e);
-      }
-    };
-    
-    if (isOpen) fetchAvailability();
+      };
+      fetchAvailability();
+    }
   }, [isOpen]);
 
   const handleChange = (e) => {
@@ -170,10 +181,19 @@ const EnquiryFab = () => {
 
   const handlePillChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
+    if (error) setError('');
   };
 
-  const validatePhone = (phone) => {
-    return phone.length === 10;
+  const validatePhone = (phone) => phone.length === 10;
+
+  const isAdult = (dateString) => {
+    if (!dateString) return false;
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+    return age >= 18;
   };
 
   const triggerWhatsApp = () => {
@@ -204,12 +224,17 @@ Please confirm if this slot is available.`;
       return; 
     }
 
+    // Validation Steps
     if (!validatePhone(formData.mobileNumber)) {
       setError('Please enter a valid 10-digit mobile number.');
       return;
     }
 
-    // Validate Location
+    if (!isAdult(formData.dateOfBirth)) { 
+      setError('You must be at least 18 years old to enroll.'); 
+      return; 
+    }
+
     if (!formData.pickupLocation) {
         setError('Please select a pickup location.');
         return;
@@ -226,6 +251,7 @@ Please confirm if this slot is available.`;
       skillLevel: formData.skillLevel,
       timeSlot: formData.timeSlot,
       pickupLocation: formData.pickupLocation,
+      submissionId: submissionIdRef.current, // Sending Unique ID
       honeypot: formData.website_honey 
     };
 
@@ -253,26 +279,26 @@ Please confirm if this slot is available.`;
 
   return (
     <>
-      {/* FAB Placeholder to reserve space and prevent CLS */}
+      {/* FAB Placeholder */}
       <div
-        className="fixed bottom-6 right-6 z-50"
-        style={{ width: 208, height: 56, pointerEvents: 'none', opacity: 0 }}
+        className="fixed bottom-16 right-6 z-50"
+        style={{ width: 160, height: 44, pointerEvents: 'none', opacity: 0 }}
         aria-hidden="true"
       />
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-16 right-6 z-50">
         <motion.button
           onClick={() => setIsOpen(true)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="group flex items-center justify-center h-14 w-52 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-full shadow-[0_8px_30px_rgb(234,88,12,0.4)] pr-6 pl-4 gap-3 transition-all"
-          style={{ minWidth: 208, minHeight: 56 }}
+          className="group flex items-center justify-center h-11 w-40 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded-full shadow-[0_8px_30px_rgb(234,88,12,0.4)] pr-5 pl-3 gap-2 transition-all"
+          style={{ minWidth: 160, minHeight: 44 }}
         >
           <div className="relative">
             <span className="absolute inset-0 bg-white/40 rounded-full animate-ping opacity-75" />
-            <FileSignature size={24} className="relative z-10" />
+            <FileSignature size={18} className="relative z-10" />
           </div>
-          <span className="font-bold text-sm tracking-wide uppercase">Enroll Now</span>
+          <span className="font-bold text-xs tracking-wide uppercase">Enroll Now</span>
         </motion.button>
       </div>
 
@@ -360,11 +386,10 @@ Please confirm if this slot is available.`;
                               pattern="[0-9]{10}"
                               value={formData.mobileNumber}
                               onChange={handleChange}
-                              className={`w-full bg-white border ${error ? 'border-red-500 ring-2 ring-red-50' : 'border-slate-200'} text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all placeholder:text-slate-400 font-medium tracking-wider`}
+                              className={`w-full bg-white border ${error && !validatePhone(formData.mobileNumber) ? 'border-red-500 ring-2 ring-red-50' : 'border-slate-200'} text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all placeholder:text-slate-400 font-medium tracking-wider`}
                               placeholder="9876543210"
                             />
                           </div>
-                          {error && <p className="text-red-500 text-xs ml-1 font-medium animate-pulse">{error}</p>}
                         </div>
 
                         <div className="space-y-2">
@@ -379,7 +404,7 @@ Please confirm if this slot is available.`;
                               max={new Date().toISOString().split("T")[0]}
                               value={formData.dateOfBirth}
                               onChange={handleChange}
-                              className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all font-medium"
+                              className={`w-full bg-white border ${error && formData.dateOfBirth && !isAdult(formData.dateOfBirth) ? 'border-red-500 ring-2 ring-red-50' : 'border-slate-200'} text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all font-medium`}
                             />
                           </div>
                         </div>
@@ -466,6 +491,18 @@ Please confirm if this slot is available.`;
                         </div>
                       </div>
                     </div>
+                    
+                    {/* UPDATED ERROR DISPLAY */}
+                    {error && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2"
+                      >
+                        <AlertCircle size={18} className="shrink-0 text-red-500" />
+                        {error}
+                      </motion.div>
+                    )}
 
                     <button
                       type="submit"

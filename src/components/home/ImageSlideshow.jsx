@@ -68,13 +68,12 @@ const ImageSlideshow = () => {
     })
   };
 
-  const textVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.3 } }
-  };
+
 
   return (
-    <section className="relative w-full min-h-[250px] xs:min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] aspect-video max-h-[90vh] overflow-hidden bg-slate-900 group">
+    /* FIXED: Changed fixed heights to 'h-full' to fill the Hero Section completely */
+    <div className="relative w-full h-full overflow-hidden bg-slate-900 group">
+      
       {/* 1. SLIDESHOW IMAGES */}
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
@@ -90,65 +89,53 @@ const ImageSlideshow = () => {
           <img
             src={SLIDES[current].image}
             alt={SLIDES[current].title}
-            className="w-full h-full max-w-full max-h-full object-cover object-center"
-            style={{ aspectRatio: '16/9' }}
+            className="w-full h-full object-cover object-center"
             loading="lazy"
           />
-          {/* Cinematic Overlay (Darker at bottom/left for text readability) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+          {/* Cinematic Overlay - Essential for text visibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
-      {/* 2. TEXT CONTENT */}
-      <div className="absolute inset-0 flex items-center z-10">
+      {/* 2. TEXT CONTENT (Only visible if not covered by Hero text) */}
+      <div className="absolute inset-0 flex items-center z-10 pointer-events-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+          {/* Only show this text if you aren't using the text in Home.jsx */}
           <motion.div
             key={current}
             initial="hidden"
             animate="visible"
-            className="max-w-xl lg:max-w-2xl"
+            className="max-w-xl lg:max-w-2xl hidden md:block" // Hidden on small screens to avoid clash
           >
-            {/* Title */}
-            <motion.h1 
-              variants={textVariants}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight drop-shadow-lg"
-            >
-              {SLIDES[current].title}
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              variants={textVariants}
-              className="text-base sm:text-lg md:text-xl text-slate-200 font-light max-w-lg drop-shadow-md border-l-4 border-[#ea580c] pl-4"
-            >
-              {SLIDES[current].subtitle}
-            </motion.p>
+            {/* NOTE: If you are using the big text in Home.jsx, 
+               you might want to remove this section entirely to avoid duplicate text.
+            */}
           </motion.div>
         </div>
       </div>
 
       {/* 3. NAVIGATION BUTTONS */}
-      <div className="absolute inset-0 flex items-center justify-between px-4 z-20 pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-between px-2 sm:px-4 z-20 pointer-events-none">
         {/* Left Button */}
         <button
           onClick={() => paginate(-1)}
-          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-[#ea580c] hover:border-[#ea580c] hover:scale-110 active:scale-95 -translate-x-10 group-hover:translate-x-0"
+          className="pointer-events-auto p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-[#ea580c] hover:border-[#ea580c] hover:scale-110 active:scale-95 -translate-x-10 group-hover:translate-x-0"
         >
-          <ChevronLeft size={24} className="sm:w-8 sm:h-8" />
+          <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
         </button>
 
         {/* Right Button */}
         <button
           onClick={() => paginate(1)}
-          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-[#ea580c] hover:border-[#ea580c] hover:scale-110 active:scale-95 translate-x-10 group-hover:translate-x-0"
+          className="pointer-events-auto p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-[#ea580c] hover:border-[#ea580c] hover:scale-110 active:scale-95 translate-x-10 group-hover:translate-x-0"
         >
-          <ChevronRight size={24} className="sm:w-8 sm:h-8" />
+          <ChevronRight size={20} className="sm:w-6 sm:h-6" />
         </button>
       </div>
 
       {/* 4. PAGINATION INDICATORS */}
-      <div className="absolute bottom-6 left-0 right-0 z-20">
-        <div className="flex justify-center gap-3">
+      <div className="absolute bottom-8 left-0 right-0 z-20 pointer-events-auto">
+        <div className="flex justify-center gap-2">
           {SLIDES.map((_, index) => (
             <button
               key={index}
@@ -156,13 +143,13 @@ const ImageSlideshow = () => {
                 setDirection(index > current ? 1 : -1);
                 setCurrent(index);
               }}
-              className="group relative h-1.5 rounded-full overflow-hidden transition-all duration-300"
-              style={{ width: index === current ? '40px' : '20px' }}
+              className="group relative h-1 rounded-full overflow-hidden transition-all duration-300"
+              style={{ width: index === current ? '40px' : '12px' }}
             >
               {/* Background track */}
               <div className="absolute inset-0 bg-white/30" />
               
-              {/* Filling animation using Brand Orange */}
+              {/* Filling animation */}
               {index === current && (
                 <motion.div
                   layoutId="activeSlide"
@@ -177,7 +164,7 @@ const ImageSlideshow = () => {
         </div>
       </div>
 
-    </section>
+    </div>
   );
 };
 

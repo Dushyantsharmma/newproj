@@ -103,7 +103,7 @@ export default function ContactPage({ theme, setTheme }) {
   return (
     <>
       <Navigation theme={theme} setTheme={setTheme} />
-      <section className="bg-slate-50 min-h-screen py-24 pt-32 px-2 relative overflow-hidden font-sans selection:bg-orange-100">
+      <section className="bg-slate-50 min-h-screen py-8 pt-16 px-2 relative overflow-hidden font-sans selection:bg-orange-100">
       <SEO 
         title="Contact Us | Raj Ann Raj Driving School" 
         description="Get in touch for driving lessons, RTO inquiries, and bookings in Mandi, HP." 
@@ -170,7 +170,7 @@ export default function ContactPage({ theme, setTheme }) {
               allowFullScreen="" 
               loading="lazy" 
               referrerPolicy="no-referrer-when-downgrade"
-              title="Raj N Raj Location"
+              title="Raj Ann Raj Location"
             ></iframe>
             
             <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-lg border border-white/50 pointer-events-none">

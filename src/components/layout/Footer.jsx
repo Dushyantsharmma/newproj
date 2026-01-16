@@ -1,168 +1,234 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { 
-  Phone, Mail, MapPin, Facebook, Instagram, Youtube, Github 
+  Phone, Mail, MapPin, Facebook, Instagram, Youtube, Github, 
+  ArrowRight, Send, MessageCircle, Globe, ChevronRight
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { useText } from "../common/useText";
 
 const Footer = () => {
-  const { i18n } = useTranslation();
-  const lang = i18n.language;
-  const brand = lang === "hi" ? "राज एन राज" : "Raj Ann Raj";
+  const brand = useText("brandName");
+  const drivingSchool = useText("drivingSchool");
+
+  // Animation variants for smooth scroll reveal
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 }
+    }
+  };
 
   return (
-    <footer className="bg-[#1e3a8a] text-blue-100 font-sans border-t border-blue-900 w-full">
+    <footer className="relative bg-[#1e3a8a] text-blue-100 border-t border-white/10 overflow-hidden font-sans">
       
-      {/* ===== MAIN FOOTER ===== */}
-      <div className="max-w-screen-xl mx-auto px-4 py-4 lg:py-6 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full break-words">
+      {/* 1. BACKGROUND DECOR - Matches Nav Gradient Vibe */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[100px] opacity-40" />
+          <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-[#ea580c]/10 rounded-full blur-[100px]" />
+      </div>
+
+      {/* ===== MAIN CONTENT ===== */}
+      <motion.div 
+        className="relative z-10 max-w-7xl mx-auto px-6 py-16"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
         
-          {/* 1. BRAND & SOCIAL */}
-          <div className="space-y-6 break-words">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-white p-1 shadow-lg">
-                <img
-                  src="/branding/raj-ann-raj-logo.webp"
-                  alt={brand}
-                  className="w-full h-full object-cover scale-[1.5] rounded-full"
-                />
+          {/* 1. BRAND IDENTITY (Col Span 4) */}
+          <motion.div variants={itemVariants} className="lg:col-span-4 space-y-6">
+            <Link to="/" className="flex items-center gap-3 group w-fit">
+              {/* Logo Box - Matches Nav Logo Style */}
+              <div className="relative w-14 h-14 rounded-full bg-white/5 p-1 border border-white/10 shadow-lg overflow-hidden group-hover:border-orange-500/50 transition-colors">
+                  <img
+                    src="/branding/raj-ann-raj-logo.webp"
+                    alt={brand}
+                    className="w-full h-full object-cover rounded-full"
+                  />
               </div>
-              <div>
-                <h3 className="text-2xl font-extrabold break-words" style={{ color: '#ea580c', textTransform: 'none' }}>{brand}</h3>
-                <p className="text-sm font-bold tracking-widest text-white px-3 py-0.5 rounded mt-1 inline-block break-words">
-                  Driving Training School
-                </p>
+              
+              <div className="flex flex-col">
+                <h3 className="text-2xl font-extrabold text-white leading-none group-hover:text-orange-400 transition-colors">
+                    {brand}
+                </h3>
+                <span className="text-[10px] font-bold tracking-[0.2em] text-orange-400 uppercase mt-1">
+                  {drivingSchool}
+                </span>
               </div>
-            </div>
-            <p className="text-sm text-blue-200 leading-relaxed font-medium break-words">
-              Professional hill driving training in Himachal Pradesh. 
-              Learn to drive safely, confidently, and independently on steep terrains.
+            </Link>
+
+            <p className="text-sm text-blue-200/80 leading-relaxed font-medium max-w-sm">
+              Himachal's premier driving institute. We don't just teach you to drive; we train you to master the mountains with confidence and safety.
             </p>
             
-            {/* FIXED: Social Icons rendered directly to avoid ESLint error */}
-            <div className="flex gap-4">
-              <a 
-                href="#" 
-                aria-label="Facebook"
-                className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-[#ea580c] hover:border-[#ea580c] hover:text-white transition-all duration-300"
-              >
-                <Facebook size={18} />
-              </a>
-              <a 
-                href="#" 
-                aria-label="Instagram"
-                className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-[#ea580c] hover:border-[#ea580c] hover:text-white transition-all duration-300"
-              >
-                <Instagram size={18} />
-              </a>
-              <a 
-                href="#" 
-                aria-label="YouTube"
-                className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-[#ea580c] hover:border-[#ea580c] hover:text-white transition-all duration-300"
-              >
-                <Youtube size={18} />
-              </a>
-            </div>
-          </div>
-
-          {/* 2. QUICK LINKS */}
-          <div>
-            <h4 className="text-white font-bold mb-6 text-lg break-words">Quick Links</h4>
-              <ul className="space-y-3 text-sm font-medium break-words">
-                {[ 
-                  { name: "Home", to: "/" }, 
-                  { name: "About", to: "/about" },
-                  { name: "Courses", to: "/courses" }, 
-                  { name: "Gallery", to: "/gallery" }, 
-                  { name: "Students", to: "/student-corner" }, 
-                  { name: "Contact", to: "/contact" }, 
-                ].map((link) => (
-                  <li key={link.name}>
-                    <Link to={link.to} className="hover:text-[#ea580c] hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-[#ea580c] opacity-0 hover:opacity-100 transition-opacity" />
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-          </div>
-
-          {/* 3. CONTACT INFO */}
-          <div>
-            <h4 className="text-white font-bold mb-6 text-lg break-words">Contact Us</h4>
-            <div className="space-y-4 text-sm font-medium break-words">
-              <div className="flex gap-3 items-start">
-                <MapPin className="text-[#ea580c] shrink-0 mt-0.5" size={18} />
-                <a
-                  href="https://goo.gl/maps/YOUR_MAP_LINK"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-white text-blue-200 transition-colors"
+            {/* Social Icons - Clean & Pill Shaped */}
+            <div className="flex gap-3 pt-2">
+              {[
+                { icon: Facebook, href: "#", color: "hover:bg-[#1877F2] hover:border-[#1877F2]" },
+                { icon: Instagram, href: "#", color: "hover:bg-[#E4405F] hover:border-[#E4405F]" },
+                { icon: Youtube, href: "#", color: "hover:bg-[#FF0000] hover:border-[#FF0000]" },
+              ].map((social, idx) => (
+                <a 
+                  key={idx}
+                  href={social.href}
+                  className={`
+                    w-10 h-10 rounded-full bg-white/5 border border-white/10 
+                    flex items-center justify-center text-white 
+                    transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:text-white
+                    ${social.color}
+                  `}
                 >
-                  Bhanthal, Karsog,<br/> Mandi, Himachal Pradesh
+                  <social.icon size={18} />
                 </a>
-              </div>
-              <div className="flex gap-3 items-center">
-                <Mail className="text-[#ea580c] shrink-0" size={18} />
-                <a href="mailto:rajannraj.dts@gmail.com" className="hover:text-white text-blue-200 transition-colors">
-                  rajannraj.dts@gmail.com
-                </a>
-              </div>
-              <div className="flex gap-3 items-center">
-                <Phone className="text-[#ea580c] shrink-0" size={18} />
-                <a href="tel:+919882034930" className="hover:text-white text-blue-200 transition-colors">
-                  +91 98820 34930
-                </a>
-              </div>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* 4. CALL TO ACTION */}
-          <div className="space-y-6 break-words">
-            <h4 className="text-white font-bold text-lg break-words">Book a Lesson</h4>
-            <p className="text-sm text-blue-200 break-words">
-              Ready to hit the road? Schedule your first training session today.
-            </p>
-            <div className="flex flex-col gap-3">
-              <a
-                href="tel:+919882034930"
-                className="flex items-center justify-center gap-2 bg-white text-[#1e3a8a] font-bold py-3 rounded-xl hover:bg-blue-50 transition-colors shadow-lg"
-              >
-                <Phone size={18} /> Call Now
-              </a>
-              <a
-                href="https://wa.me/919882034930"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#25D366] text-white font-bold py-3 rounded-xl hover:bg-[#1ebd59] transition-colors shadow-lg"
-              >
-                WhatsApp Us
-              </a>
+          {/* 2. QUICK LINKS (Col Span 2) */}
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <h4 className="text-white font-bold mb-6 text-lg flex items-center gap-2">
+                Explore <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+            </h4>
+            <ul className="space-y-3">
+              {[ 
+                { name: "Home", to: "/" }, 
+                { name: "About Us", to: "/about" },
+                { name: "Our Courses", to: "/courses" }, 
+                { name: "Gallery", to: "/gallery" }, 
+                { name: "Student Corner", to: "/student-corner" }, 
+                { name: "Contact", to: "/contact" }, 
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.to} 
+                    className="group flex items-center gap-2 text-sm font-medium text-blue-200 hover:text-white transition-colors"
+                  >
+                    <ChevronRight size={14} className="text-orange-500 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* 3. CONTACT INFO (Col Span 3) */}
+          <motion.div variants={itemVariants} className="lg:col-span-3">
+             <h4 className="text-white font-bold mb-6 text-lg flex items-center gap-2">
+                Visit Us <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+            </h4>
+            <div className="space-y-5">
+              {[
+                { icon: MapPin, label: "Location", text: "Karsog, Mandi, HP", subtext: "Near GDC Karsog" },
+                { icon: Mail, label: "Email", text: "rajannraj.dts@gmail.com", isLink: true, href: "mailto:rajannraj.dts@gmail.com" },
+                { icon: Phone, label: "Phone", text: "+91 98820 34930", isLink: true, href: "tel:+919882034930" }
+              ].map((item, idx) => (
+                 <div key={idx} className="flex gap-4 items-start group">
+                    <div className="p-2.5 bg-white/5 rounded-xl border border-white/10 group-hover:bg-orange-500 group-hover:border-orange-500 transition-colors shadow-sm">
+                       <item.icon className="text-blue-200 group-hover:text-white transition-colors" size={16} />
+                    </div>
+                    <div>
+                       <span className="block text-xs font-bold text-blue-300/60 uppercase mb-0.5 tracking-wider">{item.label}</span>
+                       {item.isLink ? (
+                         <a href={item.href} className="text-sm font-bold text-white hover:text-orange-400 transition-colors">{item.text}</a>
+                       ) : (
+                         <span className="text-sm font-bold text-white block">
+                           {item.text}
+                           {item.subtext && <span className="block text-xs text-blue-200 font-normal mt-0.5">{item.subtext}</span>}
+                         </span>
+                       )}
+                    </div>
+                 </div>
+              ))}
             </div>
-            <a
-              href="https://maps.app.goo.gl/uKX7DuD6DgV6SrKVA"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow text-[#1e3a8a] font-bold text-base cursor-pointer hover:bg-blue-50 transition mb-4"
-              style={{ boxShadow: "0 2px 8px 0 rgba(16,30,54,0.08)" }}
-            >
-              <span className="w-2 h-2 rounded-full bg-green-500 inline-block"></span>
-              Live Location
-            </a>
-          </div>
+          </motion.div>
+
+          {/* 4. CTA CARD (Col Span 3) - Glass Effect */}
+          <motion.div variants={itemVariants} className="lg:col-span-3">
+             <div className="relative bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-2xl overflow-hidden group hover:border-white/20 transition-all">
+                {/* Glow Effect */}
+                <div className="absolute -right-10 -top-10 w-32 h-32 bg-orange-500/20 rounded-full blur-3xl group-hover:bg-orange-500/30 transition-all" />
+                
+                <h4 className="text-white font-bold text-lg mb-2 relative z-10">Start Driving Today!</h4>
+                <p className="text-xs text-blue-200 mb-6 relative z-10 leading-relaxed">
+                  Ready to take the wheel? Book your slot now and get a free assessment session.
+                </p>
+                
+                <div className="flex flex-col gap-3 relative z-10">
+
+                   <div className="grid grid-cols-2 gap-3">
+                      <a
+                        href="tel:+919882034930"
+                        className="flex items-center justify-center gap-2 py-2.5 bg-white text-[#1e3a8a] font-bold text-sm rounded-xl hover:bg-blue-50 transition-colors shadow-sm"
+                      >
+                        <Phone size={14} /> Call
+                      </a>
+                      <a
+                        href="https://wa.me/919882034930"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center justify-center gap-2 py-2.5 bg-[#25D366] text-white font-bold text-sm rounded-xl hover:bg-[#20bd5a] transition-colors shadow-sm"
+                      >
+                        <MessageCircle size={14} /> WhatsApp
+                      </a>
+                   </div>
+                </div>
+             </div>
+          </motion.div>
+
+        </div>
+      </motion.div>
+
+      {/* ===== SERVING LOCATIONS BAR ===== */}
+      <div className="relative z-10 border-t border-white/10 bg-[#172554]/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+          <span className="flex items-center gap-2 font-bold text-orange-400">
+            <Globe size={14} /> Serving Areas:
+          </span>
+          <p className="text-blue-200/80 font-medium leading-relaxed">
+            Bhanthal • Sanarali • Baral Bypass • Mamail • Near GDC Karsog • Batala Bahali • Karsog Bus Stand • Sarkol
+          </p>
         </div>
       </div>
 
       {/* ===== BOTTOM BAR ===== */}
-      <div className="border-t border-white/10 py-6 bg-[#172e6e] w-full">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-blue-300 gap-3 font-medium w-full break-words">
-          <p className="text-center md:text-left w-full md:w-auto break-words">9 {new Date().getFullYear()} {brand} Driving School. All rights reserved.</p>
-          <p className="flex items-center gap-2 justify-center md:justify-end w-full md:w-auto break-words">
-            Built by
-            <a href="https://github.com/Dushyantsharmma" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-white hover:text-[#ea580c] transition-colors break-words">
-              <Github size={12} /> Dushyant Sharma
-            </a>
+      <div className="relative z-10 border-t border-white/10 bg-[#0f172a]/40">
+        <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-blue-300/70">
+          
+          <p className="text-center md:text-left">
+            © {new Date().getFullYear()} <span className="text-white font-bold">{brand}</span>. All rights reserved.
           </p>
+          
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            
+            <a 
+                href="https://github.com/Dushyantsharmma" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 text-white transition-all group"
+            >
+               <Github size={12} className="text-gray-400 group-hover:text-white transition-colors"/> 
+               <span>Dev by Dushyant</span>
+            </a>
+          </div>
+
         </div>
       </div>
     </footer>

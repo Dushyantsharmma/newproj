@@ -85,7 +85,7 @@ export default function StudentCornerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-12 font-sans">
+    <div className="min-h-screen bg-slate-50 pt-10 pb-6 font-sans">
       <SEO 
         title="Student Corner | Raj Ann Raj Driving School"
         description="Resources for driving students: RTO info, Road Signs, Mock Tests, and FAQs."

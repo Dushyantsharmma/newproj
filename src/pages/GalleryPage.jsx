@@ -58,7 +58,7 @@ export default function GalleryPage({ theme, setTheme }) {
   return (
     <>
       <Navigation theme={theme} setTheme={setTheme} />
-      <section className="max-w-7xl mx-auto px-2 py-16 mt-10 bg-slate-50 min-h-screen">
+      <section className="max-w-7xl mx-auto px-2 py-8 mt-6 bg-slate-50 min-h-screen">
         <div className="mb-12 text-center px-1">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a8a] tracking-tight mb-3">
             Our <span className="text-[#ea580c]">Gallery</span>
