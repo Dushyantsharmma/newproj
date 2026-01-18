@@ -32,7 +32,7 @@ export default function Navigation() {
         { name: homeText, to: "/", icon: Home },
         { name: aboutText, to: "/about", icon: Users },
         { name: "Courses", to: "/courses", icon: BookOpen },
-        { name: "Students", to: "/student-corner", icon: GraduationCap },
+        { name: "Student Corner", to: "/student-corner", icon: GraduationCap },
         { name: "Gallery", to: "/gallery", icon: ImageIcon },
         { name: "Contact", to: "/contact", icon: Phone },
     ];
@@ -91,7 +91,7 @@ export default function Navigation() {
                     alt="Raj Ann Raj Logo" 
                 />
                 <div className="flex flex-col justify-center h-12"> {/* Fixed height to prevent text jump */}
-                    <span className="font-extrabold text-[#ea580c] text-lg leading-none tracking-wide drop-shadow-md">
+                    <span className="font-extrabold text-[#ea580c] text-lg leading-none tracking-wide drop-shadow-md uppercase">
                         {brandName}
                     </span>
                     <div className="flex items-center gap-1 mt-1">

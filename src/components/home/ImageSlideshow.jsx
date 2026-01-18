@@ -58,33 +58,21 @@ export default function ImageSlideshow() {
   }, [paginate, paused]);
 
   const slideVariants = {
-    enter: (dir) => ({
-      x: dir > 0 ? "100%" : "-100%",
-      opacity: 0,
-      scale: 1.05,
-    }),
+    enter: { opacity: 0, scale: 1.1 },
     center: {
-      x: 0,
       opacity: 1,
       scale: 1,
-      transition: {
-        x: { type: "spring", stiffness: 400, damping: 35 },
-        opacity: { duration: 0.25 },
-        scale: { duration: 0.25, ease: "linear" },
-      },
+      transition: { opacity: { duration: 0.5 }, scale: { duration: 0.5 } },
     },
-    exit: (dir) => ({
-      x: dir < 0 ? "100%" : "-100%",
+    exit: {
       opacity: 0,
-      transition: {
-        x: { type: "spring", stiffness: 400, damping: 35 },
-        opacity: { duration: 0.25 },
-      },
-    }),
+      scale: 0.95,
+      transition: { opacity: { duration: 0.5 }, scale: { duration: 0.5 } },
+    },
   };
 
   return (
-    <div className="relative w-full h-[260px] sm:h-[350px] md:h-[420px] lg:h-[520px] overflow-hidden bg-slate-900">
+    <div className="relative w-full h-[260px] sm:h-[350px] md:h-[420px] lg:h-[520px] overflow-hidden">
       {/* SLIDES */}
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
@@ -108,7 +96,7 @@ export default function ImageSlideshow() {
       </AnimatePresence>
 
       {/* TEXT OVERLAY */}
-      <div className="absolute inset-0 flex items-center justify-center text-center px-4 z-10 pointer-events-none">
+      <div className="absolute left-0 top-0 w-full flex justify-start items-start px-1 pt-1 z-10 pointer-events-none">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -116,11 +104,13 @@ export default function ImageSlideshow() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -20, opacity: 0 }}
             transition={{ duration: 0.5 }}
+            className="px-6 py-4 rounded-xl shadow-2xl pointer-events-auto text-left mb-2 bg-transparent"
+            style={{ maxWidth: '90vw', minWidth: '320px' }}
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-2 drop-shadow-lg">
+            <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] text-white">
               {SLIDES[current].title}
             </h2>
-            <p className="text-base md:text-xl text-slate-100 max-w-2xl mx-auto">
+            <p className="text-sm md:text-base max-w-2xl font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] text-white">
               {SLIDES[current].subtitle}
             </p>
           </motion.div>

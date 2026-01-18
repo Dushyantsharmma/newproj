@@ -128,6 +128,7 @@ const EnquiryFab = () => {
   // Ref for Idempotency Token
   const submissionIdRef = useRef(generateUUID());
 
+  // Default to TRUE to prevent blocking users if API fails
   const [availability, setAvailability] = useState({
     "Morning (8 AM - 11 AM)": true,
     "Afternoon (12 PM - 4 PM)": true,
@@ -137,10 +138,10 @@ const EnquiryFab = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     mobileNumber: '',
-    gender: 'Male',
+    gender: '',
     dateOfBirth: '',
-    skillLevel: 'Beginner (Never Driven)',
-    timeSlot: 'Morning (8 AM - 11 AM)',
+    skillLevel: '',
+    timeSlot: '',
     pickupLocation: '', 
     website_honey: '' 
   });
@@ -149,17 +150,24 @@ const EnquiryFab = () => {
   useEffect(() => {
     if (isOpen) {
       submissionIdRef.current = generateUUID();
+      
       const fetchAvailability = async () => {
         try {
-          const res = await fetch(WEBHOOK_URL);
-          const data = await res.json();
-          if (data.status === "success" && data.availability) {
-            setAvailability(data.availability);
+          // Attempt to fetch availability. If it fails, we catch it and keep defaults (all open).
+          const res = await fetch(`${WEBHOOK_URL}?type=availability`);
+          
+          if (res.ok) {
+            const data = await res.json();
+            if (data.status === "success" && data.availability) {
+              setAvailability(data.availability);
+            }
           }
         } catch (e) {
-          console.warn("Could not fetch availability", e);
+          console.warn("Could not fetch availability, defaulting to all slots open.", e);
+          // Fallback is already set in initial state
         }
       };
+      
       fetchAvailability();
     }
   }, [isOpen]);
@@ -194,6 +202,18 @@ const EnquiryFab = () => {
     const m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
     return age >= 18;
+  };
+
+  // Safe Close Handler: Prevents accidental data loss
+  const handleClose = () => {
+    // If form has data and we are in the 'form' step, ask for confirmation
+    if (step === 'form' && (formData.fullName || formData.mobileNumber.length > 3)) {
+      if (window.confirm("You have unsaved details. Are you sure you want to close?")) {
+        setIsOpen(false);
+      }
+    } else {
+      setIsOpen(false);
+    }
   };
 
   const triggerWhatsApp = () => {
@@ -239,6 +259,16 @@ Please confirm if this slot is available.`;
         setError('Please select a pickup location.');
         return;
     }
+    
+    if (!formData.timeSlot) {
+        setError('Please select a time slot.');
+        return;
+    }
+    
+    if (!formData.skillLevel) {
+        setError('Please select your experience level.');
+        return;
+    }
 
     setStep('submitting');
     setIsOfflineMode(false);
@@ -246,7 +276,7 @@ Please confirm if this slot is available.`;
     const payload = {
       fullName: formData.fullName,
       mobile: formData.mobileNumber,
-      gender: formData.gender,
+      gender: formData.gender || "Not Specified",
       dateOfBirth: formData.dateOfBirth,
       skillLevel: formData.skillLevel,
       timeSlot: formData.timeSlot,
@@ -257,17 +287,19 @@ Please confirm if this slot is available.`;
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
+      // mode: 'no-cors' is necessary for Google Scripts
       await fetch(WEBHOOK_URL, {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'no-cors', 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
         signal: controller.signal
       });
 
       clearTimeout(timeoutId);
+      // Because of no-cors, we assume success if no network error occurred
       setStep('success');
 
     } catch (err) {
@@ -309,7 +341,7 @@ Please confirm if this slot is available.`;
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
 
@@ -318,10 +350,11 @@ Please confirm if this slot is available.`;
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-lg bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-200"
+              // Updated height classes for mobile compatibility
+              className="relative w-full max-w-lg bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200 h-[85vh] sm:h-auto sm:max-h-[90vh]"
             >
               {/* HEADER: Navy Blue */}
-              <div className="px-6 py-5 border-b border-slate-100 bg-[#1e3a8a] flex justify-between items-start">
+              <div className="px-6 py-5 border-b border-slate-100 bg-[#1e3a8a] flex justify-between items-start shrink-0">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="bg-[#ea580c] text-white p-1.5 rounded-lg">
@@ -332,14 +365,14 @@ Please confirm if this slot is available.`;
                   <p className="text-xs font-medium text-blue-200 ml-1">Secure your training slot today</p>
                 </div>
                 <button 
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                   className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
                 >
                   <X size={20} />
                 </button>
               </div>
 
-              <div className="p-6 overflow-y-auto custom-scrollbar bg-slate-50">
+              <div className="p-6 overflow-y-auto custom-scrollbar bg-slate-50 flex-grow">
                 {step === 'form' && (
                   <form onSubmit={handleSubmit} className="space-y-8">
                     
@@ -365,8 +398,8 @@ Please confirm if this slot is available.`;
                             required
                             value={formData.fullName}
                             onChange={handleChange}
+                            autoComplete="off"
                             className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all placeholder:text-slate-400 font-medium"
-                            placeholder="e.g. Dushyant Sharma"
                           />
                         </div>
                       </div>
@@ -386,8 +419,8 @@ Please confirm if this slot is available.`;
                               pattern="[0-9]{10}"
                               value={formData.mobileNumber}
                               onChange={handleChange}
+                              autoComplete="off"
                               className={`w-full bg-white border ${error && !validatePhone(formData.mobileNumber) ? 'border-red-500 ring-2 ring-red-50' : 'border-slate-200'} text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all placeholder:text-slate-400 font-medium tracking-wider`}
-                              placeholder="9876543210"
                             />
                           </div>
                         </div>
@@ -407,6 +440,16 @@ Please confirm if this slot is available.`;
                               className={`w-full bg-white border ${error && formData.dateOfBirth && !isAdult(formData.dateOfBirth) ? 'border-red-500 ring-2 ring-red-50' : 'border-slate-200'} text-slate-800 rounded-xl py-3.5 px-4 focus:ring-2 focus:ring-[#ea580c]/20 focus:border-[#ea580c] outline-none transition-all font-medium`}
                             />
                           </div>
+                          {/* Immediate Age Validation Error */}
+                          {formData.dateOfBirth && !isAdult(formData.dateOfBirth) && (
+                            <motion.div 
+                              initial={{ opacity: 0, y: -5 }} 
+                              animate={{ opacity: 1, y: 0 }}
+                              className="text-[11px] font-bold text-red-500 flex items-center gap-1 pl-1"
+                            >
+                              <AlertCircle size={10} /> Must be 18+ years old
+                            </motion.div>
+                          )}
                         </div>
                       </div>
 
@@ -515,7 +558,7 @@ Please confirm if this slot is available.`;
                 )}
 
                 {step === 'submitting' && (
-                  <div className="flex flex-col items-center justify-center py-20 text-center space-y-6">
+                  <div className="flex flex-col items-center justify-center py-20 text-center space-y-6 h-full">
                     <div className="relative">
                       <div className="absolute inset-0 bg-[#ea580c]/20 blur-xl rounded-full" />
                       <Loader2 size={64} className="text-[#ea580c] animate-spin relative z-10" />
@@ -528,7 +571,7 @@ Please confirm if this slot is available.`;
                 )}
 
                 {step === 'success' && (
-                  <div className="flex flex-col items-center justify-center py-10 text-center space-y-8">
+                  <div className="flex flex-col items-center justify-center py-10 text-center space-y-8 h-full">
                     <motion.div 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}

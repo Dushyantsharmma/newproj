@@ -175,7 +175,10 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-10 md:gap-12 relative">
-            <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-orange-500/0 via-[#ea580c]/30 to-orange-500/0 border-t border-dashed border-orange-200" />
+            {/* Vertical line for mobile (centered, modern) */}
+            <div className="absolute md:hidden left-1/2 -translate-x-1/2 top-16 bottom-16 w-2 bg-gradient-to-b from-[#fbbf24]/0 via-[#ea580c] to-[#1e3a8a]/80 rounded-full blur-[2px] opacity-80 shadow-lg z-0" />
+            {/* Horizontal line for desktop (centered, modern) */}
+            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-[#fbbf24]/0 via-[#ea580c] to-[#1e3a8a]/80 rounded-full blur-[2px] opacity-80 shadow-lg z-0 transform -translate-y-1/2" />
 
             {/* Steps with icons and improved layout */}
             {[{
